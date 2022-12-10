@@ -8,14 +8,17 @@
 .column1 {
   grid-column: 1/2;
   grid-row: 1/2;
+  background-color: aliceblue;
 }
 
 .column2 {
   grid-column: 2/3;
   grid-row: 1/2;
+  background-color: aqua;
 }
 
 .column3 {
   grid-column: 3/4;
   grid-row: 1/2;
+  background-color: orange;
 }
