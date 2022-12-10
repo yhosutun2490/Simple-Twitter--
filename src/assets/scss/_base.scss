@@ -1,0 +1,59 @@
+/* 中英文主要字體 */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kaushan+Script&family=Noto+Sans+TC&family=Roboto&family=Roboto+Serif&display=swap');
+
+/* 數字主要字體 */
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Kaushan+Script&family=Montserrat&family=Noto+Sans+TC&family=Roboto&family=Roboto+Serif&display=swap');
+
+/* root 參數*/
+:global(:root) {
+  --logo-color: #ff6600;
+  --color-primary: #0062ff;
+  --color-secondary: #6c757d;
+  --color-success: #3dd598;
+  --color-waring: #ffc542;
+  --color-error: #fc5a5a;
+  --color-light-orange: #ff974a;
+  /* 補助色 */
+  --color-skyblue: #50b5ff;
+  --color-light-green: #82c43c;
+  --color-light-purple: #a461d8;
+  --color-light-pink: #ff9ad5;
+  /* 灰階色 */
+  --color-dark-black: #171725;
+  --color-dark: #44444f;
+  --color-input-title-grey: #696974;
+  --color-dark-grey: #92929d;
+  --color-input-disable-grey: #b5b5be;
+  --color-light-grey: #d5d5dc;
+  --color-dark-silver: #e2e2ea;
+  --color-silver: #f1f1f5;
+  --color-light-sliver: #fafafb;
+  --color-white: #ffffff;
+
+  /* 字體大小*/
+  --main-text-size: 16px;
+  --sub-text-size: 14px;
+  --small-text-size: 12px;
+}
+
+:global(:root) {
+  h1 {
+    font-size: 68px;
+  }
+
+  h2 {
+    font-size: 42px;
+  }
+
+  h3 {
+    font-size: 28px;
+  }
+
+  h4 {
+    font-size: 24px;
+  }
+
+  h5 {
+    font-size: 18px;
+  }
+}

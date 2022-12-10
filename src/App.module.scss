@@ -1,0 +1,16 @@
+@import './assets/scss/base';
+@import './assets/scss/reset';
+
+/* 容器規定寬度 */
+.App {
+  margin: 0 auto;
+
+  @media screen and (min-width: 992px) {
+    width: 960px;
+  }
+
+  @media screen and (min-width: 1200px) {
+    width: 1140px;
+  }
+
+}
