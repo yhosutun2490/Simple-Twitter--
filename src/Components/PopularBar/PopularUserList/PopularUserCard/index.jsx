@@ -17,6 +17,7 @@ function PopularUserCard(props) {
           {accountName ? `@${accountName}` : "@pizzahut"}
         </p>
       </div>
+
       <FollowButton currentUserID={1} id={id} isFollowed={isFollowed} />
     </div>
   );
