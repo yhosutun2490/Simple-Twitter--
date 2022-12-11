@@ -1,0 +1,57 @@
+.container {
+  display: flex;
+  font-family: sans-serif;
+  padding: 18px 24px;
+  border-bottom: 1px solid #E6ECF0;
+}
+.user-avatar {
+  width: 50px;
+  height: 50px;
+  path {
+    fill: var(--color-light-grey);
+  }
+
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+  &__name {
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 700;
+    margin-right: 8px;
+  }
+  &__account, &__dot, &__update{
+    color: var(--color-secondary);
+    margin-right: 4px;
+  }
+}
+.tweet-content {
+  margin-left: 8px;
+  font-size: 16px;
+  line-height: 26px;
+  font-weight: 400;
+}
+.tweet-social-list{
+  display: flex;
+  margin-left: 8px;
+  & .tweet-social-group {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-secondary);
+    &:not(:last-child){
+      margin-right: 41.3px;
+    }
+  }
+  .reply-link,.like-link {
+    margin-right: 9.44px;
+  }
+  .like-link.like-full path{
+    fill: red;
+  }
+}
+
