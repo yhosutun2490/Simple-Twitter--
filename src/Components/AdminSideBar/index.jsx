@@ -1,7 +1,8 @@
+import styles from "./AdminSideBar.module.scss";
 import AdminNavBar from "./AdminNavBar";
 function AdminSideBar() {
   return (
-    <div>
+    <div className={styles["container"]}>
       <AdminNavBar />
     </div>
   );
