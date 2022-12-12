@@ -35,7 +35,7 @@ function TweetInfo(props) {
       <div className={styles["tweet-content"]}>
         {content
           ? content
-          : "It is a long established fact that a reader will be distracted by thenreadable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters"}
+          : "It is a long established fact that a reader will be distracted by thenreadable content of a page when looking at its layout. "}
       </div>
       <div className={styles["tweet-update-detail"]}>
         <p className={styles["update-time"]}>{time ? time : "上午 10:05"}</p>

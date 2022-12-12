@@ -26,18 +26,18 @@
   }
 }
 .tweet-content {
-  margin: 8px 0;
   font-size: 24px;
   line-height: 36px;
   font-weight: 400;
 }
 .tweet-update-detail {
-  margin-bottom: 8px;
+  padding: 8px 0;
   display: flex;
   color: var(--color-secondary);
   font-size: 14px;
   line-height: 22px;
   font-weight: 400;
+  border-bottom: 1px solid #E6ECF0;
   >:not(:last-child) {
     margin-right: 4px;
   }
@@ -45,7 +45,8 @@
 .tweet-number-detail {
   display: flex;
   font-size: 19px;
-  margin-bottom: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid #E6ECF0;
   /* 子元件第一層margin */
   &>:not(:last-child) {
     margin-right: 24px;
@@ -69,6 +70,7 @@
 }
 .tweet-social-group {
   display: flex;
+  padding: 19px 0;
   & .reply-icon {
     margin-right: 150px;
   }
