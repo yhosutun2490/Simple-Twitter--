@@ -1,5 +1,6 @@
 import styles from "./App.module.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TweetModal from "./Components/TweetModal";
 
 function App() {
   return (
@@ -7,7 +8,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/">
-            <Route index></Route>
+            <Route index element={<TweetModal trigger={true}/>}></Route>
             <Route path="login"></Route>
             <Route path="register"></Route>
             <Route path="setting"></Route>

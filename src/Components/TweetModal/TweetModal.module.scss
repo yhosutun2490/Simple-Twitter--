@@ -1,0 +1,86 @@
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.popup-main-window {
+  position: absolute;
+  left: 50%;
+  top: 54px;
+  transform: translate(-50%, 0);
+  width: 600px;
+  height: 300px;
+  max-width: 640px;
+  background-color: #fff;
+  border-radius: 14px;
+  z-index: 6;
+}
+
+.popup-head {
+  padding: 15px;
+  display: flex;
+  justify-content: start;
+  border-bottom: 1px solid #E6ECF0;
+
+  .btn-close {
+    text-align: start;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: rgb(198, 216, 233);
+    }
+  }
+}
+
+.popup-body {
+  position: relative;
+  display: flex;
+  height: 192px;
+
+  .avatar {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+
+    .person-image {
+      width: 50px;
+      height: 50px;
+      border-radius: 100px;
+    }
+  }
+
+  .type-area {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding-left: 50px;
+    margin: 27px;
+    color: #9197A3;
+    font-size: 18px;
+  }
+}
+
+.popup-footer {
+  padding: 0 15px;
+  display: flex;
+  justify-content: flex-end;
+
+  .tweet-btn {
+    padding: 10px 15px;
+    background-color: var(--logo-color);
+    border-radius: 100px;
+    color: var(--color-white);
+    border: none;
+  }
+}
