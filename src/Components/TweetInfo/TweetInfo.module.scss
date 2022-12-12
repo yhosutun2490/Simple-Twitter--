@@ -1,0 +1,78 @@
+.container {
+  padding: 0 16px;
+  font-family: "Noto Sans TC";
+}
+
+.tweet-user-info {
+  display: flex;
+  align-items: center;
+  padding-top: 16px;
+  padding-bottom: 8px;
+  .user-avatar {
+    margin-right: 8px;
+  }
+  .user-name-group {
+    & .name {
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 700;
+    }
+    & .account {
+      font-size: 14px;
+      line-height: 22px;
+      font-weight: 400;
+      color: var(--color-secondary);
+    }
+  }
+}
+.tweet-content {
+  margin: 8px 0;
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 400;
+}
+.tweet-update-detail {
+  margin-bottom: 8px;
+  display: flex;
+  color: var(--color-secondary);
+  font-size: 14px;
+  line-height: 22px;
+  font-weight: 400;
+  >:not(:last-child) {
+    margin-right: 4px;
+  }
+}
+.tweet-number-detail {
+  display: flex;
+  font-size: 19px;
+  margin-bottom: 16px;
+  /* 子元件第一層margin */
+  &>:not(:last-child) {
+    margin-right: 24px;
+  }
+  & .tweet-reply,.tweet-like {
+    display: flex;
+    align-items: center;
+  }
+  & .number {
+    color: var(--color-dark-black);
+    line-height: 23.16px;
+    font-weight: 700;
+    margin-right: 8px;
+    font-family: "Montserrat";
+  }
+  & .title {
+    color: var(--color-secondary);
+    font-weight: 500;
+    line-height: 27.51px;
+  }
+}
+.tweet-social-group {
+  display: flex;
+  & .reply-icon {
+    margin-right: 150px;
+  }
+  & .reply-icon,.like-icon {
+    cursor: pointer;
+  }
+}

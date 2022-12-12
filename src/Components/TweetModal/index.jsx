@@ -1,6 +1,7 @@
 import styles from "./TweetModal.module.scss";
 import { ReactComponent as Close } from "../../assets/icons/cross_orange.svg";
 import { useState } from "react";
+
 function TweetModal(props) {
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
