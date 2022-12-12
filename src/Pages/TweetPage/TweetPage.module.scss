@@ -1,8 +1,11 @@
 .container {
   font-family: sans-serif;
+  /* 用web-kit 改一下scrollbar樣式*/
+  overflow-y: scroll;
 }
 .page-title-wrap {
   display: flex;
+  position: fixed;
   align-items: center;
   padding: 24px 28px;
   border-bottom: 1px solid #E6ECF0;
@@ -14,3 +17,9 @@
 .arrow-img {
   margin-right: 19px;
 }
+/* 下推74px 讓上面首頁可以置頂*/
+.tweet-info-wrap {
+  margin-top: 74px;
+}
+
+/* 捲軸樣式調整 */
