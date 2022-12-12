@@ -1,6 +1,6 @@
 import styles from "./HomePage.module.scss";
-import TweetInput from "./TweetInput";
-import UserTweetList from "./UserTweetList";
+import TweetInput from "../TweetInput";
+import UserTweetList from "../UserTweetList";
 import { useRef } from "react";
 function HomePage() {
   const containerRef = useRef(null);

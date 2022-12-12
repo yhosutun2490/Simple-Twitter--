@@ -1,5 +1,5 @@
 import styles from "./TweetInput.module.scss";
-import { ReactComponent as Avatar } from "../../../assets/icons/user_fake.svg";
+import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
 import { useRef } from "react";
 function TweetInput() {
   const textAreaRef = useRef(null);

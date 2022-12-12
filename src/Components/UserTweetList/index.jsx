@@ -1,4 +1,4 @@
-import UserTweetBox from "../../UserTweetBox";
+import UserTweetBox from "../UserTweetBox";
 
 function UserTweetList() {
   return (
