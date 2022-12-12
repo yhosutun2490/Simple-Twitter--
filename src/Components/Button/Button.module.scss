@@ -1,23 +1,29 @@
-:global(button) {
+// Normal size button
+.bg-logo {
   width: 100%;
   border-radius: 50px;
-  &.bg-logo {
-    color: var(--color-white);
-    background-color: var(--logo-color);
-    font-size: var(--main-text-size);
-    padding: 8px 16px;
-  }
-  &.bg-white {
-    color: var(--logo-color);
-    background-color: var(--color-white);
-    border: 1px solid var(--logo-color);
-    font-size: var(--main-text-size);
-    padding: 8px 16px;
-  }
-  &.lg-bg-logo {
-    color: var(--color-white);
-    background-color: var(--logo-color);
-    font-size: 20px;    
-    padding: 8px 24px;
-  }
+  color: var(--color-white);
+  background-color: var(--logo-color);
+  font-size: var(--main-text-size);
+  padding: 8px 16px;
+}
+
+.bg-white {
+  width: 100%;
+  border-radius: 50px;
+  color: var(--logo-color);
+  background-color: var(--color-white);
+  border: 1px solid var(--logo-color);
+  font-size: var(--main-text-size);
+  padding: 8px 16px;
+}
+
+// Large size button
+.lg-bg-logo {
+  width: 100%;
+  border-radius: 50px;
+  color: var(--color-white);
+  background-color: var(--logo-color);
+  font-size: 20px;
+  padding: 8px 24px;
 }

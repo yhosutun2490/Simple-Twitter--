@@ -3,7 +3,7 @@ import styles from "./LayoutCommon.module.scss";
 import UserSideBar from "../UserSideBar";
 import PopularBar from "../PopularBar";
 
-function Layout() {
+function LayoutCommon() {
   return (
     <div className={styles["layout-container"]}>
       <div className={styles["column-1"]}>
@@ -18,4 +18,4 @@ function Layout() {
     </div>
   );
 }
-export default Layout;
+export default LayoutCommon;
