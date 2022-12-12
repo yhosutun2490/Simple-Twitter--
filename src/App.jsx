@@ -1,6 +1,7 @@
 import styles from "./App.module.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-
+import LayoutCommon from "./Components/LayoutCommon";
+import HomePage from "./Components/HomePage";
 function App() {
   return (
     <div className={styles["App"]}>
@@ -11,7 +12,9 @@ function App() {
             <Route path="login"></Route>
             <Route path="register"></Route>
             <Route path="setting"></Route>
-            <Route path="home"></Route>
+            <Route path="home" element={<LayoutCommon />}>
+              <Route index element={<HomePage />}></Route>
+            </Route>
             <Route path="tweet/:id"></Route>
             <Route path="/user/:username">
               <Route index></Route>
