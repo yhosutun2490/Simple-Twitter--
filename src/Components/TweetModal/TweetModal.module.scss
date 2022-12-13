@@ -16,9 +16,9 @@
   display: flex;
   flex-direction: column;
   left: 50%;
-  top: 54px;
+  top: 56px;
   transform: translate(-50%, 0);
-  width: 600px;
+  width: 45.28%;
   /*根據內容自動撐高*/
   height: auto;
   max-width: 640px;
@@ -26,6 +26,18 @@
   border-radius: 14px;
   z-index: 6;
   font-family: "Noto Sans TC";
+  animation: MoveIn 0.5s 1 forwards;
+}
+// popup滑入動畫
+@keyframes MoveIn {
+  0% {
+    transform: translate(-50%, -100px);
+  }
+
+  100% {
+    transform: translate(-50%, 0px);
+  }
+
 }
 
 .popup-head {
@@ -93,5 +105,8 @@
   .error-message {
     margin-right: 20px;
     color: var(--color-error);
+    font-size: 15px;
+    line-height: 15px;
+    font-weight: 500;
   }
 }
