@@ -57,3 +57,16 @@
     font-size: 18px;
   }
 }
+
+/* 捲軸樣式調整 */
+::-webkit-scrollbar {
+  width: 10px;
+  background-color: #fafafa;
+  padding: 0 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #C1C1C1;
+  border-radius: 8px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
