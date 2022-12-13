@@ -9,6 +9,7 @@ function TweetModal(props) {
   // 設定關掉彈窗的set function (父層傳入)
   const { trigger, closeEvent, userAvatar, currentUserID } = props;
   const [text, setText] = useState("");
+  const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);
 
   //  textarea輸入框隨使用者輸入高度變化
@@ -17,14 +18,29 @@ function TweetModal(props) {
     e.style.height = e.scrollHeight + "px";
     setText(e.value);
   }
+  function tweetApi() {
+    setTimeout(() => {
+      // 改回預設值狀態
+      setText("");
+      setIsBlank(false);
+      alert("推文成功");
+      closeEvent(false);
+    }, 1000);
+  }
   function handleTweetSubmit() {
     // 換行空白處理
     const tweetInput = text.trim().replace(/\r\n|\n/g, "");
-    console.log(tweetInput);
-    // 超過140字不送出推文表單
+    // 超過140字和空白內文不送出推文表單
     if (text.length > 140) {
       return;
     }
+    if (text.length === 0) {
+      setIsBlank(true);
+      return;
+    }
+
+    // 用setTimeout 假設Api回傳成功後清除輸入
+    tweetApi();
   }
   return trigger ? (
     <>
@@ -32,6 +48,7 @@ function TweetModal(props) {
         className={styles["popup-backdrop"]}
         onClick={() => {
           setText("");
+          setIsBlank(false);
           closeEvent(false);
         }}
       ></div>
@@ -41,6 +58,7 @@ function TweetModal(props) {
             className={styles["btn-close"]}
             onClick={() => {
               setText("");
+              setIsBlank(false);
               closeEvent(false);
             }}
           >
@@ -64,6 +82,11 @@ function TweetModal(props) {
         <div className={styles["popup-footer"]}>
           {text.length > 140 ? (
             <div className={styles["error-message"]}>字數超過上限140字</div>
+          ) : (
+            <div></div>
+          )}
+          {isBlank && text.length === 0 ? (
+            <div className={styles["error-message"]}>內容不可空白</div>
           ) : (
             <div></div>
           )}
