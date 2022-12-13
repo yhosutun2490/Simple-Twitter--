@@ -21,6 +21,7 @@
   font-size: 16px;
   line-height: 26px;
   font-weight: 400;
+  cursor: pointer;
 }
 .tweet-social-list{
   display: flex;
@@ -36,11 +37,8 @@
       margin-right: 41.3px;
     }
   }
-  .reply-link,.like-link {
+  .reply-link,.like-btn {
     margin-right: 9.44px;
-  }
-  .like-link.like-full path{
-    fill: red;
   }
 }
 

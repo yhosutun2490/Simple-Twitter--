@@ -1,16 +1,34 @@
 import styles from "./ReplyIconButton.module.scss";
 import { ReactComponent as Reply } from "../../assets/icons/reply_icon.svg";
-import { Link } from "react-router-dom";
+import ReplyModal from "../ReplyModal";
+import { useState } from "react";
+
 function ReplyIconButton(props) {
-  // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)
+  // 回覆按鈕點到時需要連到ReplyModal彈跳視窗，large放大圖片大小(tweet推文詳細頁用)
   const { tweetID, large } = props;
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const size = large ? "large" : "";
+  function handleClick() {
+    setIsOpenModal(true);
+  }
   return (
-    <div className={styles["container"]}>
-      <Link to={`/tweet/${tweetID}`}>
+    <>
+      <ReplyModal
+        trigger={isOpenModal}
+        closeEvent={setIsOpenModal}
+        tweetID
+        tweetAvatar
+        tweeterAccount
+        tweeterName
+        responseAccount
+        content
+        userAvatar
+        userId
+      />
+      <div className={styles["container"]} onClick={handleClick}>
         <Reply className={styles[size]} />
-      </Link>
-    </div>
+      </div>
+    </>
   );
 }
 export default ReplyIconButton;

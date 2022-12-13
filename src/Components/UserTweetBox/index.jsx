@@ -1,16 +1,20 @@
 import styles from "./UserTweetBox.module.scss";
 import { Link } from "react-router-dom";
 import { ReactComponent as Avatar } from "../../assets/icons/AcLogo.svg";
-import { ReactComponent as Reply } from "../../assets/icons/reply_icon.svg";
-import { ReactComponent as Like } from "../../assets/icons/like_icon.svg";
-import { ReactComponent as FullLike } from "../../assets/icons/like_full_icon.svg";
+import ReplyIconButton from "../ReplyIconButton";
 import UserInfo from "./UserInfo";
+import LikeFullIconButton from "../LikeFullIconButton";
+import LikeIconButton from "../LikeIconButton";
 function UserTweetBox(props) {
   // 先設定好要傳入的資料props
+  // 資料要傳給ReplyIconButton 跳窗才會正常顯示資料
   const {
-    account,
-    userName,
+    tweeterAccount,
+    tweeterName,
+    tweeterAvatar,
+    responseAcoount,
     update,
+    tweetContent,
     tweetNumber,
     likesNumber,
     tweetID,
@@ -20,12 +24,16 @@ function UserTweetBox(props) {
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
-        <Link to={`/user/${account}`}>
+        <Link to={`/user/${tweeterAccount}`}>
           <Avatar />
         </Link>
       </div>
       <div className={styles["tweet-detail"]}>
-        <UserInfo userName={userName} account={account} update={update} />
+        <UserInfo
+          userName={tweeterName}
+          account={tweeterAccount}
+          update={update}
+        />
         <div className={styles["tweet-content"]}>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -33,21 +41,21 @@ function UserTweetBox(props) {
         </div>
         <div className={styles["tweet-social-list"]}>
           <div className={styles["tweet-social-group"]}>
-            <Link className={styles["reply-link"]} to={`/tweet/${tweetID}`}>
-              <Reply />
-            </Link>
+            <div className={styles["reply-link"]}>
+              <ReplyIconButton />
+            </div>
             <p className={styles["reply-number"]}>
               {tweetNumber ? tweetNumber : 16}
             </p>
           </div>
           <div className={styles["tweet-social-group"]}>
             {isLike ? (
-              <div className={styles["like-link"]}>
-                <FullLike />
+              <div className={styles["like-btn"]}>
+                <LikeFullIconButton />
               </div>
             ) : (
-              <div className={styles["like-link"]}>
-                <Like />
+              <div className={styles["like-btn"]}>
+                <LikeIconButton />
               </div>
             )}
 

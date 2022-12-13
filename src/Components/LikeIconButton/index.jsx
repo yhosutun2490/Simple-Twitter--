@@ -8,7 +8,7 @@ function LikeIconButton(props) {
     // 打api更新按讚狀態....
   }
   return (
-    <div className={styles["container"]}>
+    <div className={styles["container"]} onClick={handleLikeClick}>
       <Like className={styles[size]} />
     </div>
   );

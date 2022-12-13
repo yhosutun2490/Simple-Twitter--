@@ -7,6 +7,7 @@
 /* 試作點擊加入like 出現+1 (還未完成)*/
 .container {
   position: relative;
+  cursor: pointer;
   animation: love-appear 0.5s forwards;
 }
 
