@@ -42,6 +42,9 @@ function TweetModal(props) {
     // 用setTimeout 假設Api回傳成功後清除輸入
     tweetApi();
   }
+  function handleOnFocus() {
+    setIsBlank(false);
+  }
   return trigger ? (
     <>
       <div
@@ -65,7 +68,7 @@ function TweetModal(props) {
             <Close className={styles["btn-close-img"]} />
           </button>
         </div>
-        <div className={styles["popup-body"]}>
+        <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-avatar"]}>
             <Avatar />
           </div>

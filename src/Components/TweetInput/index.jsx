@@ -20,6 +20,7 @@ function TweetInput() {
     if (text.length > 140) {
       return;
     }
+    // 空白內容處理
     if (text.length === 0) {
       setIsBlank(true);
       return;
@@ -33,11 +34,14 @@ function TweetInput() {
       alert("推文成功");
     }, 1000);
   }
-
+  function handleOnFocus() {
+    setIsBlank(false);
+  }
+  // onFocus 事件綁在父層，當使用者重新輸入時，不再重複出現空白錯誤提示
 
   return (
     <div className={styles["container"]}>
-      <div className={styles["input-body"]}>
+      <div className={styles["input-body"]} onFocus={handleOnFocus}>
         <div className={styles["user-avatar"]}>
           <Avatar />
         </div>
