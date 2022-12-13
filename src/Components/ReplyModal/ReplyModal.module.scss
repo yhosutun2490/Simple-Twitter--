@@ -21,7 +21,7 @@
   width: 45.28%;
   /*根據內容自動撐高*/
   height: auto;
-  max-width: 640px;
+  min-height: auto;
   background-color: #fff;
   border-radius: 14px;
   z-index: 6;
@@ -64,46 +64,76 @@
 .popup-body {
   position: relative;
   display: flex;
+  flex-direction: column;
   margin-top: 16px;
   padding: 0 24px;
   // height: 192px;
   display: flex;
-
-  .user-avatar {
-    width: 50px;
-    height: 50px;
-  }
-
-  .input-body {
-    margin-left: 8px;
-    width: 100%;
-    /* 最小輸入高度*/
-    min-height: 100px;
-
-    .input-textarea {
-      /* textarea撐滿剩餘空間*/
-      width: 100%;
-      resize: none;
-      border: none;
-      outline: none;
-      font-size: 16px;
-      line-height: 26px;
-      font-weight: 400;
-      color: var(--color-secondary);
-
-      /*textarea scrollbar關掉*/
-      &::-webkit-scrollbar {
-        display: none;
-      }
+.tweet-info-body {
+  display: flex;
+  .avatar-main {
+    & .tweeter-avatar {
+        width: 50px;
+        height: 50px;
+    }
+    & .connect-line {
+      position: relative;
+      left: 24px;
+      width: 2px;
+      height: 86px;
+      background-color: var(--color-input-disable-grey);
+      margin: 16px 0px;
     }
   }
+  .tweet-content {
+    color: var(--color-dark-black);
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    margin-left: 8px;
+  }
+
+  
+}
+.input-main-body {
+  display: flex;
+  & .user-avatar {
+      width: 50px;
+      height: 50px;
+    }
+  
+    & .input-body {
+      margin-left: 8px;
+      width: 100%;
+      /* 最小輸入高度*/
+      min-height: 183px;
+  
+     & .input-textarea {
+        /* textarea撐滿剩餘空間*/
+        width: 100%;
+        resize: none;
+        border: none;
+        outline: none;
+        font-size: 16px;
+        line-height: 26px;
+        font-weight: 400;
+        color: var(--color-secondary);
+  
+        /*textarea scrollbar關掉*/
+        &::-webkit-scrollbar {
+          display: none;
+        }
+      }
+    }  
+}
+  
 
 
 }
 
 .popup-footer {
   padding: 0 16px;
-  margin-bottom: 24px;
+  margin-bottom: 16px ;
   display: flex;
   justify-content: end;
   align-items: center;

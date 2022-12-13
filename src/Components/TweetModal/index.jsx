@@ -29,7 +29,7 @@ function TweetModal(props) {
   }
   function handleTweetSubmit() {
     // 換行空白處理
-    const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
     // 超過140字和空白內文不送出推文表單
     if (text.length > 140) {
       return;

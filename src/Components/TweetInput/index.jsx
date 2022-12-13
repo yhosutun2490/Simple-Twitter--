@@ -15,7 +15,8 @@ function TweetInput() {
   }
   function handleTweetSubmit() {
     // 換行空白處理
-    const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+
     // 超過140字推文表單不送出
     if (text.length > 140) {
       return;
