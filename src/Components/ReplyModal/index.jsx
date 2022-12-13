@@ -38,6 +38,8 @@ function ReplyModal(props) {
       <div
         className={styles["popup-backdrop"]}
         onClick={() => {
+          setText("");
+          setIsBlank(false);
           closeEvent(false);
         }}
       ></div>
@@ -45,7 +47,11 @@ function ReplyModal(props) {
         <div className={styles["popup-head"]}>
           <button
             className={styles["btn-close"]}
-            onClick={() => closeEvent(false)}
+            onClick={() => {
+              setText("");
+              setIsBlank(false);
+              closeEvent(false);
+            }}
           >
             <Close className={styles["btn-close-img"]} />
           </button>
@@ -62,6 +68,10 @@ function ReplyModal(props) {
                 There are many variations of passages of Lorem Ipsum available,
                 but the majority have suffered alteration in some form, by
                 injected humour
+              </div>
+              <div className={styles["response-to-user"]}>
+                <p className={styles["response-title-1"]}>回覆給</p>
+                <p className={styles["response-title-2"]}>@{"Mitsubishi"}</p>
               </div>
             </div>
           </div>

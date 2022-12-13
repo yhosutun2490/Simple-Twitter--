@@ -92,6 +92,21 @@
     font-weight: 400;
     margin-left: 8px;
   }
+  .response-to-user {
+    display: flex;
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 400;
+    margin-left: 8px;
+    margin-top: 11px;
+    .response-title-1 {
+      color: var(--color-secondary);
+      margin-right: 4px;
+    }
+    .response-title-2 {
+      color: var(--logo-color);
+    }
+  }
 
   
 }
@@ -137,6 +152,9 @@
   display: flex;
   justify-content: end;
   align-items: center;
+  .reply-btn {
+    outline: none;
+  }
 
   .error-message {
     margin-right: 20px;
