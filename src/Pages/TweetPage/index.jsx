@@ -13,13 +13,15 @@ function TweetPage(props) {
   }
   const { replyerData } = props;
   return (
-    <div className={styles["container"]} ref={containerRef} onClick={scrollTop}>
+    <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title-wrap"]}>
         <Link to={"/home"}>
           <PreArrow className={styles["arrow-img"]} />
         </Link>
 
-        <p className={styles["page-title"]}>推文</p>
+        <p className={styles["page-title"]} onClick={scrollTop}>
+          推文
+        </p>
       </div>
       <div className={styles["tweet-info-wrap"]}>
         <TweetInfo isLiked={isLiked} setLikeEvent={setIsLiked} />
