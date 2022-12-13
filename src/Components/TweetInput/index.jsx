@@ -1,6 +1,7 @@
 import styles from "./TweetInput.module.scss";
 import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
 import { useRef } from "react";
+import TweetSubmitButton from "./TweetSubmitButton";
 function TweetInput() {
   const textAreaRef = useRef(null);
   //  textarea輸入框隨使用者輸入高度變化
@@ -27,9 +28,9 @@ function TweetInput() {
         ></textarea>
       </div>
       <div className={styles["footer"]}>
-        <button className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
-          推文
-        </button>
+        <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
+          <TweetSubmitButton />
+        </div>
       </div>
     </div>
   );

@@ -13,15 +13,19 @@
 
 .popup-main-window {
   position: absolute;
+  display: flex;
+  flex-direction: column;
   left: 50%;
   top: 54px;
   transform: translate(-50%, 0);
   width: 600px;
-  height: 300px;
+  /*根據內容自動撐高*/
+  height: auto;
   max-width: 640px;
   background-color: #fff;
   border-radius: 14px;
   z-index: 6;
+  font-family: "Noto Sans TC";
 }
 
 .popup-head {
@@ -43,48 +47,51 @@
   }
 }
 
+/* 使用者推文輸入框樣式 */
 .popup-body {
   position: relative;
   display: flex;
-  height: 192px;
-
-  .avatar {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-
-    .person-image {
-      width: 50px;
-      height: 50px;
-      border-radius: 100px;
+  margin-top: 16px;
+  padding: 0 24px;
+  // height: 192px;
+  display: flex;
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  .input-body {
+    margin-left: 8px;
+    width: 100%;
+    /* 最小輸入高度*/
+    min-height: 100px;
+    .input-textarea {
+      /* textarea撐滿剩餘空間*/
+      width: 100%;
+      resize: none;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-secondary);
+      /*textarea scrollbar關掉*/
+      &::-webkit-scrollbar {
+          display: none;
+        }
     }
   }
 
-  .type-area {
-    width: 100%;
-    border: none;
-    outline: none;
-    padding-left: 50px;
-    margin: 27px;
-    color: #9197A3;
-    font-size: 18px;
-  }
+
 }
 
 .popup-footer {
-  padding: 0 15px;
+  padding: 0 16px;
+  margin-bottom: 24px;
   display: flex;
   justify-content: end;
-
-  .tweet-btn {
-    width: 64px;
-    padding: 10px 15px;
-    background-color: var(--logo-color);
-    border-radius: 100px;
-    color: var(--color-white);
-    border: none;
-    font-size: 16px;
-    line-height: 24px;
-    font-weight: 400;
+  align-items: center;
+  .error-message {
+    margin-right: 20px;
+    color: var(--color-error);
   }
 }

@@ -6,7 +6,10 @@ import { NavLink } from "react-router-dom";
 import { ReactComponent as House } from "../../../assets/icons/house.svg";
 import { ReactComponent as Head } from "../../../assets/icons/head.svg";
 import { ReactComponent as Gear } from "../../../assets/icons/gear.svg";
+import TweetButtonSideBar from "./TweetButtonSideBar";
+
 function UserNavBar(props) {
+  const { userAvatar, curretUserID } = props;
   // 個人資料頁路由名稱 暫定為self
   const currentUsername = "self";
   return (
@@ -80,7 +83,9 @@ function UserNavBar(props) {
           <p className={styles["navbar-link__title"]}>設定</p>
         </NavLink>
       </NavBarItem>
-      <div className={styles["tweet-btn"]}>推文</div>
+      <TweetButtonSideBar userAvatar curretUserID>
+        推文
+      </TweetButtonSideBar>
       <div className={styles["logout-btn"]}>
         <LogoutButton />
       </div>
