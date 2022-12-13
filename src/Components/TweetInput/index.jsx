@@ -21,7 +21,7 @@ function TweetInput() {
         </div>
         <textarea
           className={styles["input-textarea"]}
-          placeholder="有什麼新鮮事"
+          placeholder="有什麼新鮮事?"
           ref={textAreaRef}
           onChange={(e) => textAreaChange(e.target)}
         ></textarea>
