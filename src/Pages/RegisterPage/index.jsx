@@ -48,6 +48,12 @@ function RegisterPage() {
   let passwordAlertMsg = "";
   let passwordCheckAlertMsg = "";
 
+  // Word length related constant
+  const accountLength = account.trim().length;
+  const nameLength = name.trim().length;
+  const accountLengthLimit = 50;
+  const nameLengthLimit = 50;
+
   return (
     <div className={styles["container"]}>
       <div>
@@ -66,10 +72,7 @@ function RegisterPage() {
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg={accountAlertMsg} />
-            <AuthInputWordCount
-              wordLength={10}
-              wordLengthLimit={50}
-            />
+            <AuthInputWordCount wordLength={accountLength} wordLengthLimit={accountLengthLimit} />
           </div>
         </div>
 
@@ -83,10 +86,7 @@ function RegisterPage() {
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg={nameAlertMsg} />
-            <AuthInputWordCount
-              wordLength={10}
-              wordLengthLimit={50}
-            />
+            <AuthInputWordCount wordLength={nameLength} wordLengthLimit={nameLengthLimit} />
           </div>
         </div>
 
