@@ -1,6 +1,6 @@
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import Button from "../../Components/Button";
-import styles from "./RegisterPage.module.scss"
+import styles from "./RegisterPage.module.scss";
 
 function AuthInputAlert(prop) {
   const { alertMsg } = prop;
@@ -17,14 +17,16 @@ function AuthInputWordCount(props) {
 }
 
 function AuthInput(props) {
-  const { label, type, placeholder } = props;
+  const { label, type, value, placeholder, onChange } = props;
   return (
     <div className={styles["authinput-box"]}>
       <label className={styles["authinput-label"]}>{label}</label>
       <input
         className={styles["authinput"]}
         type={type || "text"}
+        value={value || ""}
         placeholder={placeholder || ""}
+        onChange={(e) => onChange?.(e.target.value)}
       />
     </div>
   );
