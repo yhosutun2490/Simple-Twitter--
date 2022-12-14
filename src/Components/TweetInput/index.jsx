@@ -5,7 +5,8 @@ import TweetSubmitButton from "./TweetSubmitButton";
 function TweetInput() {
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
-  const [isBlank, setIsBlank] = useState(false);
+  // 判斷使用者是否回到輸入狀態
+  const [isOnSubmit, setIsOnSubmit] = useState(false);
   const textAreaRef = useRef(null);
   //  textarea輸入框隨使用者輸入高度變化
   function textAreaChange(e) {
@@ -23,7 +24,7 @@ function TweetInput() {
     }
     // 空白內容處理
     if (text.length === 0) {
-      setIsBlank(true);
+      setIsOnSubmit(true);
       return;
     }
 
@@ -31,12 +32,12 @@ function TweetInput() {
     setTimeout(() => {
       // 改回預設值狀態
       setText("");
-      setIsBlank(false);
+      setIsOnSubmit(false);
       alert("推文成功");
     }, 1000);
   }
   function handleOnFocus() {
-    setIsBlank(false);
+    setIsOnSubmit(false);
   }
   // onFocus 事件綁在父層，當使用者重新輸入時，不再重複出現空白錯誤提示
 
@@ -56,7 +57,7 @@ function TweetInput() {
       </div>
       <div className={styles["footer"]}>
         <div className={styles["error-message"]}>
-          {isBlank && text.length === 0 ? "內容不能空白" : ""}
+          {isOnSubmit && text.length === 0 ? "內容不能空白" : ""}
           {text.length > 140 ? "字數超過上限140字" : ""}
         </div>
         <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>

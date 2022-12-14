@@ -11,10 +11,9 @@ function UserTweetBox(props) {
   const {
     tweeterAccount,
     tweeterName,
-    tweeterAvatar,
-    responseAcoount,
+    Avatar,
     update,
-    tweetContent,
+    content,
     tweetNumber,
     likesNumber,
     tweetID,
@@ -25,7 +24,7 @@ function UserTweetBox(props) {
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
         <Link to={`/user/${tweeterAccount}`}>
-          <Avatar />
+          <img src={Avatar} className={styles["avatar-img"]} />
         </Link>
       </div>
       <div className={styles["tweet-detail"]}>
@@ -35,9 +34,12 @@ function UserTweetBox(props) {
           update={update}
         />
         <div className={styles["tweet-content"]}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s
+          <Link
+            to={`/tweet/${tweetID}`}
+            className={styles["tweet-content-link"]}
+          >
+            {content}
+          </Link>
         </div>
         <div className={styles["tweet-social-list"]}>
           <div className={styles["tweet-social-group"]}>
