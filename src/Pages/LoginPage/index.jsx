@@ -84,7 +84,7 @@ function LoginPage() {
       </div>
       {/* Auth Link */}
       <div className={styles["auth-link-box"]}>
-        <Link to="/login" className={styles["auth-link"]}>
+        <Link to="/register" className={styles["auth-link"]}>
           <div className={styles["auth-link-text"]}>註冊</div>
         </Link>
         <div className={styles["auth-link-dot"]}>·</div>
