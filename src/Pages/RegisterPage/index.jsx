@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
@@ -242,7 +243,9 @@ function RegisterPage() {
         <Button styleName="lg-bg-logo">註冊</Button>
       </div>
       {/* Auth Link */}
-      <div className={styles["auth-link"]}>取消</div>
+      <Link to="/login" className={styles["auth-link"]}>
+        <div className={styles["auth-link-text"]}>取消</div>
+      </Link>
     </div>
   );
 }
