@@ -2,6 +2,7 @@ import styles from "./TweetInfo.module.scss";
 import ReplyIconButton from "../ReplyIconButton";
 import LikeIconButton from "../LikeIconButton";
 import LikeFullIconButton from "../LikeFullIconButton";
+import { getChineseDate, TimeMeridiem } from "../../CostumHook/TransFormDate";
 function TweetInfo(props) {
   // 使用到的props參數
   const { mainTweetInfo, isLiked, likeEvent } = props;
@@ -18,8 +19,8 @@ function TweetInfo(props) {
   const update = data?.createdAt;
   const repliesTimes = data?.replies?.length;
   const likeTimes = data?.liked ? data.liked : "";
-  const date = update?.slice(0, 10);
-  const time = update?.slice(11, 19);
+  const date = getChineseDate(update);
+  const time = TimeMeridiem(update);
   const tweetID = data?.id;
   return (
     <div className={styles["container"]}>

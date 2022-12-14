@@ -2,10 +2,12 @@ import styles from "./ReplyBox.module.scss";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { ReactComponent as Avatar } from "../../assets/icons/AcLogo.svg";
 import { Link } from "react-router-dom";
+import { TimeFromNow } from "../../CostumHook/TransFormDate";
 
 function ReplyBox(props) {
   // 這邊傳進來的是回覆的使用者
   const { name, account, avatar, update, userID, replyTo, comment } = props;
+  const date = TimeFromNow(update);
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
@@ -14,7 +16,7 @@ function ReplyBox(props) {
         </Link>
       </div>
       <div className={styles["response-detail"]}>
-        <UserInfo userName={name} account={account} update={update} />
+        <UserInfo userName={name} account={account} update={date} />
         <div className={styles["response-to"]}>
           <p className={styles["response-title-1"]}>回覆</p>
           <p className={styles["response-title-2"]}>@{replyTo}</p>

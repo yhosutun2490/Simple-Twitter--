@@ -12,7 +12,7 @@ function UserInfo(props) {
       </p>
       <p className={styles["user-info-dot"]}>•</p>
       <p className={styles["user-info-update"]}>
-        {update ? `${update} 小時` : "3 小時"}
+        {update ? `${update}` : "3 小時"}
       </p>
     </div>
   );

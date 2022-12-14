@@ -5,6 +5,7 @@ import ReplyIconButton from "../ReplyIconButton";
 import UserInfo from "./UserInfo";
 import LikeFullIconButton from "../LikeFullIconButton";
 import LikeIconButton from "../LikeIconButton";
+import { TimeFromNow } from "../../CostumHook/TransFormDate";
 function UserTweetBox(props) {
   // 先設定好要傳入的資料props
   // 資料要傳給ReplyIconButton 跳窗才會正常顯示資料
@@ -19,7 +20,8 @@ function UserTweetBox(props) {
     tweetID,
     isLike,
   } = props;
-
+  // 日期資料轉換
+  const date = TimeFromNow(update);
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
@@ -31,7 +33,7 @@ function UserTweetBox(props) {
         <UserInfo
           userName={tweeterName}
           account={tweeterAccount}
-          update={update}
+          update={date}
         />
         <div className={styles["tweet-content"]}>
           <Link

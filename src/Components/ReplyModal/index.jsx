@@ -5,6 +5,7 @@ import AcLogo from "../../assets/icons/AcLogo.svg";
 import ReplyTweetButton from "./ReplyTweetButton";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
+import { TimeFromNow } from "../../CostumHook/TransFormDate";
 function ReplyModal(props) {
   // 設定props 打開與否和關閉事件
   const {
@@ -25,6 +26,8 @@ function ReplyModal(props) {
   const [isBlank, setIsBlank] = useState(false);
   // 設定useRef讓輸入內容高度能夠變化
   const textAreaRef = useRef(null);
+  // 日期資料轉換
+  const date = TimeFromNow(update);
   function textAreaChange(e) {
     e.style.height = "auto";
     e.style.height = e.scrollHeight + "px";
@@ -77,7 +80,7 @@ function ReplyModal(props) {
               <UserInfo
                 userName={tweeterName}
                 account={tweeterAccount}
-                update={update}
+                update={date}
               />
               <div className={styles["tweet-content"]}>{content}</div>
               <div className={styles["response-to-user"]}>
