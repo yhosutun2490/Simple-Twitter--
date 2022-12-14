@@ -62,7 +62,12 @@ function RegisterPage() {
     setSubmitting(true);
   };
 
-  // word length limit alert
+  // When user focus on the input clear the alert message
+  const handleFocus = () => {
+    setSubmitting(false);
+  };
+
+  // Word length limit alert
   if (accountLength > accountLengthLimit) {
     accountAlertMsg = "帳號字數超出上限";
   }
@@ -86,7 +91,7 @@ function RegisterPage() {
       </div>
       <h3 className={styles["title"]}>建立你的帳號</h3>
       {/* AuthInput group */}
-      <div className={styles["authinput-group"]}>
+      <div className={styles["authinput-group"]} onFocus={handleFocus}>
         <div className={styles["authinput-container"]}>
           <AuthInput
             label="帳號"
