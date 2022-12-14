@@ -12,6 +12,7 @@ function TweetPage() {
   const [mainTweetInfo, setMainTweetInfo] = useState("");
   const [replies, setRplies] = useState("");
   const containerRef = useRef(null);
+
   // 點擊置頂功能
   function scrollTop() {
     containerRef.current.scrollTo(0, 0);
@@ -61,7 +62,7 @@ function TweetPage() {
         />
       </div>
       <div className={styles["tweet-reply-wrap"]}>
-        <ReplyList replyerData={replies} />
+        <ReplyList repliesData={replies} mainTweetInfo={mainTweetInfo} />
       </div>
     </div>
   );
