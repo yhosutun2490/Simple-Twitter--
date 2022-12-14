@@ -93,6 +93,11 @@ function RegisterPage() {
     emailAlertMsg = "Email格式錯誤";
   }
 
+  //passwordCheck unmatched alert
+  if (submitting && passwordCheck > 0 && passwordCheck !== password) {
+    passwordCheckAlertMsg = "密碼不相符";
+  }
+
   return (
     <div className={styles["container"]}>
       <div>
