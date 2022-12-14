@@ -54,6 +54,15 @@ function RegisterPage() {
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
+  // word length limit alert
+  if (accountLength > accountLengthLimit) {
+    accountAlertMsg = "字數超出上限";
+  }
+
+  if (nameLength > nameLengthLimit) {
+    nameAlertMsg = "字數超出上限";
+  }
+
   return (
     <div className={styles["container"]}>
       <div>
@@ -72,7 +81,10 @@ function RegisterPage() {
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg={accountAlertMsg} />
-            <AuthInputWordCount wordLength={accountLength} wordLengthLimit={accountLengthLimit} />
+            <AuthInputWordCount
+              wordLength={accountLength}
+              wordLengthLimit={accountLengthLimit}
+            />
           </div>
         </div>
 
@@ -86,7 +98,10 @@ function RegisterPage() {
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg={nameAlertMsg} />
-            <AuthInputWordCount wordLength={nameLength} wordLengthLimit={nameLengthLimit} />
+            <AuthInputWordCount
+              wordLength={nameLength}
+              wordLengthLimit={nameLengthLimit}
+            />
           </div>
         </div>
 
