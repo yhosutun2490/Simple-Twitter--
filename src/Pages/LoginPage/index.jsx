@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import { AuthInput, AuthInputAlert } from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
@@ -80,6 +81,16 @@ function LoginPage() {
       </div>
       <div className={styles["auth-button"]} onClick={handleClick}>
         <Button styleName="lg-bg-logo">登入</Button>
+      </div>
+      {/* Auth Link */}
+      <div className={styles["auth-link-box"]}>
+        <Link to="/login" className={styles["auth-link"]}>
+          <div className={styles["auth-link-text"]}>註冊</div>
+        </Link>
+        <div className={styles["auth-link-dot"]}>·</div>
+        <Link to="/admin" className={styles["auth-link"]}>
+          <div className={styles["auth-link-text"]}>後台登入</div>
+        </Link>
       </div>
     </div>
   );
