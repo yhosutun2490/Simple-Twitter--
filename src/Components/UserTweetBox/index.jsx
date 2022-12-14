@@ -44,7 +44,16 @@ function UserTweetBox(props) {
         <div className={styles["tweet-social-list"]}>
           <div className={styles["tweet-social-group"]}>
             <div className={styles["reply-link"]}>
-              <ReplyIconButton />
+              <ReplyIconButton
+                Avatar={Avatar}
+                currentUserAvatar
+                currentUserID
+                tweetID={tweetID}
+                content={content}
+                name={tweeterName}
+                account={tweeterAccount}
+                update={update}
+              />
             </div>
             <p className={styles["reply-number"]}>
               {tweetNumber ? tweetNumber : 16}

@@ -7,7 +7,18 @@ import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
 function ReplyModal(props) {
   // 設定props 打開與否和關閉事件
-  const { trigger, closeEvent } = props;
+  const {
+    trigger,
+    closeEvent,
+    tweetID,
+    tweeterAvatar,
+    tweeterAccount,
+    tweeterName,
+    content,
+    userAvatar,
+    userID,
+    update,
+  } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
   // 送出推文按鈕時顯示空白錯誤
@@ -59,19 +70,19 @@ function ReplyModal(props) {
         <div className={styles["popup-body"]}>
           <div className={styles["tweet-info-body"]}>
             <div className={styles["avatar-main"]}>
-              <img src={AcLogo} className={styles["tweeter-avatar"]} />
+              <img src={tweeterAvatar} className={styles["tweeter-avatar"]} />
               <div className={styles["connect-line"]}></div>
             </div>
             <div className={styles["tweet-content-info"]}>
-              <UserInfo userName={"Apple"} account={"apple"} update={3} />
-              <div className={styles["tweet-content"]}>
-                There are many variations of passages of Lorem Ipsum available,
-                but the majority have suffered alteration in some form, by
-                injected humour
-              </div>
+              <UserInfo
+                userName={tweeterName}
+                account={tweeterAccount}
+                update={update}
+              />
+              <div className={styles["tweet-content"]}>{content}</div>
               <div className={styles["response-to-user"]}>
                 <p className={styles["response-title-1"]}>回覆給</p>
-                <p className={styles["response-title-2"]}>@{"Mitsubishi"}</p>
+                <p className={styles["response-title-2"]}>@{tweeterAccount}</p>
               </div>
             </div>
           </div>
