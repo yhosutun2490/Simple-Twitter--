@@ -51,6 +51,7 @@ function RegisterPage() {
   // Word length related constant
   const accountLength = account.trim().length;
   const nameLength = name.trim().length;
+  const passwordLength = password.trim().length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
@@ -61,6 +62,14 @@ function RegisterPage() {
 
   if (nameLength > nameLengthLimit) {
     nameAlertMsg = "字數超出上限";
+  }
+
+  if (passwordLength > 0 && passwordLength < 4) {
+    passwordAlertMsg = "密碼不可小於4字元";
+  }
+
+  if (passwordLength > 12) {
+    passwordAlertMsg = "密碼不可多於12字元";
   }
 
   return (
@@ -120,8 +129,8 @@ function RegisterPage() {
 
         <div className={styles["authinput-container"]}>
           <AuthInput
-            label="密碼"
-            type="text"
+            label="密碼（需介於4到～12字元）"
+            type="password"
             value={password}
             placeholder="請設定密碼"
             onChange={setPassword}
@@ -134,7 +143,7 @@ function RegisterPage() {
         <div className={styles["authinput-container"]}>
           <AuthInput
             label="密碼確認"
-            type="text"
+            type="password"
             value={passwordCheck}
             placeholder="請再次輸入密碼"
             onChange={setPasswordCheck}
