@@ -18,9 +18,12 @@ function AuthInputWordCount(props) {
 }
 
 function AuthInput(props) {
-  const { label, type, value, placeholder, onChange } = props;
+  const { label, type, value, placeholder, onChange, isAlert } = props;
   return (
-    <div className={styles["authinput-box"]}>
+    <div className={[
+              `${styles["authinput-box"]}`,
+              isAlert ? `${styles["error"]}` : ``,
+            ].join(" ")}>
       <label className={styles["authinput-label"]}>{label}</label>
       <input
         className={styles["authinput"]}
@@ -135,6 +138,7 @@ function RegisterPage() {
             value={account}
             placeholder="請輸入帳號"
             onChange={setAccount}
+            isAlert={accountAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
@@ -158,6 +162,7 @@ function RegisterPage() {
             value={name}
             placeholder="請輸入使用者名稱"
             onChange={setName}
+            isAlert={nameAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
@@ -179,6 +184,7 @@ function RegisterPage() {
             value={email}
             placeholder="請輸入Email"
             onChange={setEmail}
+            isAlert={emailAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
@@ -198,6 +204,7 @@ function RegisterPage() {
             value={password}
             placeholder="請設定密碼"
             onChange={setPassword}
+            isAlert={passwordAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
@@ -217,6 +224,7 @@ function RegisterPage() {
             value={checkPassword}
             placeholder="請再次輸入密碼"
             onChange={setCheckPassword}
+            isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
