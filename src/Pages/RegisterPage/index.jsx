@@ -57,11 +57,11 @@ function RegisterPage() {
 
   // word length limit alert
   if (accountLength > accountLengthLimit) {
-    accountAlertMsg = "字數超出上限";
+    accountAlertMsg = "帳號字數超出上限";
   }
 
   if (nameLength > nameLengthLimit) {
-    nameAlertMsg = "字數超出上限";
+    nameAlertMsg = "密碼字數超出上限";
   }
 
   if (passwordLength > 0 && passwordLength < 4) {
