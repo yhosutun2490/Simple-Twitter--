@@ -21,10 +21,12 @@ function AuthInputWordCount(props) {
 function AuthInput(props) {
   const { label, type, value, placeholder, onChange, isAlert } = props;
   return (
-    <div className={[
-              `${styles["authinput-box"]}`,
-              isAlert ? `${styles["error"]}` : ``,
-            ].join(" ")}>
+    <div
+      className={[
+        `${styles["authinput-box"]}`,
+        isAlert ? `${styles["error"]}` : ``,
+      ].join(" ")}
+    >
       <label className={styles["authinput-label"]}>{label}</label>
       <input
         className={styles["authinput"]}
@@ -97,6 +99,27 @@ function RegisterPage() {
     setSubmitting(false);
   };
 
+  // Input blank check
+  if (submitting && accountLength === 0) {
+    accountAlertMsg = "此欄為必填欄位";
+  }
+
+  if (submitting && nameLength === 0) {
+    nameAlertMsg = "此欄為必填欄位";
+  }
+
+  if (submitting && emailLength === 0) {
+    emailAlertMsg = "此欄為必填欄位";
+  }
+
+  if (submitting && passwordLength === 0) {
+    passwordAlertMsg = "此欄為必填欄位";
+  }
+
+  if (submitting && checkPasswordLength === 0) {
+    checkPasswordAlertMsg = "此欄為必填欄位";
+  }
+
   // Word length limit alert
   if (accountLength > accountLengthLimit) {
     accountAlertMsg = "帳號字數超出上限";
@@ -142,13 +165,7 @@ function RegisterPage() {
             isAlert={accountAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert
-              alertMsg={
-                submitting && accountLength === 0
-                  ? "此欄為必填欄位"
-                  : accountAlertMsg
-              }
-            />
+            <AuthInputAlert alertMsg={accountAlertMsg} />
             <AuthInputWordCount
               wordLength={accountLength}
               wordLengthLimit={accountLengthLimit}
@@ -166,11 +183,7 @@ function RegisterPage() {
             isAlert={nameAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert
-              alertMsg={
-                submitting && nameLength === 0 ? "此欄為必填欄位" : nameAlertMsg
-              }
-            />
+            <AuthInputAlert alertMsg={nameAlertMsg} />
             <AuthInputWordCount
               wordLength={nameLength}
               wordLengthLimit={nameLengthLimit}
@@ -188,13 +201,7 @@ function RegisterPage() {
             isAlert={emailAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert
-              alertMsg={
-                submitting && emailLength === 0
-                  ? "此欄為必填欄位"
-                  : emailAlertMsg
-              }
-            />
+            <AuthInputAlert alertMsg={emailAlertMsg} />
           </div>
         </div>
 
@@ -208,13 +215,7 @@ function RegisterPage() {
             isAlert={passwordAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert
-              alertMsg={
-                submitting && passwordLength === 0
-                  ? "此欄為必填欄位"
-                  : passwordAlertMsg
-              }
-            />
+            <AuthInputAlert alertMsg={passwordAlertMsg} />
           </div>
         </div>
 
@@ -228,13 +229,7 @@ function RegisterPage() {
             isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert
-              alertMsg={
-                submitting && checkPasswordLength === 0
-                  ? "此欄為必填欄位"
-                  : checkPasswordAlertMsg
-              }
-            />
+            <AuthInputAlert alertMsg={checkPasswordAlertMsg} />
           </div>
         </div>
       </div>
