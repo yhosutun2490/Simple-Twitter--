@@ -23,7 +23,6 @@ function HomePage() {
     };
     apiTweets();
   }, []);
-  console.log(tweetList);
   return (
     <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title"]} onClick={scrollTop}>

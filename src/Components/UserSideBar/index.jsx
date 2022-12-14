@@ -1,4 +1,4 @@
-import styles from "./UserNavBar.module.scss";
+import styles from "./UserSideBar.module.scss";
 import UserNavBar from "./UserNavBar";
 function UserSideBar() {
   return (
