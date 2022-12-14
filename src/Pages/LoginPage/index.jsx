@@ -48,7 +48,7 @@ function LoginPage() {
       <div>
         <AcLogo />
       </div>
-      <h3 className={styles["title"]}>建立你的帳號</h3>
+      <h3 className={styles["title"]}>登入Alphitter</h3>
       {/* AuthInput group */}
       <div className={styles["authinput-group"]} onFocus={handleFocus}>
         <div className={styles["authinput-container"]}>
