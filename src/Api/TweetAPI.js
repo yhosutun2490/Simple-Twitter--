@@ -63,7 +63,7 @@ export const getAllTweets = async () => {
            updatedAt: "2022-11-17T15:32:31.000z",
          }
       }
-]
+    ]
 
     return resfakeData
   }
