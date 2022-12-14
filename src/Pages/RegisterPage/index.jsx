@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
@@ -33,6 +34,13 @@ function AuthInput(props) {
 }
 
 function RegisterPage() {
+  // State Variable
+  const [account, setAccount] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [passwordCheck, setPasswordCheck] = useState("");
+
   return (
     <div className={styles["container"]}>
       <div>
@@ -42,7 +50,13 @@ function RegisterPage() {
       {/* AuthInput group */}
       <div className={styles["authinput-group"]}>
         <div className={styles["authinput-container"]}>
-          <AuthInput label="帳號" type="text" placeholder="請輸入帳號" />
+          <AuthInput
+            label="帳號"
+            type="text"
+            value={account}
+            placeholder="請輸入帳號"
+            onChange={(accountInputValue) => setAccount(accountInputValue)}
+          />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg="字數超出上限！" />
             <AuthInputWordCount wordLength={10} wordLengthLimit={50} />
@@ -50,7 +64,13 @@ function RegisterPage() {
         </div>
 
         <div className={styles["authinput-container"]}>
-          <AuthInput label="名稱" type="text" placeholder="請輸入使用者名稱" />
+          <AuthInput
+            label="名稱"
+            type="text"
+            value={name}
+            placeholder="請輸入使用者名稱"
+            onChange={(nameInputValue) => setName(nameInputValue)}
+          />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg="字數超出上限！" />
             <AuthInputWordCount wordLength={10} wordLengthLimit={50} />
@@ -58,14 +78,26 @@ function RegisterPage() {
         </div>
 
         <div className={styles["authinput-container"]}>
-          <AuthInput label="Email" type="text" placeholder="請輸入Email" />
+          <AuthInput
+            label="Email"
+            type="text"
+            value={email}
+            placeholder="請輸入Email"
+            onChange={(emailInputValue) => setEmail(emailInputValue)}
+          />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg="Email格式錯誤" />
           </div>
         </div>
 
         <div className={styles["authinput-container"]}>
-          <AuthInput label="密碼" type="text" placeholder="請設定密碼" />
+          <AuthInput
+            label="密碼"
+            type="text"
+            value={password}
+            placeholder="請設定密碼"
+            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+          />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg="密碼長度不夠！" />
           </div>
@@ -75,7 +107,11 @@ function RegisterPage() {
           <AuthInput
             label="密碼確認"
             type="text"
+            value={passwordCheck}
             placeholder="請再次輸入密碼"
+            onChange={(passwordCheckInputValue) =>
+              setPasswordCheck(passwordCheckInputValue)
+            }
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert alertMsg="密碼不正確" />
