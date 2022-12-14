@@ -58,6 +58,10 @@ function RegisterPage() {
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
+  //Email rule check 待確認是否有漏洞的可能
+  const emailRule =
+    /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+
   const handleClick = () => {
     setSubmitting(true);
   };
@@ -82,6 +86,11 @@ function RegisterPage() {
 
   if (passwordLength > 12) {
     passwordAlertMsg = "密碼不可多於12字元";
+  }
+
+  //wrong email format alert
+  if (submitting && email.length > 0 && !emailRule.test(email)) {
+    emailAlertMsg = "Email格式錯誤";
   }
 
   return (
