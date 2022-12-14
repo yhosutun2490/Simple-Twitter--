@@ -32,6 +32,13 @@
   background-color: #f5f8fa;
   border-bottom: 2px solid var(--color-dark-black);
   border-radius: 2px;
+  &:hover {
+    border-bottom: 2px solid var(--color-skyblue);
+  }
+}
+
+.error {
+  border-bottom: 2px solid var(--color-error);
 }
 
 .authinput-label {
