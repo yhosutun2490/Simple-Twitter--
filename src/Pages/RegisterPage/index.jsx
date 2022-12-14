@@ -40,6 +40,7 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -52,8 +53,14 @@ function RegisterPage() {
   const accountLength = account.trim().length;
   const nameLength = name.trim().length;
   const passwordLength = password.trim().length;
+  const emailLength = email.trim().length;
+  const passwordCheckLength = passwordCheck.trim().length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
+
+  const handleClick = () => {
+    setSubmitting(true);
+  };
 
   // word length limit alert
   if (accountLength > accountLengthLimit) {
@@ -89,7 +96,13 @@ function RegisterPage() {
             onChange={setAccount}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={accountAlertMsg} />
+            <AuthInputAlert
+              alertMsg={
+                submitting && accountLength === 0
+                  ? "此欄為必填欄位"
+                  : accountAlertMsg
+              }
+            />
             <AuthInputWordCount
               wordLength={accountLength}
               wordLengthLimit={accountLengthLimit}
@@ -106,7 +119,11 @@ function RegisterPage() {
             onChange={setName}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={nameAlertMsg} />
+            <AuthInputAlert
+              alertMsg={
+                submitting && nameLength === 0 ? "此欄為必填欄位" : nameAlertMsg
+              }
+            />
             <AuthInputWordCount
               wordLength={nameLength}
               wordLengthLimit={nameLengthLimit}
@@ -123,7 +140,13 @@ function RegisterPage() {
             onChange={setEmail}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={emailAlertMsg} />
+            <AuthInputAlert
+              alertMsg={
+                submitting && emailLength === 0
+                  ? "此欄為必填欄位"
+                  : emailAlertMsg
+              }
+            />
           </div>
         </div>
 
@@ -136,7 +159,13 @@ function RegisterPage() {
             onChange={setPassword}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={passwordAlertMsg} />
+            <AuthInputAlert
+              alertMsg={
+                submitting && passwordLength === 0
+                  ? "此欄為必填欄位"
+                  : passwordAlertMsg
+              }
+            />
           </div>
         </div>
 
@@ -149,12 +178,18 @@ function RegisterPage() {
             onChange={setPasswordCheck}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={passwordCheckAlertMsg} />
+            <AuthInputAlert
+              alertMsg={
+                submitting && passwordCheckLength === 0
+                  ? "此欄為必填欄位"
+                  : passwordCheckAlertMsg
+              }
+            />
           </div>
         </div>
       </div>
       {/* Register Button */}
-      <div className={styles["auth-button"]}>
+      <div className={styles["auth-button"]} onClick={handleClick}>
         <Button styleName="lg-bg-logo">註冊</Button>
       </div>
       {/* Auth Link */}
