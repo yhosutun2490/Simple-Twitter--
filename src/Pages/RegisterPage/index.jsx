@@ -41,6 +41,13 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [passwordCheck, setPasswordCheck] = useState("");
 
+  // Alert message variant
+  let accountAlertMsg = "";
+  let nameAlertMsg = "";
+  let emailAlertMsg = "";
+  let passwordAlertMsg = "";
+  let passwordCheckAlertMsg = "";
+
   return (
     <div className={styles["container"]}>
       <div>
@@ -55,11 +62,14 @@ function RegisterPage() {
             type="text"
             value={account}
             placeholder="請輸入帳號"
-            onChange={(accountInputValue) => setAccount(accountInputValue)}
+            onChange={setAccount}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg="字數超出上限！" />
-            <AuthInputWordCount wordLength={10} wordLengthLimit={50} />
+            <AuthInputAlert alertMsg={accountAlertMsg} />
+            <AuthInputWordCount
+              wordLength={10}
+              wordLengthLimit={50}
+            />
           </div>
         </div>
 
@@ -69,11 +79,14 @@ function RegisterPage() {
             type="text"
             value={name}
             placeholder="請輸入使用者名稱"
-            onChange={(nameInputValue) => setName(nameInputValue)}
+            onChange={setName}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg="字數超出上限！" />
-            <AuthInputWordCount wordLength={10} wordLengthLimit={50} />
+            <AuthInputAlert alertMsg={nameAlertMsg} />
+            <AuthInputWordCount
+              wordLength={10}
+              wordLengthLimit={50}
+            />
           </div>
         </div>
 
@@ -83,10 +96,10 @@ function RegisterPage() {
             type="text"
             value={email}
             placeholder="請輸入Email"
-            onChange={(emailInputValue) => setEmail(emailInputValue)}
+            onChange={setEmail}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg="Email格式錯誤" />
+            <AuthInputAlert alertMsg={emailAlertMsg} />
           </div>
         </div>
 
@@ -96,10 +109,10 @@ function RegisterPage() {
             type="text"
             value={password}
             placeholder="請設定密碼"
-            onChange={(passwordInputValue) => setPassword(passwordInputValue)}
+            onChange={setPassword}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg="密碼長度不夠！" />
+            <AuthInputAlert alertMsg={passwordAlertMsg} />
           </div>
         </div>
 
@@ -109,12 +122,10 @@ function RegisterPage() {
             type="text"
             value={passwordCheck}
             placeholder="請再次輸入密碼"
-            onChange={(passwordCheckInputValue) =>
-              setPasswordCheck(passwordCheckInputValue)
-            }
+            onChange={setPasswordCheck}
           />
           <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg="密碼不正確" />
+            <AuthInputAlert alertMsg={passwordCheckAlertMsg} />
           </div>
         </div>
       </div>
