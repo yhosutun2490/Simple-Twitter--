@@ -2,6 +2,8 @@ import styles from "./App.module.scss";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LayoutCommon from "./Components/LayoutCommon";
 import HomePage from "./Components/HomePage";
+import RegisterPage from "./Pages/RegisterPage";
+
 function App() {
   return (
     <div className={styles["App"]}>
@@ -10,7 +12,7 @@ function App() {
           <Route path="/">
             <Route index></Route>
             <Route path="login"></Route>
-            <Route path="register"></Route>
+            <Route path="register" element={<RegisterPage />}></Route>
             <Route path="setting"></Route>
             <Route path="home" element={<LayoutCommon />}>
               <Route index element={<HomePage />}></Route>
