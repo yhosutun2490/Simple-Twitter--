@@ -39,7 +39,7 @@ function RegisterPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordCheck, setPasswordCheck] = useState("");
+  const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
 
   // Alert message variant
@@ -47,14 +47,14 @@ function RegisterPage() {
   let nameAlertMsg = "";
   let emailAlertMsg = "";
   let passwordAlertMsg = "";
-  let passwordCheckAlertMsg = "";
+  let checkPasswordAlertMsg = "";
 
   // Word length related constant
   const accountLength = account.trim().length;
   const nameLength = name.trim().length;
   const passwordLength = password.trim().length;
   const emailLength = email.trim().length;
-  const passwordCheckLength = passwordCheck.trim().length;
+  const checkPasswordLength = checkPassword.trim().length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
@@ -81,7 +81,7 @@ function RegisterPage() {
       return;
     }
 
-    if (passwordCheckLength === 0 || passwordCheck !== password) {
+    if (checkPasswordLength === 0 || checkPassword !== password) {
       return;
     }
     // If all input value is valid
@@ -116,8 +116,8 @@ function RegisterPage() {
   }
 
   //passwordCheck unmatched alert
-  if (submitting && passwordCheck > 0 && passwordCheck !== password) {
-    passwordCheckAlertMsg = "密碼不相符";
+  if (submitting && checkPassword > 0 && checkPassword !== password) {
+    checkPasswordAlertMsg = "密碼不相符";
   }
 
   return (
@@ -214,16 +214,16 @@ function RegisterPage() {
           <AuthInput
             label="密碼確認"
             type="password"
-            value={passwordCheck}
+            value={checkPassword}
             placeholder="請再次輸入密碼"
-            onChange={setPasswordCheck}
+            onChange={setCheckPassword}
           />
           <div className={styles["authinput-msg-box"]}>
             <AuthInputAlert
               alertMsg={
-                submitting && passwordCheckLength === 0
+                submitting && checkPasswordLength === 0
                   ? "此欄為必填欄位"
-                  : passwordCheckAlertMsg
+                  : checkPasswordAlertMsg
               }
             />
           </div>
