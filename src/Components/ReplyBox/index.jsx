@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 
 function ReplyBox(props) {
   // 這邊傳進來的是回覆的使用者
-  const { name, account, avatar, update, content, userID, replyTo, comment } =
-    props;
+  const { name, account, avatar, update, userID, replyTo, comment } = props;
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>

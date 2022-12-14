@@ -20,6 +20,7 @@ function TweetInfo(props) {
   const likeTimes = data?.liked ? data.liked : "";
   const date = update?.slice(0, 10);
   const time = update?.slice(11, 19);
+  const tweetID = data?.id;
   return (
     <div className={styles["container"]}>
       <div className={styles["tweet-user-info"]}>
@@ -47,7 +48,15 @@ function TweetInfo(props) {
       </div>
       <div className={styles["tweet-social-group"]}>
         <div className={styles["reply-icon"]}>
-          <ReplyIconButton large={true} />
+          <ReplyIconButton
+            large={true}
+            tweetID={tweetID}
+            Avatar={avatar}
+            content={content}
+            name={name}
+            account={account}
+            update={update}
+          />
         </div>
         <div className={styles["like-icon"]} onClick={handleLikeClick}>
           {isLiked ? (

@@ -3,9 +3,11 @@ import ReplyBox from "../ReplyBox";
 function ReplyList(props) {
   // 會用回覆者清單作渲染
   const { repliesData, mainTweetInfo } = props;
+  // 主要回覆清單資料
   const replyTweets = repliesData?.data;
+  // 回覆人
   const mainTweeterAccount = mainTweetInfo ? mainTweetInfo[0].user.account : "";
-  console.log(replyTweets);
+
   return (
     <div className={styles["container"]}>
       {replyTweets &&
@@ -19,44 +21,9 @@ function ReplyList(props) {
             content={data?.description}
             userID={data?.user?.id}
             comment={data?.comment}
+            replyTo={mainTweeterAccount}
           />
         ))}
-      {/* <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      />
-      <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      />
-      <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      />
-      <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      />
-      <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      />
-      <ReplyBox
-        userName={"Sean"}
-        account={"Sean888"}
-        update={3}
-        tweeterUser={"Apple"}
-      /> */}
     </div>
   );
 }
