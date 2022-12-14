@@ -64,6 +64,28 @@ function RegisterPage() {
 
   const handleClick = () => {
     setSubmitting(true);
+
+    if (accountLength === 0 || accountLength > accountLengthLimit) {
+      return;
+    }
+
+    if (nameLength === 0 || nameLength > nameLengthLimit) {
+      return;
+    }
+
+    if (emailLength === 0 || !emailRule.test(email)) {
+      return;
+    }
+
+    if (passwordLength === 0 || passwordLength < 4 || passwordLength > 12) {
+      return;
+    }
+
+    if (passwordCheckLength === 0 || passwordCheck !== password) {
+      return;
+    }
+    // If all input value is valid
+    alert("success");
   };
 
   // When user focus on the input clear the alert message
