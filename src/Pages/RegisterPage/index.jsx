@@ -1,43 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
+import {
+  AuthInput,
+  AuthInputAlert,
+  AuthInputWordCount,
+} from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
-
-function AuthInputAlert(prop) {
-  const { alertMsg } = prop;
-  return <div className={styles["authinput-alertmsg"]}>{alertMsg}</div>;
-}
-
-function AuthInputWordCount(props) {
-  const { wordLength, wordLengthLimit } = props;
-  return (
-    <div>
-      {wordLength}/{wordLengthLimit}
-    </div>
-  );
-}
-
-function AuthInput(props) {
-  const { label, type, value, placeholder, onChange, isAlert } = props;
-  return (
-    <div
-      className={[
-        `${styles["authinput-box"]}`,
-        isAlert ? `${styles["error"]}` : ``,
-      ].join(" ")}
-    >
-      <label className={styles["authinput-label"]}>{label}</label>
-      <input
-        className={styles["authinput"]}
-        type={type || "text"}
-        value={value || ""}
-        placeholder={placeholder || ""}
-        onChange={(e) => onChange?.(e.target.value)}
-      />
-    </div>
-  );
-}
 
 function RegisterPage() {
   // State Variable

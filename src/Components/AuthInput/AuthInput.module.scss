@@ -1,0 +1,44 @@
+.authinput-box {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 54px;
+  background-color: #f5f8fa;
+  border-bottom: 2px solid var(--color-dark-black);
+  border-radius: 2px;
+  &:hover {
+    border-bottom: 2px solid var(--color-skyblue);
+  }
+}
+
+.error {
+  border-bottom: 2px solid var(--color-error);
+}
+
+.authinput-label {
+  color: var(--color-input-title-grey);
+  font-size: var(--sub-text-size);
+  line-height: 22px;
+  margin-top: 2px;
+  margin-left: 10.55px;
+}
+
+.authinput {
+  outline: none;
+  border: none;
+  background-color: #f5f8fa;
+  border-radius: 0px;
+  font-family: "Noto Sans TC", sans-serif;
+  font-size: var(--main-text-size);
+  line-height: 26px;
+  margin-left: 10.55px;
+}
+
+.authinput::placeholder {
+  color: var(--color-input-disable-grey);
+  font-weight: 400;
+}
+
+.authinput-alertmsg {
+  color: var(--color-error);
+}
