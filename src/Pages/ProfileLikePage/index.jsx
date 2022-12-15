@@ -1,9 +1,11 @@
 import styles from "./ProfileLikePage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
+import { useLocation } from "react-router-dom";
 function ProfileLikePage() {
-  // 預設使用者id
-  const userID = 1;
+  const { pathname } = useLocation();
+  const viewID = pathname.slice(6,7);
+
   //另一支API 使用者個人資料
   const user = {
     id: 1,
@@ -59,7 +61,7 @@ function ProfileLikePage() {
 
   return (
     <div className={styles["container"]}>
-      <ProfileUserNavBar userID={userID} />
+      <ProfileUserNavBar userID={viewID} />
       <div>
         <UserTweetList tweetList={likedata.data} />
       </div>

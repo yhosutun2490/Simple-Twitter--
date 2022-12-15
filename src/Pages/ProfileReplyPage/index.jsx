@@ -1,8 +1,10 @@
 import styles from "./ProfileReplyPage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import ReplyList from "../../Components/ReplyList";
+import { useLocation } from "react-router-dom";
 function ProfileReplyPage() {
-  const userID = 1;
+   const { pathname } = useLocation();
+   const viewID = pathname.slice(6, 7);
   //  API文件某位使用者假資料
   const user = {
     id: 1,
@@ -68,7 +70,7 @@ function ProfileReplyPage() {
   ];
   return (
     <div className={styles["container"]}>
-      <ProfileUserNavBar userID={userID} />
+      <ProfileUserNavBar userID={viewID} />
       <div>
         <ReplyList selfReplies={repliesData} selfAccount={user} />
       </div>
