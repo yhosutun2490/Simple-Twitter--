@@ -17,23 +17,6 @@
   width: 25.4%;
 }
 
-.authinput-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin-bottom: 8px;
-}
-
-.authinput-msg-box {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  height: 20px;
-  font-size: var(--small-text-size);
-  font-weight: 500;
-  margin-top: 4px;
-}
-
 .auth-button {
   margin-top: 24px;
   width: 25.4%;
