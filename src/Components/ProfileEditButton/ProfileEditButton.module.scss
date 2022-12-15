@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  justify-content: end;
+  font-family: "Noto Sans TC";
+  padding: 16px;
+  padding-right: 16px;
+}
+.edit-btn {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--logo-color);
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: 1px solid var(--logo-color);
+  background: transparent;
+  cursor: pointer;
+}
+.other-btn {
+  display: flex;
+  align-items: center;
+  .bell-avatar,.message-avatar {
+    margin-right: 16px;
+  }
+}

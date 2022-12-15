@@ -15,7 +15,6 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/">
-              <Route index></Route>
               <Route path="login" element={<LoginPage />}></Route>
               <Route path="register" element={<RegisterPage />}></Route>
               <Route path="setting"></Route>
