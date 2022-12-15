@@ -1,0 +1,112 @@
+.popup-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+
+.popup-main-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left: 50%;
+  top: 56px;
+  transform: translate(-50%, 0);
+  width: 45.28%;
+  /*根據內容自動撐高*/
+  height: auto;
+  max-width: 640px;
+  background-color: #fff;
+  border-radius: 14px;
+  z-index: 6;
+  font-family: "Noto Sans TC";
+  animation: MoveIn 0.5s 1 forwards;
+}
+// popup滑入動畫
+@keyframes MoveIn {
+  0% {
+    transform: translate(-50%, -100px);
+  }
+
+  100% {
+    transform: translate(-50%, 0px);
+  }
+
+}
+
+.popup-head {
+  padding: 15px;
+  display: flex;
+  justify-content: start;
+  border-bottom: 1px solid #E6ECF0;
+
+  .btn-close {
+    text-align: start;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border-radius: 100px;
+
+    &:hover {
+      background-color: rgb(198, 216, 233);
+    }
+  }
+}
+
+/* 使用者推文輸入框樣式 */
+.popup-body {
+  position: relative;
+  display: flex;
+  margin-top: 16px;
+  padding: 0 24px;
+  // height: 192px;
+  display: flex;
+  .user-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  .input-body {
+    margin-left: 8px;
+    width: 100%;
+    /* 最小輸入高度*/
+    min-height: 100px;
+    .input-textarea {
+      /* textarea撐滿剩餘空間*/
+      width: 100%;
+      resize: none;
+      border: none;
+      outline: none;
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 400;
+      color: var(--color-secondary);
+      /*textarea scrollbar關掉*/
+      &::-webkit-scrollbar {
+          display: none;
+        }
+    }
+  }
+
+
+}
+
+.popup-footer {
+  padding: 0 16px;
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  .error-message {
+    margin-right: 20px;
+    color: var(--color-error);
+    font-size: 15px;
+    line-height: 15px;
+    font-weight: 500;
+  }
+}

@@ -3,36 +3,29 @@
   font-family: sans-serif;
   padding: 18px 24px;
   border-bottom: 1px solid #E6ECF0;
+  font-family: "Noto Sans TC";
 }
 .user-avatar {
-  width: 50px;
-  height: 50px;
-  path {
-    fill: var(--color-light-grey);
+  .avatar-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 100px;
   }
-
 }
-
-.user-info {
-  display: flex;
-  align-items: center;
+.tweet-user-info {
   margin-left: 8px;
-  &__name {
-    font-size: 16px;
-    line-height: 26px;
-    font-weight: 700;
-    margin-right: 8px;
-  }
-  &__account, &__dot, &__update{
-    color: var(--color-secondary);
-    margin-right: 4px;
-  }
 }
 .tweet-content {
   margin-left: 8px;
-  font-size: 16px;
-  line-height: 26px;
-  font-weight: 400;
+  margin-bottom: 9px;
+  cursor: pointer;
+  .tweet-content-link {
+    text-decoration: none;
+    color: var(--color-dark-black);
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+  }
 }
 .tweet-social-list{
   display: flex;
@@ -43,15 +36,13 @@
     font-size: 14px;
     font-weight: 600;
     color: var(--color-secondary);
+    font-family: "Montserrat";
     &:not(:last-child){
       margin-right: 41.3px;
     }
   }
-  .reply-link,.like-link {
+  .reply-link,.like-btn {
     margin-right: 9.44px;
-  }
-  .like-link.like-full path{
-    fill: red;
   }
 }
 

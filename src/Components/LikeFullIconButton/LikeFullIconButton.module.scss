@@ -1,0 +1,22 @@
+.large {
+  /* 傳入large 參數時圖示變大*/
+  width: 30px;
+  height: 30px;
+}
+
+/* 試作點擊加入like 出現+1 (還未完成)*/
+.container {
+  position: relative;
+  cursor: pointer;
+  animation: love-appear 0.5s forwards;
+}
+
+@keyframes love-appear {
+  0%{ 
+    transform: scale(1.2,1.2);
+}
+
+  100% {
+    transform: scale(1.0, 1.0);
+    }
+}
