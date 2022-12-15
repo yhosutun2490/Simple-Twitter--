@@ -1,0 +1,41 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 69px;
+  font-family: "Noto Sans TC", sans-serif;
+}
+
+.title {
+  font-weight: 700;
+  margin-top: 29px;
+}
+
+.authinput-group {
+  margin-top: 40px;
+  width: 25.4%;
+}
+
+.auth-button {
+  margin-top: 24px;
+  width: 25.4%;
+}
+
+.auth-link-box {
+  display: flex;
+  margin-top: 22px;
+  width: 25.4%;
+  justify-content: end;
+}
+
+.auth-link {
+  text-decoration-color: var(--color-primary);
+}
+
+.auth-link-text {
+  color: var(--color-primary);
+  line-height: 24px;
+  margin-right: 12px;
+  margin-left: 12px;
+}
