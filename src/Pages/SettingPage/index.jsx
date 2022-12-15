@@ -1,4 +1,5 @@
 import { useState } from "react";
+import UserSideBar from "../../Components/UserSideBar";
 import AuthInput from "../../Components/AuthInput";
 import Button from "../../Components/Button";
 import styles from "./SettingPage.module.scss";
@@ -113,71 +114,78 @@ function SettingPage() {
 
   return (
     <div className={styles["container"]}>
-      <h3 className={styles["title"]}>帳號設定</h3>
-      {/* AuthInput group */}
-      <div className={styles["authinput-group"]} onFocus={handleFocus}>
-        <AuthInput
-          label="帳號"
-          type="text"
-          value={account}
-          placeholder="請輸入帳號"
-          onChange={setAccount}
-          isAlert={accountAlertMsg.length > 0 ? true : false}
-          alertMsg={accountAlertMsg}
-          isWordCount={true}
-          wordLength={accountLength}
-          wordLengthLimit={accountLengthLimit}
-        />
-
-        <AuthInput
-          label="名稱"
-          type="text"
-          value={name}
-          placeholder="請輸入使用者名稱"
-          onChange={setName}
-          isAlert={nameAlertMsg.length > 0 ? true : false}
-          alertMsg={nameAlertMsg}
-          isWordCount={true}
-          wordLength={nameLength}
-          wordLengthLimit={nameLengthLimit}
-        />
-
-        <AuthInput
-          label="Email"
-          type="text"
-          value={email}
-          placeholder="請輸入Email"
-          onChange={setEmail}
-          isAlert={emailAlertMsg.length > 0 ? true : false}
-          alertMsg={emailAlertMsg}
-          isWordCount={false}
-        />
-
-        <AuthInput
-          label="密碼（需介於4到～12字元）"
-          type="password"
-          value={password}
-          placeholder="請設定密碼"
-          onChange={setPassword}
-          isAlert={passwordAlertMsg.length > 0 ? true : false}
-          alertMsg={passwordAlertMsg}
-          isWordCount={false}
-        />
-
-        <AuthInput
-          label="密碼再確認"
-          type="password"
-          value={checkPassword}
-          placeholder="請再次輸入密碼"
-          onChange={setCheckPassword}
-          isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
-          alertMsg={checkPasswordAlertMsg}
-          isWordCount={false}
-        />
+      <div className={styles["column-1"]}>
+        <UserSideBar />
       </div>
-      {/* Save Button */}
-      <div className={styles["save-button"]} onClick={handleClick}>
-        <Button styleName="bg-logo">儲存</Button>
+      <div className={styles["column-2"]}>
+        <h3 className={styles["title"]}>帳號設定</h3>
+        {/* AuthInput group */}
+        <div className={styles["authinput-group"]} onFocus={handleFocus}>
+          <AuthInput
+            label="帳號"
+            type="text"
+            value={account}
+            placeholder="請輸入帳號"
+            onChange={setAccount}
+            isAlert={accountAlertMsg.length > 0 ? true : false}
+            alertMsg={accountAlertMsg}
+            isWordCount={true}
+            wordLength={accountLength}
+            wordLengthLimit={accountLengthLimit}
+          />
+
+          <AuthInput
+            label="名稱"
+            type="text"
+            value={name}
+            placeholder="請輸入使用者名稱"
+            onChange={setName}
+            isAlert={nameAlertMsg.length > 0 ? true : false}
+            alertMsg={nameAlertMsg}
+            isWordCount={true}
+            wordLength={nameLength}
+            wordLengthLimit={nameLengthLimit}
+          />
+
+          <AuthInput
+            label="Email"
+            type="text"
+            value={email}
+            placeholder="請輸入Email"
+            onChange={setEmail}
+            isAlert={emailAlertMsg.length > 0 ? true : false}
+            alertMsg={emailAlertMsg}
+            isWordCount={false}
+          />
+
+          <AuthInput
+            label="密碼（需介於4到～12字元）"
+            type="password"
+            value={password}
+            placeholder="請設定密碼"
+            onChange={setPassword}
+            isAlert={passwordAlertMsg.length > 0 ? true : false}
+            alertMsg={passwordAlertMsg}
+            isWordCount={false}
+          />
+
+          <AuthInput
+            label="密碼再確認"
+            type="password"
+            value={checkPassword}
+            placeholder="請再次輸入密碼"
+            onChange={setCheckPassword}
+            isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
+            alertMsg={checkPasswordAlertMsg}
+            isWordCount={false}
+          />
+        </div>
+        {/* Save Button */}
+        <div className={styles["save-button"]} onClick={handleClick}>
+          <Button styleName="bg-logo">儲存</Button>
+        </div>
+      </div>
+      <div className={styles["column-3"]}>
       </div>
     </div>
   );
