@@ -104,7 +104,7 @@ function RegisterPage() {
   }
 
   //wrong email format alert
-  if (submitting && email.length > 0 && !emailRule.test(email)) {
+  if (submitting && emailLength > 0 && !emailRule.test(email)) {
     emailAlertMsg = "Email格式錯誤";
   }
 
