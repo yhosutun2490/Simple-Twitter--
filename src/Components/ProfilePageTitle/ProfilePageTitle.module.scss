@@ -1,0 +1,26 @@
+.container {
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  font-family: "Noto Sans TC";
+}
+
+.profile-title {
+  margin-left: 16px;
+  display: flex;
+ justify-content: center;
+  flex-direction: column;
+  .user-name {
+    font-size: 18px;
+    line-height: 26px;
+    font-weight: 700;
+    color: var(--color-dark-black);
+
+  }
+  .tweet-count {
+    font-size: 13px;
+    line-height: 18.82px;
+    font-weight: 500;
+    color: var(--color-secondary)
+  }
+}

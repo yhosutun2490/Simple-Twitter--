@@ -6,6 +6,7 @@ import HomePage from "./Pages/HomePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import TweetPage from "./Pages/TweetPage";
+import ProfilePage from "./Pages/ProfilePage";
 
 function App() {
   return (
@@ -24,8 +25,8 @@ function App() {
               <Route path="tweet/:id" element={<LayoutCommon />}>
                 <Route index element={<TweetPage />}></Route>
               </Route>
-              <Route path="/user/:username">
-                <Route index></Route>
+              <Route path="/user/:username" element={<LayoutCommon />}>
+                <Route index element={<ProfilePage />}></Route>
                 <Route path="reply"></Route>
                 <Route path="likes"></Route>
                 <Route path="follower"></Route>
