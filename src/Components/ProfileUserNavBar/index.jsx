@@ -3,7 +3,8 @@ import ProfileInfo from "../ProfileInfo";
 import ProfilePageTitle from "../ProfilePageTitle";
 import ProfileNavLink from "../ProfileNavLink";
 import fakeBackgroundImg from "../../assets/icons/background.svg";
-function ProfileUserNavBar() {
+function ProfileUserNavBar(props) {
+  const { userID } = props;
   return (
     <div className={styles["container"]}>
       <ProfilePageTitle name={"Natsu"} tweetCount={25} />
@@ -29,7 +30,7 @@ function ProfileUserNavBar() {
         />
       </div>
       <div className={styles["profile-nav-link"]}>
-        <ProfileNavLink />
+        <ProfileNavLink userID={userID} />
       </div>
     </div>
   );

@@ -7,6 +7,8 @@ import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import TweetPage from "./Pages/TweetPage";
 import ProfilePage from "./Pages/ProfilePage";
+import ProfileReplyPage from "./Pages/ProfileReplyPage";
+import ProfileLikePage from "./Pages/ProfileLikePage";
 
 function App() {
   return (
@@ -26,8 +28,8 @@ function App() {
               </Route>
               <Route path="/user/:username" element={<LayoutCommon />}>
                 <Route index element={<ProfilePage />}></Route>
-                <Route path="reply"></Route>
-                <Route path="likes"></Route>
+                <Route path="reply" element={<ProfileReplyPage />}></Route>
+                <Route path="likes" element={<ProfileLikePage />}></Route>
                 <Route path="follower"></Route>
                 <Route path="following"></Route>
               </Route>

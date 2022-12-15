@@ -1,6 +1,5 @@
 import styles from "./ReplyBox.module.scss";
 import UserInfo from "../UserTweetBox/UserInfo";
-import { ReactComponent as Avatar } from "../../assets/icons/AcLogo.svg";
 import { Link } from "react-router-dom";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 
@@ -11,7 +10,7 @@ function ReplyBox(props) {
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
-        <Link to={`/user/${account}`}>
+        <Link to={`/user/${userID}`}>
           <img src={avatar} alt="avatar-img" className={styles["avatar-img"]} />
         </Link>
       </div>
