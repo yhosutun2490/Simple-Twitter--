@@ -1,11 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
-import {
-  AuthInput,
-  AuthInputAlert,
-  AuthInputWordCount,
-} from "../../Components/AuthInput/index";
+import AuthInput from "../../Components/AuthInput";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
 
@@ -125,83 +121,64 @@ function RegisterPage() {
       <h3 className={styles["title"]}>建立你的帳號</h3>
       {/* AuthInput group */}
       <div className={styles["authinput-group"]} onFocus={handleFocus}>
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="帳號"
-            type="text"
-            value={account}
-            placeholder="請輸入帳號"
-            onChange={setAccount}
-            isAlert={accountAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={accountAlertMsg} />
-            <AuthInputWordCount
-              wordLength={accountLength}
-              wordLengthLimit={accountLengthLimit}
-            />
-          </div>
-        </div>
+        <AuthInput
+          label="帳號"
+          type="text"
+          value={account}
+          placeholder="請輸入帳號"
+          onChange={setAccount}
+          isAlert={accountAlertMsg.length > 0 ? true : false}
+          alertMsg={accountAlertMsg}
+          isWordCount={true}
+          wordLength={accountLength}
+          wordLengthLimit={accountLengthLimit}
+        />
 
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="名稱"
-            type="text"
-            value={name}
-            placeholder="請輸入使用者名稱"
-            onChange={setName}
-            isAlert={nameAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={nameAlertMsg} />
-            <AuthInputWordCount
-              wordLength={nameLength}
-              wordLengthLimit={nameLengthLimit}
-            />
-          </div>
-        </div>
+        <AuthInput
+          label="名稱"
+          type="text"
+          value={name}
+          placeholder="請輸入使用者名稱"
+          onChange={setName}
+          isAlert={nameAlertMsg.length > 0 ? true : false}
+          alertMsg={nameAlertMsg}
+          isWordCount={true}
+          wordLength={nameLength}
+          wordLengthLimit={nameLengthLimit}
+        />
 
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="Email"
-            type="text"
-            value={email}
-            placeholder="請輸入Email"
-            onChange={setEmail}
-            isAlert={emailAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={emailAlertMsg} />
-          </div>
-        </div>
+        <AuthInput
+          label="Email"
+          type="text"
+          value={email}
+          placeholder="請輸入Email"
+          onChange={setEmail}
+          isAlert={emailAlertMsg.length > 0 ? true : false}
+          alertMsg={emailAlertMsg}
+          isWordCount={false}
+        />
 
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="密碼（需介於4到～12字元）"
-            type="password"
-            value={password}
-            placeholder="請設定密碼"
-            onChange={setPassword}
-            isAlert={passwordAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={passwordAlertMsg} />
-          </div>
-        </div>
+        <AuthInput
+          label="密碼（需介於4到～12字元）"
+          type="password"
+          value={password}
+          placeholder="請設定密碼"
+          onChange={setPassword}
+          isAlert={passwordAlertMsg.length > 0 ? true : false}
+          alertMsg={passwordAlertMsg}
+          isWordCount={false}
+        />
 
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="密碼確認"
-            type="password"
-            value={checkPassword}
-            placeholder="請再次輸入密碼"
-            onChange={setCheckPassword}
-            isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={checkPasswordAlertMsg} />
-          </div>
-        </div>
+        <AuthInput
+          label="密碼確認"
+          type="password"
+          value={checkPassword}
+          placeholder="請再次輸入密碼"
+          onChange={setCheckPassword}
+          isAlert={checkPasswordAlertMsg.length > 0 ? true : false}
+          alertMsg={checkPasswordAlertMsg}
+          isWordCount={false}
+        />
       </div>
       {/* Register Button */}
       <div className={styles["auth-button"]} onClick={handleClick}>
