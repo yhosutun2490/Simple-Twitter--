@@ -41,23 +41,23 @@ function RegisterPage() {
   const handleClick = () => {
     setSubmitting(true);
 
-    if (accountLength === 0 || accountLength > accountLengthLimit) {
+    if (accountLength === 0 || accountAlertMsg.length > 0) {
       return;
     }
 
-    if (nameLength === 0 || nameLength > nameLengthLimit) {
+    if (nameLength === 0 || nameAlertMsg.length > 0) {
       return;
     }
 
-    if (emailLength === 0 || !emailRule.test(email)) {
+    if (emailLength === 0 || emailAlertMsg.length > 0) {
       return;
     }
 
-    if (passwordLength === 0 || passwordLength < 4 || passwordLength > 12) {
+    if (passwordLength === 0 || passwordAlertMsg.length > 0) {
       return;
     }
 
-    if (checkPasswordLength === 0 || checkPassword !== password) {
+    if (checkPasswordLength === 0 || checkPasswordAlertMsg.length > 0) {
       return;
     }
     // If all input value is valid
