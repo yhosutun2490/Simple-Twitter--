@@ -80,14 +80,6 @@ function SettingPage() {
     emailAlertMsg = "此欄為必填欄位";
   }
 
-  if (submitting && passwordLength === 0) {
-    passwordAlertMsg = "此欄為必填欄位";
-  }
-
-  if (submitting && checkPasswordLength === 0) {
-    checkPasswordAlertMsg = "此欄為必填欄位";
-  }
-
   //space including check
   if (isSpaceCheck.test(account)) {
     accountAlertMsg = "不可有空白";
