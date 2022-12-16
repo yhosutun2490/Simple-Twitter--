@@ -11,12 +11,21 @@ function AdminTweetBox(props) {
 
   return (
     <div className={styles["tweet-box-container"]}>
-      <div>
+      <div className={styles["avatar-img-container"]}>
         <img src={avatar} className={styles["avatar-img"]} alt="user-avatar" />
       </div>
-      <UserInfo account={tweeterAccount} userName={tweeterName} update={date} />
-      <div>{content}</div>
-      <div><AdminDeleteIcon /></div>
+      <div className={styles["tweet-detail"]}>
+        <UserInfo
+          account={tweeterAccount}
+          userName={tweeterName}
+          update={date}
+        />
+        <div className={styles["tweet-content"]}>{content}</div>
+      </div>
+
+      <div className={styles["admin-delete-icon"]}>
+        <AdminDeleteIcon />
+      </div>
     </div>
   );
 }
