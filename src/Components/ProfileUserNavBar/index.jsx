@@ -4,7 +4,7 @@ import ProfilePageTitle from "../ProfilePageTitle";
 import ProfileNavLink from "../ProfileNavLink";
 import fakeBackgroundImg from "../../assets/icons/background.svg";
 function ProfileUserNavBar(props) {
-  const { userID } = props;
+  const { currentUserID, viewID } = props;
   return (
     <div className={styles["container"]}>
       <ProfilePageTitle name={"Natsu"} tweetCount={25} />
@@ -25,12 +25,12 @@ function ProfileUserNavBar(props) {
           Avatar={"https://picsum.photos/50/50"}
           followingCount={25}
           followerCount={30}
-          userID={1}
-          currentUserID={1}
+          viewID={viewID}
+          currentUserID={currentUserID}
         />
       </div>
       <div className={styles["profile-nav-link"]}>
-        <ProfileNavLink userID={userID} />
+        <ProfileNavLink viewID={viewID} />
       </div>
     </div>
   );

@@ -3,8 +3,11 @@ import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import ReplyList from "../../Components/ReplyList";
 import { useLocation } from "react-router-dom";
 function ProfileReplyPage() {
-   const { pathname } = useLocation();
-   const viewID = pathname.slice(6, 7);
+  // 目前使用者ID
+  const currentUserID = 1;
+  // 現在瀏覽使用者的ID
+  const { pathname } = useLocation();
+  const viewID = pathname.slice(6, 7);
   //  API文件某位使用者假資料
   const user = {
     id: 1,
@@ -70,7 +73,7 @@ function ProfileReplyPage() {
   ];
   return (
     <div className={styles["container"]}>
-      <ProfileUserNavBar userID={viewID} />
+      <ProfileUserNavBar viewID={viewID} currentUserID={currentUserID} />
       <div>
         <ReplyList selfReplies={repliesData} selfAccount={user} />
       </div>

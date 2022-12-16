@@ -9,7 +9,7 @@ function ProfileInfo(props) {
     content,
     followingCount,
     followerCount,
-    userID,
+    viewID,
     currentUserID,
   } = props;
   return (
@@ -18,7 +18,7 @@ function ProfileInfo(props) {
         <img src={Avatar} alt="user-avatar" className={styles["avatar-img"]} />
       </div>
       <div className={styles["user-detail"]}>
-        <ProfileEditButton currentUserID={currentUserID} userID={userID} />
+        <ProfileEditButton currentUserID={currentUserID} viewID={viewID} />
         <div className={styles["user-info"]}>
           <p className={styles["user-name"]}>{name}</p>
           <p className={styles["user-account"]}>@{account}</p>
@@ -27,7 +27,7 @@ function ProfileInfo(props) {
         <div className={styles["user-track-info"]}>
           <div className={styles["user-following"]}>
             <Link
-              to={`/user/${userID}/following`}
+              to={`/user/${viewID}/following`}
               className={styles["number-link"]}
             >
               {followingCount}
@@ -36,7 +36,7 @@ function ProfileInfo(props) {
           </div>
           <div className={styles["user-follower"]}>
             <Link
-              to={`/user/${userID}/follower`}
+              to={`/user/${viewID}/follower`}
               className={styles["number-link"]}
             >
               {followerCount}

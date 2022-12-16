@@ -3,8 +3,11 @@ import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
 import { useLocation } from "react-router-dom";
 function ProfileLikePage() {
+  // 目前使用者ID
+  const currentUserID = 1;
+  // 現在瀏覽者的ID
   const { pathname } = useLocation();
-  const viewID = pathname.slice(6,7);
+  const viewID = pathname.slice(6, 7);
 
   //另一支API 使用者個人資料
   const user = {
@@ -61,7 +64,7 @@ function ProfileLikePage() {
 
   return (
     <div className={styles["container"]}>
-      <ProfileUserNavBar userID={viewID} />
+      <ProfileUserNavBar viewID={viewID} currentUserID={currentUserID} />
       <div>
         <UserTweetList tweetList={likedata.data} />
       </div>

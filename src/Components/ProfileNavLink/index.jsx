@@ -1,14 +1,13 @@
 import styles from "./ProfileNavLink.module.scss";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 function ProfileNavLink(props) {
-  // 要用context provider傳入現在瀏覽者id
-  const { userID } = props;
-  const { pathname } = useLocation();
+  // 傳入現在瀏覽者id(viewID)
+  const { viewID } = props;
   return (
     <div className={styles["container"]}>
       <NavLink
-        to={`/user/${userID}`}
+        to={`/user/${viewID}`}
         className={({ isActive }) =>
           [
             `${styles["profile-nav-link"]}`,
@@ -20,7 +19,7 @@ function ProfileNavLink(props) {
         推文
       </NavLink>
       <NavLink
-        to={`/user/${userID}/reply`}
+        to={`/user/${viewID}/reply`}
         className={({ isActive }) =>
           [
             `${styles["profile-nav-link"]}`,
@@ -32,7 +31,7 @@ function ProfileNavLink(props) {
         回覆
       </NavLink>
       <NavLink
-        to={`/user/${userID}/likes`}
+        to={`/user/${viewID}/likes`}
         className={({ isActive }) =>
           [
             `${styles["profile-nav-link"]}`,

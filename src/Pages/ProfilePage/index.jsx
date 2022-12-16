@@ -4,9 +4,10 @@ import UserTweetList from "../../Components/UserTweetList";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-
-function ProfilePage(props) {
-  // 目前頁面userID
+function ProfilePage() {
+  // 目前使用者ID
+  const currentUserID = 1;
+  // 目前頁面瀏覽者ID
   const { pathname } = useLocation();
   const viewID = pathname.slice(6);
 
@@ -42,7 +43,7 @@ function ProfilePage(props) {
 
   return (
     <div className={styles["container"]}>
-      <ProfileUserNavBar userID={viewID} />
+      <ProfileUserNavBar viewID={viewID} currentUserID={currentUserID} />
       <div>
         <UserTweetList tweetList={tweetList} />
       </div>
