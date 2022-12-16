@@ -21,10 +21,10 @@ function SettingPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account.trim().length;
+  const accountLength = account.length;
   const nameLength = name.trim().length;
-  const passwordLength = password.trim().length;
-  const emailLength = email.trim().length;
+  const passwordLength = password.length;
+  const emailLength = email.length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
