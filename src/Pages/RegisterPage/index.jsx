@@ -117,12 +117,12 @@ function RegisterPage() {
   }
 
   //wrong email format alert
-  if (submitting && emailLength > 0 && !emailRule.test(email)) {
+  if (emailLength > 0 && !emailRule.test(email)) {
     emailAlertMsg = "Email格式錯誤";
   }
 
   //passwordCheck unmatched alert
-  if (submitting && checkPassword > 0 && checkPassword !== password) {
+  if (checkPassword > 0 && checkPassword !== password) {
     checkPasswordAlertMsg = "密碼不相符";
   }
 
