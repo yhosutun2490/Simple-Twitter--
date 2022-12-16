@@ -25,7 +25,6 @@ function SettingPage() {
   const nameLength = name.trim().length;
   const passwordLength = password.trim().length;
   const emailLength = email.trim().length;
-  const checkPasswordLength = checkPassword.trim().length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
