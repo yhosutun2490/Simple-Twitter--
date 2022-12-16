@@ -1,14 +1,17 @@
 import styles from "./ProfileEditModal.module.scss";
 import { useState } from "react";
-import backgroundUrl from "../../assets/icons/background.svg";
+import initialBackground from "../../assets/icons/background.svg";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
+import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
-  const { trigger, closeEvent } = props;
+  // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
+  const { trigger, closeEvent, userIntro, userName, userAvatr, userBgAatar } =
+    props;
   // 上傳資料儲存狀態
-  const [background, setBackground] = useState("");
+  const [background, setBackgroundUrl] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");
   const [name, setName] = useState("");
   const [introduction, setIntroduction] = useState("");
@@ -17,8 +20,8 @@ function ProfileEditModal(props) {
   // 字數錯誤參數
   const nameError = name.trim().length > 50 ? "error" : "";
   const introducitonError = introduction.trim().length > 160 ? "error" : "";
-  // handleFileChange 取出上傳圖片物件
-  function hadleBgFileChange(e) {
+  // handlBgeFileChange 取出上傳圖片物件
+  function handleBgFileChange(e) {
     const { files } = e.target;
     if (files.length === 0) {
       // 使用者沒有選擇上傳的檔案
@@ -26,10 +29,10 @@ function ProfileEditModal(props) {
     }
     // 否則產生預覽圖
     const imageURL = window.URL.createObjectURL(files[0]);
-    setBackground(imageURL);
+    setBackgroundUrl(imageURL);
     setPhotoData({ ...photoData, bgImage: files[0] });
   }
-  function hadleAvatarFileChange(e) {
+  function handleAvatarFileChange(e) {
     const { files } = e.target;
     if (files.length === 0) {
       // 使用者沒有選擇上傳的檔案
@@ -40,39 +43,76 @@ function ProfileEditModal(props) {
     setAvatarUrl(imageURL);
     setPhotoData({ ...photoData, avatar: files[0] });
   }
-  // 表單資料提交
+  // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白不送出
   function handleSubmit() {
-    console.log(photoData);
-    console.log(name);
-    console.log(introduction);
+    // 如果內容是空白，傳回預設資料
+
+    // 超過字數上限表單不作事、跳出錯誤
+    if (nameError === "error" || introducitonError === "error") {
+      Swal.fire({
+        position: "top",
+        title: "輸入字數超過上限！",
+        timer: 1000,
+        icon: "info",
+        showConfirmButton: false,
+      });
+      return;
+    }
     const api = async () => {
-      await setTimeout(() => {
-        alert("Delayed for 2 second.");
-      }, 2000);
+      try {
+        // 修改成功訊息
+        await Swal.fire({
+          position: "top",
+          title: "修改成功！",
+          timer: 2000,
+          icon: "success",
+          showConfirmButton: false,
+        });
+        setIsSubmitting(false);
+        closeEditModal(); //api回傳成功關閉彈窗
+      } catch (error) {
+        console.error("[API failed]: ", error);
+        await Swal.fire({
+          position: "top",
+          title: "修改失敗！(伺服器連線問題)",
+          timer: 1000,
+          icon: "error",
+          showConfirmButton: false,
+        });
+      }
     };
-    setIsSubmitting(true);
     api();
+  }
+  // 關掉視窗時自己的所有狀態要歸零(因為元件在同一位置)
+  function closeEditModal() {
+    setAvatarUrl("");
+    setBackgroundUrl("");
+    setName("");
+    setIntroduction("");
+    setPhotoData("");
+    closeEvent(false);
+  }
+  // 處理onFocus 使用者再次輸入時解除按鈕disabled
+  function handleOnFocus() {
     setIsSubmitting(false);
   }
+  /////////////////////元件JSX
   // 如果trigger是 True 打開元件
   return trigger ? (
     <>
       <div
         className={styles["popup-backdrop"]}
         onClick={() => {
+          closeEditModal();
           closeEvent(false);
-          setName("");
-          setIntroduction("");
         }}
       ></div>
       <div className={styles["popup-main-window"]}>
         <div className={styles["popup-head"]}>
           <CrossOrange
-            className={styles["btn-cancel"]}
+            className={styles["btn-cross-orange"]}
             onClick={() => {
-              closeEvent(false);
-              setName("");
-              setIntroduction("");
+              closeEditModal();
             }}
           />
           <p className={styles["popup-title"]}>編輯個人資料</p>
@@ -80,15 +120,15 @@ function ProfileEditModal(props) {
             className={styles["btn-save"]}
             type="submit"
             onClick={handleSubmit}
-            disabled={true}
+            // disabled={isSubmitting ? true : false}
           >
             儲存
           </button>
         </div>
-        <div className={styles["popup-body"]}>
+        <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : backgroundUrl}
+              src={background ? background : initialBackground}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -96,14 +136,14 @@ function ProfileEditModal(props) {
               <Camera />
             </label>
             <label className={styles["user-bg-label-cross"]}>
-              <Cross onClick={() => setBackground("")} />
+              <Cross onClick={() => setBackgroundUrl("")} />
             </label>
             <input
               type="file"
               className={styles["user-bg-input"]}
               id="user-bg"
               onChange={(e) => {
-                hadleBgFileChange(e);
+                handleBgFileChange(e);
               }}
             />
           </div>
@@ -126,7 +166,7 @@ function ProfileEditModal(props) {
               className={styles["user-avatar-input"]}
               id="user-avatar"
               onChange={(e) => {
-                hadleAvatarFileChange(e);
+                handleAvatarFileChange(e);
               }}
             />
           </div>
@@ -145,7 +185,7 @@ function ProfileEditModal(props) {
             </div>
             <div className={styles["form-row-text"]}>
               {nameError ? (
-                <div className={styles["text-error"]}>名稱字數超過上限</div>
+                <div className={styles["text-error"]}>字數超過上限</div>
               ) : (
                 <div></div>
               )}
@@ -169,7 +209,7 @@ function ProfileEditModal(props) {
             </div>
             <div className={styles["form-row-text"]}>
               {introducitonError ? (
-                <div className={styles["text-error"]}>自介字數超過上限</div>
+                <div className={styles["text-error"]}>字數超過上限</div>
               ) : (
                 <div></div>
               )}
