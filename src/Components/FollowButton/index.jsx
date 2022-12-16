@@ -4,7 +4,7 @@ function FollowButton(props) {
   const { currentUserID, id, isFollow } = props;
   return Number(currentUserID) === Number(id) ? (
     <div>是本人~!</div>
-  ) : isFollow ? (
+  ) : !isFollow ? (
     <button className={styles["follow-btn"]}>跟隨</button>
   ) : (
     <button className={styles["following-btn"]}>正在跟隨</button>

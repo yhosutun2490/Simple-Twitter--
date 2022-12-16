@@ -19,9 +19,9 @@ function ProfileFollowList(props) {
         followingData?.map((data) => (
           <FollowUserCard
             key={data.id}
-            userName
-            avatar
-            description
+            userName={data.name}
+            avatar={data.avatar}
+            description={data.introduction}
             isFollow={true}
           />
         ))}

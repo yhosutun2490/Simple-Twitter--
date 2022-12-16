@@ -10,6 +10,7 @@ import ProfilePage from "./Pages/ProfilePage";
 import ProfileReplyPage from "./Pages/ProfileReplyPage";
 import ProfileLikePage from "./Pages/ProfileLikePage";
 import FollowerListPage from "./Pages/FollowerListPage";
+import FolloweringListPage from "./Pages/FolloweringListPage";
 
 function App() {
   return (
@@ -32,7 +33,10 @@ function App() {
                 <Route path="reply" element={<ProfileReplyPage />}></Route>
                 <Route path="likes" element={<ProfileLikePage />}></Route>
                 <Route path="follower" element={<FollowerListPage />}></Route>
-                <Route path="following"></Route>
+                <Route
+                  path="following"
+                  element={<FolloweringListPage />}
+                ></Route>
               </Route>
               <Route path="admin">
                 <Route index></Route>
