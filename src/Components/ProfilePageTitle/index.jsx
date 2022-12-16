@@ -1,15 +1,16 @@
 import styles from "./ProfilePageTitle.module.scss";
 import { ReactComponent as ArrowPre } from "../../assets/icons/arrowPre.svg";
-import { Link } from "react-router-dom"; //轉址至HomePage用
+import { Link, useNavigate } from "react-router-dom"; //轉址至HomePage用
 function ProfilePageTitle(props) {
+  // 回到上一頁用
+  const navigate = useNavigate();
   // props 有個人名稱name、推文次數
   const { name, tweetCount } = props;
   return (
     <div className={styles["container"]}>
-      <Link to={"/home"}>
-        <div className={styles["arrow-img"]}></div>
+      <div className={styles["arrow-img"]} onClick={() => navigate(-1)}>
         <ArrowPre />
-      </Link>
+      </div>
       <div className={styles["profile-title"]}>
         <div className={styles["user-name"]}>{name}</div>
         <div className={styles["tweet-count"]}>{tweetCount} 貼文</div>

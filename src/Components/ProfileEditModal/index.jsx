@@ -19,7 +19,7 @@ function ProfileEditModal(props) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 字數錯誤參數
   const nameError = name.trim().length > 50 ? "error" : "";
-  const introducitonError = introduction.trim().length > 160 ? "error" : "";
+  const introductionError = introduction.trim().length > 160 ? "error" : "";
   // handlBgeFileChange 取出上傳圖片物件
   function handleBgFileChange(e) {
     const { files } = e.target;
@@ -45,16 +45,14 @@ function ProfileEditModal(props) {
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   function handleSubmit() {
-    // 如果內容是空白，傳回預設資料
-    const submitEditData = {
-      name: name ? name : userName,
-      introduction: introduction ? introduction : userIntro,
-      bgImage: photoData.bgImage ? photoData.bgImage : userBgAatar,
-      avatar: photoData.avatar ? photoData.avatar : userAvatr,
-    };
+    // 如果自介或名稱內容是空白，顯示錯誤再輸入欄底下
+    if (name.length === 0 || introduction.length === 0) {
+      setIsSubmitting(true);
+      return;
+    }
 
     // 超過字數上限表單不作事、跳出錯誤
-    if (nameError === "error" || introducitonError === "error") {
+    if (nameError === "error" || introductionError === "error") {
       Swal.fire({
         position: "top",
         title: "輸入字數超過上限！",
@@ -66,10 +64,13 @@ function ProfileEditModal(props) {
     }
     const api = async () => {
       try {
+        console.log(photoData);
+        console.log(name);
+        console.log(introduction);
         // 修改成功訊息
         await Swal.fire({
           position: "top",
-          title: "修改成功！",
+          title: "成功更新！",
           timer: 2000,
           icon: "success",
           showConfirmButton: false,
@@ -96,6 +97,7 @@ function ProfileEditModal(props) {
     setName("");
     setIntroduction("");
     setPhotoData("");
+    setIsSubmitting(false);
     closeEvent(false);
   }
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
@@ -190,16 +192,25 @@ function ProfileEditModal(props) {
               />
             </div>
             <div className={styles["form-row-text"]}>
-              {nameError ? (
-                <div className={styles["text-error"]}>字數超過上限</div>
-              ) : (
-                <div></div>
-              )}
-              <div>{name.trim().length}/50</div>
-            </div>
+              <div className={styles["text-error-group"]}>
+                {nameError ? (
+                  <div className={styles["text-error"]}>字數超過上限</div>
+                ) : (
+                  <div></div>
+                )}
+                {name.length === 0 && isSubmitting ? (
+                  <div className={styles["text-error"]}>內容不可空白</div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
 
+              <div className={styles["text-length"]}>
+                {name.trim().length}/50
+              </div>
+            </div>
             <div
-              className={`${styles["form-row"]} ${styles["form-row-intro"]} ${styles[introducitonError]}`}
+              className={`${styles["form-row"]} ${styles["form-row-intro"]} ${styles[introductionError]}`}
             >
               <label htmlFor="intro" className={styles["label-title"]}>
                 自我介紹
@@ -214,12 +225,21 @@ function ProfileEditModal(props) {
               />
             </div>
             <div className={styles["form-row-text"]}>
-              {introducitonError ? (
-                <div className={styles["text-error"]}>字數超過上限</div>
-              ) : (
-                <div></div>
-              )}
-              {introduction.trim().length}/160
+              <div className={styles["text-error-group"]}>
+                {introductionError ? (
+                  <div className={styles["text-error"]}>字數超過上限</div>
+                ) : (
+                  <div></div>
+                )}
+                {introduction.length === 0 && isSubmitting ? (
+                  <div className={styles["text-error"]}>內容不可空白</div>
+                ) : (
+                  <div></div>
+                )}
+              </div>
+              <div className={styles["text-length"]}>
+                {introduction.trim().length}/160
+              </div>
             </div>
           </div>
         </div>
