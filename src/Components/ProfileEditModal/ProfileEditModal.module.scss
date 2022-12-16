@@ -8,6 +8,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  /* 覆蓋上去，不然下面畫面後透出 */
+  z-index: 5;
 }
 
 .popup-main-window {
@@ -22,6 +24,8 @@
   background-color: #fff;
   border-radius: 14px;
   animation: MoveIn 0.5s 1 forwards;
+  /* 高於背景屏幕1層 */
+  z-index: 6;
 
   @media screen and (max-width: 1200px) {
     width: 450px;
