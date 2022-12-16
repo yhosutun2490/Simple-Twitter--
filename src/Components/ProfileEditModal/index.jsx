@@ -43,9 +43,15 @@ function ProfileEditModal(props) {
     setAvatarUrl(imageURL);
     setPhotoData({ ...photoData, avatar: files[0] });
   }
-  // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白不送出
+  // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   function handleSubmit() {
     // 如果內容是空白，傳回預設資料
+    const submitEditData = {
+      name: name ? name : userName,
+      introduction: introduction ? introduction : userIntro,
+      bgImage: photoData.bgImage ? photoData.bgImage : userBgAatar,
+      avatar: photoData.avatar ? photoData.avatar : userAvatr,
+    };
 
     // 超過字數上限表單不作事、跳出錯誤
     if (nameError === "error" || introducitonError === "error") {
