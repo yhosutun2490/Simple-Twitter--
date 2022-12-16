@@ -30,10 +30,14 @@ function RegisterPage() {
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
-  //Email rule check 待確認是否有漏洞的可能
+  //Email rule check
   const emailRule =
     /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 
+  //Check if there is space in the input value
+  const isSpaceCheck = /\s/
+
+  // 注意現在state裡面存的value頭尾沒有消空白傳入header需要trim()，消除頭尾的空白
   const handleClick = () => {
     setSubmitting(true);
 
@@ -84,6 +88,15 @@ function RegisterPage() {
 
   if (submitting && checkPasswordLength === 0) {
     checkPasswordAlertMsg = "此欄為必填欄位";
+  }
+
+  //space including check
+  if(isSpaceCheck.test(account)) {
+    accountAlertMsg="不可有空白"
+  }
+
+  if (isSpaceCheck.test(password)) {
+    passwordAlertMsg = "不可有空白";
   }
 
   // Word length limit alert
