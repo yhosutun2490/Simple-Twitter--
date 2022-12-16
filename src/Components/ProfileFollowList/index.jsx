@@ -13,6 +13,7 @@ function ProfileFollowList(props) {
             avatar={data?.avatar}
             description={data?.introduction}
             isFollow={data?.following}
+            userID={data.id}
           />
         ))}
       {followingData &&
@@ -22,6 +23,7 @@ function ProfileFollowList(props) {
             userName={data.name}
             avatar={data.avatar}
             description={data.introduction}
+            userID={data.id}
             isFollow={true}
           />
         ))}
