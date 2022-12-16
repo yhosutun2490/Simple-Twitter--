@@ -1,0 +1,35 @@
+.container {
+  display: flex;
+  padding: 16px 23px;
+  border-bottom: 1px solid #E6ECF0 ;
+  color: var(--color-dark-black);
+  font-family: "Noto Sans TC";
+}
+.avatar-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+}
+.follower-info {
+  margin-left: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  .follower-title {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    .user-name {
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 700;
+    }
+  }
+  .user-description {
+    margin-top: 8px;
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+
+  }
+}
