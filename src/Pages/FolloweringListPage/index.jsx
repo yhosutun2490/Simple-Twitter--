@@ -53,7 +53,9 @@ function FolloweringListPage() {
   const viewID = pathNameArr[2];
   return (
     <div className={styles["container"]}>
-      <ProfileFollowNavBar viewID={viewID} />
+      <div className={styles["profile-navbar"]}>
+        <ProfileFollowNavBar viewID={viewID} />
+      </div>
       <div className={styles["follow-list"]}>
         <ProfileFollowList followingData={apiData} />
       </div>
