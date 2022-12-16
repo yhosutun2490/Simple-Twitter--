@@ -51,11 +51,11 @@ function SettingPage() {
       return;
     }
 
-    if (passwordLength === 0 || passwordLength < 4 || passwordLength > 12) {
+    if (passwordLength < 4 || passwordLength > 12) {
       return;
     }
 
-    if (checkPasswordLength === 0 || checkPassword !== password) {
+    if (checkPassword !== password) {
       return;
     }
     // If all input value is valid
