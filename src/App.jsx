@@ -11,6 +11,8 @@ import ProfileReplyPage from "./Pages/ProfileReplyPage";
 import ProfileLikePage from "./Pages/ProfileLikePage";
 import FollowerListPage from "./Pages/FollowerListPage";
 import FolloweringListPage from "./Pages/FolloweringListPage";
+import EnterPage from "./Pages/EnterPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
   return (
@@ -19,6 +21,8 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/">
+              <Route index element={<EnterPage />}></Route>
+              <Route path="*" element={<NotFoundPage />} />
               <Route path="login" element={<LoginPage />}></Route>
               <Route path="register" element={<RegisterPage />}></Route>
               <Route path="setting"></Route>
@@ -44,7 +48,6 @@ function App() {
                 <Route path="user-list"></Route>
               </Route>
             </Route>
-            <Route path="*" />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
