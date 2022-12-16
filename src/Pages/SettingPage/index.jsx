@@ -33,6 +33,9 @@ function SettingPage() {
   const emailRule =
     /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 
+  //Check if there is space in the input value
+  const isSpaceCheck = /\s/;
+
   const handleClick = () => {
     setSubmitting(true);
 
@@ -83,6 +86,15 @@ function SettingPage() {
 
   if (submitting && checkPasswordLength === 0) {
     checkPasswordAlertMsg = "此欄為必填欄位";
+  }
+
+  //space including check
+  if (isSpaceCheck.test(account)) {
+    accountAlertMsg = "不可有空白";
+  }
+
+  if (isSpaceCheck.test(password)) {
+    passwordAlertMsg = "不可有空白";
   }
 
   // Word length limit alert
