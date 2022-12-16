@@ -9,7 +9,8 @@ function ProfilePage() {
   const currentUserID = 1;
   // 目前頁面瀏覽者ID
   const { pathname } = useLocation();
-  const viewID = pathname.slice(6);
+  const pathNameArr = pathname.split("/");
+  const viewID = pathNameArr[2];
 
   // api文件假資料有點問題，先自創
   const tweetList = [

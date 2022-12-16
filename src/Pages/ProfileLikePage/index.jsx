@@ -7,7 +7,8 @@ function ProfileLikePage() {
   const currentUserID = 1;
   // 現在瀏覽者的ID
   const { pathname } = useLocation();
-  const viewID = pathname.slice(6, 7);
+  const pathNameArr = pathname.split("/");
+  const viewID = pathNameArr[2];
 
   //另一支API 使用者個人資料
   const user = {

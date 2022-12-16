@@ -7,7 +7,8 @@ function ProfileReplyPage() {
   const currentUserID = 1;
   // 現在瀏覽使用者的ID
   const { pathname } = useLocation();
-  const viewID = pathname.slice(6, 7);
+  const pathNameArr = pathname.split("/");
+  const viewID = pathNameArr[2]
   //  API文件某位使用者假資料
   const user = {
     id: 1,
