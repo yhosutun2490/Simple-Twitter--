@@ -11,13 +11,14 @@
 .profile-title {
   margin-left: 16px;
   display: flex;
- justify-content: center;
+  justify-content: center;
   flex-direction: column;
   .user-name {
     font-size: 18px;
     line-height: 26px;
     font-weight: 700;
     color: var(--color-dark-black);
+    cursor: pointer;
 
   }
   .tweet-count {

@@ -2,6 +2,7 @@ import styles from "./ProfileLikePage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
 import { useLocation } from "react-router-dom";
+import { useRef } from "react";
 function ProfileLikePage() {
   // 目前使用者ID
   const currentUserID = 1;
@@ -9,6 +10,11 @@ function ProfileLikePage() {
   const { pathname } = useLocation();
   const pathNameArr = pathname.split("/");
   const viewID = pathNameArr[2];
+  // 置頂功能
+  const containerRef = useRef(null);
+  function scrollTop() {
+    containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   //另一支API 使用者個人資料
   const user = {
@@ -64,8 +70,12 @@ function ProfileLikePage() {
   };
 
   return (
-    <div className={styles["container"]}>
-      <ProfileUserNavBar viewID={viewID} currentUserID={currentUserID} />
+    <div className={styles["container"]} ref={containerRef}>
+      <ProfileUserNavBar
+        viewID={viewID}
+        currentUserID={currentUserID}
+        scrollTop={scrollTop}
+      />
       <div>
         <UserTweetList tweetList={likedata.data} />
       </div>

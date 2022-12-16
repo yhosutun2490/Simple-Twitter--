@@ -4,10 +4,12 @@ import ProfilePageTitle from "../ProfilePageTitle";
 import ProfileNavLink from "../ProfileNavLink";
 import fakeBackgroundImg from "../../assets/icons/background.svg";
 function ProfileUserNavBar(props) {
-  const { currentUserID, viewID } = props;
+  const { currentUserID, viewID, scrollTop } = props;
   return (
     <div className={styles["container"]}>
-      <ProfilePageTitle name={"Natsu"} tweetCount={25} />
+      <div className={styles["profile-title"]}>
+        <ProfilePageTitle name={"Natsu"} tweetCount={25} scrollTop={scrollTop}/>
+      </div>
       <div className={styles["background-avatar"]}>
         <img
           src={fakeBackgroundImg}

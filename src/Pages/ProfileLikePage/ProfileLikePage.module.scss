@@ -1,4 +1,7 @@
 .container {
-  font-family: "Noto Sans TC";
-  border: 1px solid #E6ECF0;
+    font-family: "Noto Sans TC";
+    border: 1px solid #E6ECF0;
+    height: 100vh;
+    /* 用web-kit 改一下scrollbar樣式*/
+    overflow-y: scroll;
 }

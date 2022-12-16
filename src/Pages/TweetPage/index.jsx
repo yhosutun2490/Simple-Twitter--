@@ -15,7 +15,7 @@ function TweetPage() {
 
   // 點擊置頂功能
   function scrollTop() {
-    containerRef.current.scrollTo(0, 0);
+    containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
   }
   // 呼叫該頁API
   useEffect(() => {

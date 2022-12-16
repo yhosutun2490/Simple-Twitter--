@@ -2,13 +2,19 @@ import styles from "./ProfileReplyPage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import ReplyList from "../../Components/ReplyList";
 import { useLocation } from "react-router-dom";
+import { useRef } from "react";
 function ProfileReplyPage() {
   // 目前使用者ID
   const currentUserID = 1;
+  // 置頂功能
+  const containerRef = useRef(null);
+  function scrollTop() {
+    containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
+  }
   // 現在瀏覽使用者的ID
   const { pathname } = useLocation();
   const pathNameArr = pathname.split("/");
-  const viewID = pathNameArr[2]
+  const viewID = pathNameArr[2];
   //  API文件某位使用者假資料
   const user = {
     id: 1,
@@ -73,8 +79,12 @@ function ProfileReplyPage() {
     },
   ];
   return (
-    <div className={styles["container"]}>
-      <ProfileUserNavBar viewID={viewID} currentUserID={currentUserID} />
+    <div className={styles["container"]} ref={containerRef}>
+      <ProfileUserNavBar
+        viewID={viewID}
+        currentUserID={currentUserID}
+        scrollTop={scrollTop}
+      />
       <div>
         <ReplyList selfReplies={repliesData} selfAccount={user} />
       </div>

@@ -8,7 +8,7 @@ function HomePage() {
   const containerRef = useRef(null);
   // 點擊置頂功能
   function scrollTop() {
-    containerRef.current.scrollTo(0, 0);
+    containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
   }
   // 由API獲取所有Tweet資料 (只有第一次mount呼叫useEffect)
   useEffect(() => {
