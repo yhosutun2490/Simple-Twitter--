@@ -1,15 +1,21 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import { AuthInput, AuthInputAlert } from "../../Components/AuthInput/index";
+import { useAuth } from "../../Context/AuthContext";
+
 import Button from "../../Components/Button";
 import styles from "./LoginPage.module.scss";
+import Swal from "sweetalert2";
 
 function LoginPage() {
   // State Variable
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const { login } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -19,14 +25,38 @@ function LoginPage() {
   const accountLength = account.trim().length;
   const passwordLength = password.trim().length;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSubmitting(true);
 
     if (accountLength === 0 || passwordLength === 0) {
       return;
     }
     // If all input value is valid
-    alert("success");
+    // refactor the value of account and password
+    const accountTrimmed = account.trim();
+    const passwordTrimmed = password.trim();
+    const success = await login({ accountTrimmed, passwordTrimmed });
+
+    // 待後端把錯誤訊息補上補上實作錯誤訊息
+    if (success) {
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+      navigate("/home");
+      return;
+    } else {
+      Swal.fire({
+        title: "Failed...",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+    }
   };
 
   // When user focus on the input clear the alert message
