@@ -10,8 +10,8 @@ import TweetButtonSideBar from "./TweetButtonSideBar";
 
 function UserNavBar(props) {
   const { userAvatar, curretUserID } = props;
-  // 個人資料頁路由名稱 暫定為self
-  const currentUsername = "self";
+  // 個人資料頁使用者id 暫定為1
+  const currentUserID = 1;
   return (
     <div className={styles["container"]}>
       <AcLogo className={styles["navbar-logo"]} />
@@ -44,14 +44,13 @@ function UserNavBar(props) {
       </NavBarItem>
       <NavBarItem>
         <NavLink
-          to={`/user/${currentUsername}`}
+          to={`/user/${currentUserID}`}
           className={({ isActive }) =>
             [
               `${styles["navbar-link"]}`,
               isActive ? `${styles["router-link-active"]}` : ``,
             ].join(" ")
           }
-          end
         >
           <Head className={styles["navbar-link__logo"]} />
           <p className={styles["navbar-link__title"]}>個人資料</p>

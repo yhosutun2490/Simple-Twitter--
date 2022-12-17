@@ -6,6 +6,13 @@ import HomePage from "./Pages/HomePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import TweetPage from "./Pages/TweetPage";
+import ProfilePage from "./Pages/ProfilePage";
+import ProfileReplyPage from "./Pages/ProfileReplyPage";
+import ProfileLikePage from "./Pages/ProfileLikePage";
+import FollowerListPage from "./Pages/FollowerListPage";
+import FolloweringListPage from "./Pages/FolloweringListPage";
+import EnterPage from "./Pages/EnterPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
 function App() {
   return (
@@ -14,7 +21,8 @@ function App() {
         <AuthProvider>
           <Routes>
             <Route path="/">
-              <Route index></Route>
+              <Route index element={<EnterPage />}></Route>
+              <Route path="*" element={<NotFoundPage />} />
               <Route path="login" element={<LoginPage />}></Route>
               <Route path="register" element={<RegisterPage />}></Route>
               <Route path="setting"></Route>
@@ -24,12 +32,15 @@ function App() {
               <Route path="tweet/:id" element={<LayoutCommon />}>
                 <Route index element={<TweetPage />}></Route>
               </Route>
-              <Route path="/user/:username">
-                <Route index></Route>
-                <Route path="reply"></Route>
-                <Route path="likes"></Route>
-                <Route path="follower"></Route>
-                <Route path="following"></Route>
+              <Route path="/user/:username" element={<LayoutCommon />}>
+                <Route index element={<ProfilePage />}></Route>
+                <Route path="reply" element={<ProfileReplyPage />}></Route>
+                <Route path="likes" element={<ProfileLikePage />}></Route>
+                <Route path="follower" element={<FollowerListPage />}></Route>
+                <Route
+                  path="following"
+                  element={<FolloweringListPage />}
+                ></Route>
               </Route>
               <Route path="admin">
                 <Route index></Route>
@@ -37,7 +48,6 @@ function App() {
                 <Route path="user-list"></Route>
               </Route>
             </Route>
-            <Route path="*" />
           </Routes>
         </AuthProvider>
       </BrowserRouter>

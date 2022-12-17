@@ -1,0 +1,28 @@
+.container {
+  font-family: "Noto Sans TC";
+  font-size: 15px;
+  line-height: 21.72px;
+  font-weight: 700;
+  border-bottom: 1px solid #E6ECF0;
+  display: flex; /*彈性排版讓內容物撐開*/
+}
+.profile-nav-link {
+  padding: 15px 50px ;
+  text-decoration: none;
+  color: #657786;
+  &.router-link-active {
+      color: var(--logo-color);
+      border-bottom: 2px solid var(--logo-color);
+  }
+  
+}
+.profile-nav-link-like {
+  padding: 15px 28px 15px 27px;
+  text-decoration: none;
+  color: #657786;
+  &.router-link-active {
+      color: var(--logo-color);
+      border-bottom: 2px solid var(--logo-color);
+    }
+  
+}

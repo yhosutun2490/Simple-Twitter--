@@ -12,6 +12,7 @@ function UserTweetBox(props) {
   const {
     tweeterAccount,
     tweeterName,
+    tweeterID,
     Avatar,
     update,
     content,
@@ -25,7 +26,7 @@ function UserTweetBox(props) {
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
-        <Link to={`/user/${tweeterAccount}`}>
+        <Link to={`/user/${tweeterID}`}>
           <img src={Avatar} className={styles["avatar-img"]} />
         </Link>
       </div>
