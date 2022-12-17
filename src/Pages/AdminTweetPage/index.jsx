@@ -1,3 +1,4 @@
+import {useState} from 'react'
 import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg"
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
@@ -5,7 +6,7 @@ import { TimeFromNow } from "../../CostumHook/TransFormDate";
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
-  const { tweeterAccount, tweeterName, avatar, update, content } = props;
+  const { tweet, tweeterAccount, tweeterName, avatar, update, content, onDelete} = props;
   //日期資料轉換
   const date = TimeFromNow(update);
 
@@ -23,7 +24,7 @@ function AdminTweetBox(props) {
         <div className={styles["tweet-content"]}>{content}</div>
       </div>
 
-      <div className={styles["admin-delete-icon"]}>
+      <div className={styles["admin-delete-icon"]} onClick={() => onDelete?.(tweet.id)}>
         <AdminDeleteIcon />
       </div>
     </div>
@@ -32,8 +33,8 @@ function AdminTweetBox(props) {
 
 function AdminTweetPage() {
   // fake data 待後端api測試檔通過後再次查看response格式 [Get]api/admin/tweets
-  // 是否該做分頁？設計稿上沒有指定
-  const datas = [
+  // 是否該做分頁待討論，設計稿上沒有指定
+  const fakeTweetList = [
     {
       id: 11,
       UserId: 2,
@@ -52,7 +53,7 @@ function AdminTweetPage() {
       },
     },
     {
-      id: 11,
+      id: 12,
       UserId: 2,
       description: "voluptatibus iure quidem",
       createdAt: "2020-09-20T16:41:19.000Z",
@@ -69,7 +70,7 @@ function AdminTweetPage() {
       },
     },
     {
-      id: 11,
+      id: 13,
       UserId: 2,
       description: "voluptatibus iure quidem",
       createdAt: "2020-09-20T16:41:19.000Z",
@@ -86,20 +87,43 @@ function AdminTweetPage() {
       },
     },
   ];
+  const [tweetList, setTweetList] = useState(fakeTweetList)
+
+  //Delete function
+  //  const handleDelete = async (id) => {
+  //   try {
+  //     await deleteTodo(id);
+
+  //     setTweetList((preTweetList) => {
+  //       return preTweetList.filter((tweet) => tweet.id !== id);
+  //     });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
+  // };
+
+  const handleDelete = (id) => {
+    setTweetList((preTweetList) => {
+      return preTweetList.filter((tweet) => tweet.id !== id);
+    });
+  } 
 
   return (
     <div className={styles["container"]}>
       <div className={styles["title"]}>推文清單</div>
       <div className={styles["tweet-list"]}>
-        {datas &&
-          datas.map((data) => (
+        {tweetList &&
+          tweetList.map((tweet) => (
             <AdminTweetBox
-              key={data.id}
-              tweeterAccount={data.User.account}
-              tweeterName={data.User.name}
-              avatar={data.User.avatar}
-              update={data.createdAt}
-              content={data.description}
+              key={tweet.id}
+              tweet={tweet}
+              tweeterAccount={tweet.User.account}
+              tweeterName={tweet.User.name}
+              avatar={tweet.User.avatar}
+              update={tweet.createdAt}
+              content={tweet.description}
+              onDelete={handleDelete}
             />
           ))}
       </div>
