@@ -14,6 +14,10 @@ import FollowerListPage from "./Pages/FollowerListPage";
 import FolloweringListPage from "./Pages/FolloweringListPage";
 import EnterPage from "./Pages/EnterPage";
 import NotFoundPage from "./Pages/NotFoundPage";
+import AdminLoginPage from "./Pages/AdminLoginPage";
+import SettingPage from "./Pages/SettingPage";
+import AdminTweetPage from "./Pages/AdminTweetPage";
+import AdminUserPage from "./Pages/AdminUserPage";
 
 const basename = process.env.PUBLIC_URL;
 function App() {
