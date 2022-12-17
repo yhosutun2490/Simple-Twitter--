@@ -13,7 +13,7 @@ function UserTweetBox(props) {
     tweeterAccount,
     tweeterName,
     tweeterID,
-    Avatar,
+    avatar,
     update,
     content,
     tweetNumber,
@@ -27,7 +27,10 @@ function UserTweetBox(props) {
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
         <Link to={`/user/${tweeterID}`}>
-          <img src={Avatar} className={styles["avatar-img"]} />
+          <img
+            src={avatar ? avatar : "https://picsum.photos/50/50"}
+            className={styles["avatar-img"]}
+          />
         </Link>
       </div>
       <div className={styles["tweet-detail"]}>

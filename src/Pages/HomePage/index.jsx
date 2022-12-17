@@ -3,9 +3,12 @@ import TweetInput from "../../Components/TweetInput";
 import UserTweetList from "../../Components/UserTweetList";
 import { useState, useEffect, useRef } from "react";
 import { getAllTweets } from "../../Api/TweetAPI";
+
 function HomePage() {
   const [tweetList, setTweetList] = useState("");
   const containerRef = useRef(null);
+  console.log(tweetList)
+
   // 點擊置頂功能
   function scrollTop() {
     containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -23,6 +26,7 @@ function HomePage() {
     };
     apiTweets();
   }, []);
+
   return (
     <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title"]} onClick={scrollTop}>
@@ -32,7 +36,7 @@ function HomePage() {
         <TweetInput />
       </div>
       <div className={styles["tweet-list"]}>
-        <UserTweetList tweetList={tweetList} />
+        <UserTweetList tweetList={tweetList}/>
       </div>
     </div>
   );

@@ -1,18 +1,16 @@
 import UserTweetBox from "../UserTweetBox";
-import { useState, useEffect } from "react";
-
 function UserTweetList(props) {
-  const { tweetList, selfTweet, selfAccount } = props;
+  const { tweetList, selfTweet } = props;
 
   return (
     <div>
       {selfTweet &&
         selfTweet?.map((data) => (
           <UserTweetBox
-            key={data.id}
+            key={data?.id}
             tweeterAccount={data?.account}
             tweeterName={data?.name}
-            Avatar={data?.avatar}
+            avatar={data?.avatar}
             update={data?.updatedAt}
             content={data?.description}
             tweetNumber={data?.repliesCount}
@@ -25,16 +23,16 @@ function UserTweetList(props) {
         tweetList?.map((data) => (
           <UserTweetBox
             key={data.id}
-            tweeterAccount={data.user?.account}
-            tweeterName={data.user?.name}
-            tweeterID={data.user?.id}
-            Avatar={data.user?.avatar}
-            update={data?.updatedAt}
+            tweeterAccount={data?.account}
+            tweeterName={data?.name}
+            tweeterID={data.User?.id}
+            avatar={data.User?.avatar}
+            update={data?.cratedAt}
             content={data?.description}
-            tweetNumber={data?.repliesCount}
-            likeNumber={data?.likeCount}
+            tweetNumber={data?.replyCount}
+            likeNumber={data?.LikeCount}
             tweetID={data?.id}
-            isLike={data?.liked}
+            isLike={data?.ifliked}
           />
         ))}
     </div>
