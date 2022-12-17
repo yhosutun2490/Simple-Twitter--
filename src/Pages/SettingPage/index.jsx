@@ -5,6 +5,9 @@ import Button from "../../Components/Button";
 import styles from "./SettingPage.module.scss";
 
 function SettingPage() {
+  //useEffect透過api獲取現在登入使用者的資料，用setState讓畫面可以顯示default帳號、名稱、信箱
+  // [GET]/api/users/:id，需要token
+
   // State Variable
   const [account, setAccount] = useState("");
   const [name, setName] = useState("");
@@ -58,6 +61,8 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
+    //密碼如果沒有input value便不做更動
+    //其他欄位如果和default value不一樣要做更動
     alert("success");
   };
 
