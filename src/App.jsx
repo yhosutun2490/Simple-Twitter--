@@ -7,19 +7,24 @@ import HomePage from "./Pages/HomePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";
 import TweetPage from "./Pages/TweetPage";
-import AdminLoginPage from "./Pages/AdminLoginPage";
-import SettingPage from "./Pages/SettingPage";
-import AdminTweetPage from "./Pages/AdminTweetPage";
-import AdminUserPage from "./Pages/AdminUserPage";
+import ProfilePage from "./Pages/ProfilePage";
+import ProfileReplyPage from "./Pages/ProfileReplyPage";
+import ProfileLikePage from "./Pages/ProfileLikePage";
+import FollowerListPage from "./Pages/FollowerListPage";
+import FolloweringListPage from "./Pages/FolloweringListPage";
+import EnterPage from "./Pages/EnterPage";
+import NotFoundPage from "./Pages/NotFoundPage";
 
+const basename = process.env.PUBLIC_URL;
 function App() {
   return (
     <div className={styles["App"]}>
-      <BrowserRouter>
+      <BrowserRouter basename={basename}>
         <AuthProvider>
           <Routes>
             <Route path="/">
-              <Route index></Route>
+              <Route index element={<EnterPage />}></Route>
+              <Route path="*" element={<NotFoundPage />} />
               <Route path="login" element={<LoginPage />}></Route>
               <Route path="register" element={<RegisterPage />}></Route>
               <Route path="setting" element={<SettingPage />}></Route>
@@ -29,12 +34,15 @@ function App() {
               <Route path="tweet/:id" element={<LayoutCommon />}>
                 <Route index element={<TweetPage />}></Route>
               </Route>
-              <Route path="/user/:username">
-                <Route index></Route>
-                <Route path="reply"></Route>
-                <Route path="likes"></Route>
-                <Route path="follower"></Route>
-                <Route path="following"></Route>
+              <Route path="/user/:username" element={<LayoutCommon />}>
+                <Route index element={<ProfilePage />}></Route>
+                <Route path="reply" element={<ProfileReplyPage />}></Route>
+                <Route path="likes" element={<ProfileLikePage />}></Route>
+                <Route path="follower" element={<FollowerListPage />}></Route>
+                <Route
+                  path="following"
+                  element={<FolloweringListPage />}
+                ></Route>
               </Route>
               <Route path="admin" element={<AdminLoginPage />}></Route>
               <Route path="admin/tweetlist" element={<LayoutAdmin />}>
@@ -44,7 +52,6 @@ function App() {
                 <Route index element={<AdminUserPage />}></Route>
               </Route>
             </Route>
-            <Route path="*" />
           </Routes>
         </AuthProvider>
       </BrowserRouter>
