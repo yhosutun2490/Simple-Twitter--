@@ -1,12 +1,20 @@
-import {useState} from 'react'
-import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg"
+import { useState } from "react";
+import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg";
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
-  const { tweet, tweeterAccount, tweeterName, avatar, update, content, onDelete} = props;
+  const {
+    tweet,
+    tweeterAccount,
+    tweeterName,
+    avatar,
+    update,
+    content,
+    onDelete,
+  } = props;
   //日期資料轉換
   const date = TimeFromNow(update);
 
@@ -24,7 +32,10 @@ function AdminTweetBox(props) {
         <div className={styles["tweet-content"]}>{content}</div>
       </div>
 
-      <div className={styles["admin-delete-icon"]} onClick={() => onDelete?.(tweet.id)}>
+      <div
+        className={styles["admin-delete-icon"]}
+        onClick={() => onDelete?.(tweet.id)}
+      >
         <AdminDeleteIcon />
       </div>
     </div>
@@ -87,7 +98,7 @@ function AdminTweetPage() {
       },
     },
   ];
-  const [tweetList, setTweetList] = useState(fakeTweetList)
+  const [tweetList, setTweetList] = useState(fakeTweetList);
 
   //Delete function
   //  const handleDelete = async (id) => {
@@ -107,29 +118,27 @@ function AdminTweetPage() {
     setTweetList((preTweetList) => {
       return preTweetList.filter((tweet) => tweet.id !== id);
     });
-  } 
+  };
 
   return (
     <div className={styles["container"]}>
       <div className={styles["title"]}>推文清單</div>
       <div className={styles["tweet-list"]}>
-        {tweetList &&
-          tweetList.map((tweet) => (
-            <AdminTweetBox
-              key={tweet.id}
-              tweet={tweet}
-              tweeterAccount={tweet.User.account}
-              tweeterName={tweet.User.name}
-              avatar={tweet.User.avatar}
-              update={tweet.createdAt}
-              content={tweet.description}
-              onDelete={handleDelete}
-            />
-          ))}
+        {tweetList.map((tweet) => (
+          <AdminTweetBox
+            key={tweet.id}
+            tweet={tweet}
+            tweeterAccount={tweet.User.account}
+            tweeterName={tweet.User.name}
+            avatar={tweet.User.avatar}
+            update={tweet.createdAt}
+            content={tweet.description}
+            onDelete={handleDelete}
+          />
+        ))}
       </div>
     </div>
   );
 }
 
 export default AdminTweetPage;
-
