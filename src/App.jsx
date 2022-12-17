@@ -14,7 +14,7 @@ import FolloweringListPage from "./Pages/FolloweringListPage";
 import EnterPage from "./Pages/EnterPage";
 import NotFoundPage from "./Pages/NotFoundPage";
 
-const basename = process.env.PUBLIC_URL
+const basename = process.env.PUBLIC_URL;
 function App() {
   return (
     <div className={styles["App"]}>
