@@ -1,14 +1,22 @@
-import styles from "./AdminUserPage.module.scss"
+import styles from "./AdminUserPage.module.scss";
 import { ReactComponent as TweetFeather } from "../../assets/icons/tweet_feather_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/icons/like_icon.svg";
 
-
 function AdminUserCard(props) {
   //須從後端取得的資料
-  const { coverImg, avatar, account, userName, tweetNum, likedNum, followingNum, followerNum } = props;
+  const {
+    coverImg,
+    avatar,
+    account,
+    userName,
+    tweetNum,
+    likedNum,
+    followingNum,
+    followerNum,
+  } = props;
 
   return (
-    <div className={styles["tweet-box-container"]}>
+    <div className={styles["user-card-container"]}>
       <div className={styles["cover-img-container"]}>
         <img src={coverImg} className={styles["cover-img"]} alt="user-cover" />
       </div>
@@ -19,19 +27,23 @@ function AdminUserCard(props) {
         <p className={styles["user-info-name"]}>{userName}</p>
         <p className={styles["user-info-account"]}>@{account}</p>
       </div>
-      <div className={styles["user-social-info"]}>
-        <div>
-          <TweetFeather />
+      <div className={styles["user-tweet-data"]}>
+        <div className={styles["user-tweet-num"]}>
+          <TweetFeather className={styles["tweet-feather"]} />
           <p>{tweetNum}</p>
         </div>
-        <div>
-          <LikeIcon />
+        <div className={styles["user-tweet-liked-num"]}>
+          <LikeIcon className={styles["like-icon"]} />
           <p>{likedNum}</p>
         </div>
       </div>
       <div className={styles["user-follow-info"]}>
-        <p>{followingNum}跟隨中</p>
-        <p>{followerNum}跟隨者</p>
+        <p>
+          {followingNum} 個<span>跟隨中</span>
+        </p>
+        <p>
+          {followerNum} 位<span>跟隨者</span>
+        </p>
       </div>
     </div>
   );
@@ -39,7 +51,6 @@ function AdminUserCard(props) {
 
 function AdminUserPage() {
   // fake data 待後端api測試檔通過後再次查看response格式 [Get]api/admin/users
-  // 是否該做分頁待討論，設計稿上沒有指定
   const fakeUserList = [
     {
       id: 1,
@@ -79,6 +90,60 @@ function AdminUserPage() {
     },
     {
       id: 3,
+      account: "Gina",
+      email: "Javon_Gutmann@gmail.com",
+      name: "Gina Koboyashi",
+      avatar:
+        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
+      introduction:
+        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
+      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
+      role: "0",
+      createdAt: "2020-11-27T00:01:30.000Z",
+      updatedAt: "2022-01-16T02:32:34.000Z",
+      tweetsCount: 0,
+      likeCount: 0,
+      followerCount: 3,
+      followingCount: 112,
+    },
+    {
+      id: 4,
+      account: "Gina",
+      email: "Javon_Gutmann@gmail.com",
+      name: "Gina Koboyashi",
+      avatar:
+        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
+      introduction:
+        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
+      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
+      role: "0",
+      createdAt: "2020-11-27T00:01:30.000Z",
+      updatedAt: "2022-01-16T02:32:34.000Z",
+      tweetsCount: 0,
+      likeCount: 0,
+      followerCount: 3,
+      followingCount: 112,
+    },
+    {
+      id: 5,
+      account: "Gina",
+      email: "Javon_Gutmann@gmail.com",
+      name: "Gina Koboyashi",
+      avatar:
+        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
+      introduction:
+        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
+      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
+      role: "0",
+      createdAt: "2020-11-27T00:01:30.000Z",
+      updatedAt: "2022-01-16T02:32:34.000Z",
+      tweetsCount: 0,
+      likeCount: 0,
+      followerCount: 3,
+      followingCount: 112,
+    },
+    {
+      id: 5,
       account: "Gina",
       email: "Javon_Gutmann@gmail.com",
       name: "Gina Koboyashi",
