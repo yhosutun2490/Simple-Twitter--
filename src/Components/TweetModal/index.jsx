@@ -2,11 +2,12 @@ import styles from "./TweetModal.module.scss";
 import { ReactComponent as Close } from "../../assets/icons/cross_orange.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "../TweetInput/TweetSubmitButton";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 
 function TweetModal(props) {
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
-  const { trigger, closeEvent ,userAvatar} = props;
+  const { trigger, closeEvent, userAvatar } = props;
   const [text, setText] = useState("");
   const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);
@@ -70,8 +71,9 @@ function TweetModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-avatar"]}>
             <img
-              src={userAvatar ? userAvatar : "https://picsum.photos/50/50"}
+              src={userAvatar ? userAvatar : avatarDefault}
               alt="avatar-img"
+              className={styles["avatar-img"]}
             />
           </div>
           <div className={styles["input-body"]}>
