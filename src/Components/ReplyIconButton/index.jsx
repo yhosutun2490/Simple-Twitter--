@@ -8,8 +8,7 @@ function ReplyIconButton(props) {
   const {
     tweetID,
     Avatar,
-    currentUserAvatar,
-    currentUserID,
+    // currentUserAvatar,
     content,
     name,
     account,

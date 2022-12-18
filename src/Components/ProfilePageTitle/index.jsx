@@ -1,7 +1,7 @@
 import styles from "./ProfilePageTitle.module.scss";
 import { ReactComponent as ArrowPre } from "../../assets/icons/arrowPre.svg";
-import { Link, useNavigate } from "react-router-dom"; //轉址至HomePage用
-import { useRef } from "react";
+import { useNavigate } from "react-router-dom"; //轉址至HomePage用
+
 function ProfilePageTitle(props) {
   // 回到上一頁用
   const navigate = useNavigate();
