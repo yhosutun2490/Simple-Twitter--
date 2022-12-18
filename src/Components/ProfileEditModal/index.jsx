@@ -8,8 +8,7 @@ import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
-  const { trigger, closeEvent, userIntro, userName, userAvatr, userBgAatar } =
-    props;
+  const { trigger, closeEvent } = props;
   // 上傳資料儲存狀態
   const [background, setBackgroundUrl] = useState("");
   const [avatarUrl, setAvatarUrl] = useState("");

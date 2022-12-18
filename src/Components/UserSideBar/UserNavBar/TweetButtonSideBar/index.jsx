@@ -5,7 +5,7 @@ import { useState } from "react";
 function TweetButtonSideBar(props) {
   // 設定推文視窗由推文按鈕決定要不要打開的狀態
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { children, userAvatar, currentUserID } = props;
+  const { children} = props;
   function handleOnClick() {
     setIsOpenModal(true);
   }
