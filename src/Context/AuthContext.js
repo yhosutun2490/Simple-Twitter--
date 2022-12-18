@@ -7,6 +7,7 @@ import { login, register, checkPermission } from '../Api/AuthAPI'
 const defaultValue = {
   isAuthenticated: false, //是否通過後端驗證
   currentUser: null,  //現在使用者資料
+  setCurrentUser: null, //更新使用者資料
   register: null, //註冊function
   login: null, //登入function
   logout: null, // 登出function
@@ -51,6 +52,7 @@ function AuthProvider(props) {
       {
         isAuthenticated,
         currentUser: userData,
+        setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
           const { success, token, user } = await register({ 
             account: data.account, 
