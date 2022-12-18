@@ -1,7 +1,7 @@
 // 引入axios
 import axios from 'axios';
 // 後端Heroku網址
-const baseUrl =""
+const baseUrl ="https://floating-forest-88499.herokuapp.com"
 
 // 產生axios 實例來管理API
 const axiosInstance = axios.create({
@@ -86,3 +86,14 @@ export const getOneUserData = async () => {
     console.error('[Get AllTweetData failed]: ', error);
   }
 }
+
+//使用者推文
+export const userTweet = async (text) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets`,{description:text})
+    return res;
+  } catch (error) {
+    console.error("[Submit Tweet Failed]:", error);
+    return error;
+  }
+};

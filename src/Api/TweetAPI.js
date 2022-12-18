@@ -12,10 +12,7 @@ const axiosInstance = axios.create({
 // 利用axios 攔截器再發現請求前帶入token
 axiosInstance.interceptors.request.use(
   (config) => {
-    //  const token = localStorage.getItem('authToken'); // 取出token
-     // 如果有token的話 放入API請求Header中
-       // 暫用token
-    const token ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NjQsImFjY291bnQiOiJyYWZhZWwwMDIiLCJlbWFpbCI6ImV4YW1wbGVAZ2FtaWwuY29tIiwibmFtZSI6InJhZmFlbDAwMiIsImF2YXRhciI6bnVsbCwiaW50cm9kdWN0aW9uIjpudWxsLCJjb3ZlciI6Imh0dHBzOi8vaS5pbWd1ci5jb20vS05idHlHcS5wbmciLCJyb2xlIjpudWxsLCJjcmVhdGVkQXQiOiIyMDIyLTEyLTE3VDE0OjUzOjM3LjAwMFoiLCJ1cGRhdGVkQXQiOiIyMDIyLTEyLTE3VDE0OjUzOjM3LjAwMFoiLCJpYXQiOjE2NzEyODg4NTMsImV4cCI6MTY3Mzg4MDg1M30.7HWwxH4KHyfNeQ_BhXKccfUcuXciqaRfs-WDMPTaBRE"
+     const token = localStorage.getItem('authToken'); // 取出token
       if (token) {
       config.headers['Authorization'] = `Bearer ${token}`;
     }

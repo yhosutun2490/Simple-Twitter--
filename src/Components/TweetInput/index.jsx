@@ -2,6 +2,8 @@ import styles from "./TweetInput.module.scss";
 import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "./TweetSubmitButton";
+import { userTweet } from "../../Api/UserAPI"; //推文API
+import Swal from "sweetalert2";
 function TweetInput() {
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
@@ -14,7 +16,7 @@ function TweetInput() {
     e.style.height = e.scrollHeight + "px";
     setText(e.value);
   }
-  function handleTweetSubmit() {
+  async function handleTweetSubmit() {
     // 換行空白處理
     // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
 
@@ -27,14 +29,25 @@ function TweetInput() {
       setIsOnSubmit(true);
       return;
     }
-
-    // 用setTimeout 假設Api回傳成功後清除輸入
-    setTimeout(() => {
-      // 改回預設值狀態
+    const tweetResponse = await userTweet(text);
+    if (tweetResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "成功推文！",
+        timer: 2000,
+        icon: "success",
+        showConfirmButton: false,
+      });
       setText("");
-      setIsOnSubmit(false);
-      alert("推文成功");
-    }, 1000);
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+    }
   }
   function handleOnFocus() {
     setIsOnSubmit(false);
