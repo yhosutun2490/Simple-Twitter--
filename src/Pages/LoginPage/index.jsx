@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
-import { AuthInput } from "../../Components/AuthInput/index";
+import AuthInput from "../../Components/AuthInput";
 import { useAuth } from "../../Context/AuthContext";
 
 import Button from "../../Components/Button";
