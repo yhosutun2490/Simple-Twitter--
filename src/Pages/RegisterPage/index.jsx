@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import AuthInput from "../../Components/AuthInput";
@@ -17,7 +17,7 @@ function RegisterPage() {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const { register } = useAuth();
+  const { register, isAuthenticated } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -75,7 +75,7 @@ function RegisterPage() {
       password,
       checkPassword,
     });
-    
+
     if (success) {
       Swal.fire({
         title: "Success!",
@@ -101,6 +101,13 @@ function RegisterPage() {
   const handleFocus = () => {
     setSubmitting(false);
   };
+
+  //if user is authenticated, navigate to home page
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [navigate, isAuthenticated]);
 
   // Input blank check
   if (submitting && accountLength === 0) {
@@ -142,7 +149,11 @@ function RegisterPage() {
   }
 
   // 使用者有輸入且不是空值的時候判斷字數
-  if (passwordLength > 0 && passwordLength < 4 && !isSpaceCheck.test(password)) {
+  if (
+    passwordLength > 0 &&
+    passwordLength < 4 &&
+    !isSpaceCheck.test(password)
+  ) {
     passwordAlertMsg = "密碼不可小於4字元";
   }
 

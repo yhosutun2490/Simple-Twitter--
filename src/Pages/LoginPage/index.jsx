@@ -15,7 +15,7 @@ function LoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const navigate = useNavigate();
 
-  const { login } = useAuth();
+  const { login, isAuthenticated } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -63,6 +63,13 @@ function LoginPage() {
   const handleFocus = () => {
     setSubmitting(false);
   };
+
+  //if user is authenticated, navigate to home page
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [navigate, isAuthenticated]);
 
   // Input blank check
   if (submitting && accountLength === 0) {
