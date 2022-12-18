@@ -43,7 +43,7 @@
 .popup-head {
   padding: 15px;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   border-bottom: 1px solid #E6ECF0;
 
   .btn-close {
@@ -100,7 +100,7 @@
   padding: 0 16px;
   margin-bottom: 24px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   .error-message {
     margin-right: 20px;

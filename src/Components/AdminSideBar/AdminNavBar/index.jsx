@@ -11,7 +11,7 @@ function AdminNavBar() {
       <AcLogo className={styles["navbar-logo"]} />
       <NavBarItem>
         <NavLink
-          to={"/admin/tweet-list"}
+          to={"/admin/tweetlist"}
           className={({ isActive }) =>
             [
               `${styles["navbar-link"]}`,
@@ -23,7 +23,7 @@ function AdminNavBar() {
           <House className={styles["navbar-link__logo"]} />
         </NavLink>
         <NavLink
-          to={"/admin/tweet-list"}
+          to={"/admin/tweetlist"}
           className={({ isActive }) =>
             [
               `${styles["navbar-link"]}`,
@@ -38,7 +38,7 @@ function AdminNavBar() {
       </NavBarItem>
       <NavBarItem>
         <NavLink
-          to={"/admin/tweet-user"}
+          to={"/admin/userlist"}
           className={({ isActive }) =>
             [
               `${styles["navbar-link"]}`,

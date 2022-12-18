@@ -81,33 +81,27 @@ function LoginPage() {
       <h3 className={styles["title"]}>登入Alphitter</h3>
       {/* AuthInput group */}
       <div className={styles["authinput-group"]} onFocus={handleFocus}>
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="帳號"
-            type="text"
-            value={account}
-            placeholder="請輸入帳號"
-            onChange={setAccount}
-            isAlert={accountAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={accountAlertMsg} />
-          </div>
-        </div>
+        <AuthInput
+          label="帳號"
+          type="text"
+          value={account}
+          placeholder="請輸入帳號"
+          onChange={setAccount}
+          isAlert={accountAlertMsg.length > 0 ? true : false}
+          alertMsg={accountAlertMsg}
+          isWordCount={false}
+        />
 
-        <div className={styles["authinput-container"]}>
-          <AuthInput
-            label="密碼"
-            type="password"
-            value={password}
-            placeholder="請輸入密碼"
-            onChange={setPassword}
-            isAlert={passwordAlertMsg.length > 0 ? true : false}
-          />
-          <div className={styles["authinput-msg-box"]}>
-            <AuthInputAlert alertMsg={passwordAlertMsg} />
-          </div>
-        </div>
+        <AuthInput
+          label="密碼"
+          type="password"
+          value={password}
+          placeholder="請輸入密碼"
+          onChange={setPassword}
+          isAlert={passwordAlertMsg.length > 0 ? true : false}
+          alertMsg={passwordAlertMsg}
+          isWordCount={false}
+        />
       </div>
       <div className={styles["auth-button"]} onClick={handleClick}>
         <Button styleName="lg-bg-logo">登入</Button>
