@@ -7,7 +7,7 @@ import TweetSubmitButton from "../TweetInput/TweetSubmitButton";
 function TweetModal(props) {
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
-  const { trigger, closeEvent, userAvatar, currentUserID } = props;
+  const { trigger, closeEvent } = props;
   const [text, setText] = useState("");
   const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);

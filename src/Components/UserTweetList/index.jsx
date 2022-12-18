@@ -1,8 +1,7 @@
 import UserTweetBox from "../UserTweetBox";
-import { useState, useEffect } from "react";
 
 function UserTweetList(props) {
-  const { tweetList, selfTweet, selfAccount } = props;
+  const { tweetList, selfTweet } = props;
 
   return (
     <div>
