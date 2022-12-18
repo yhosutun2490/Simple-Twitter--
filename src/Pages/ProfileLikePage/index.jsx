@@ -46,7 +46,7 @@ function ProfileLikePage() {
         likeCount: 8,
         liked: true,
         replies: 5,
-        user: {
+        User: {
           id: 3,
           account: "Rafael202",
           name: "Rafael",
@@ -59,7 +59,7 @@ function ProfileLikePage() {
         createdAt: "2022-11-17T15:32:31.000z",
         updatedAt: "2022-11-17T15:32:31.000z",
         liked: true,
-        user: {
+        User: {
           id: 2,
           account: "Rubyhelen",
           name: "Ruby",

@@ -25,7 +25,7 @@ function ProfilePage() {
       description: "大家都很棒",
       repliesCount: 5,
       likeCount: 8,
-      user: {
+      User: {
         account: "NatsuTW",
         id: 1,
         name: "Natsu",
@@ -38,7 +38,7 @@ function ProfilePage() {
       description: "大家都很棒22",
       repliesCount: 7,
       likeCount: 10,
-      user: {
+      User: {
         account: "NatsuTW",
         id: 1,
         name: "Natsu",
@@ -51,7 +51,7 @@ function ProfilePage() {
       description: "大家都很棒，隊友加油~!!!",
       repliesCount: 7,
       likeCount: 10,
-      user: {
+      User: {
         account: "NatsuTW",
         id: 1,
         name: "Natsu",
@@ -64,7 +64,7 @@ function ProfilePage() {
       description: "大家都很棒，隊友加油~!!!",
       repliesCount: 7,
       likeCount: 10,
-      user: {
+      User: {
         account: "NatsuTW",
         id: 1,
         name: "Natsu",
