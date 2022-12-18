@@ -1,6 +1,6 @@
 import styles from "./UserTweetBox.module.scss";
 import { Link } from "react-router-dom";
-import { ReactComponent as Avatar } from "../../assets/icons/AcLogo.svg";
+// import { ReactComponent as Avatar } from "../../assets/icons/AcLogo.svg";
 import ReplyIconButton from "../ReplyIconButton";
 import UserInfo from "./UserInfo";
 import LikeFullIconButton from "../LikeFullIconButton";
@@ -27,10 +27,7 @@ function UserTweetBox(props) {
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
         <Link to={`/user/${tweeterID}`}>
-          <img
-            src={avatar ? avatar : "https://picsum.photos/50/50"}
-            className={styles["avatar-img"]}
-          />
+          <img src={Avatar} className={styles["avatar-img"]} alt="avatar-img" />
         </Link>
       </div>
       <div className={styles["tweet-detail"]}>

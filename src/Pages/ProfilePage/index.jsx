@@ -1,7 +1,7 @@
 import styles from "./ProfilePage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
-import { useEffect, useState, useRef } from "react";
+import { useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 function ProfilePage() {
@@ -10,7 +10,7 @@ function ProfilePage() {
   // 置頂功能
   const containerRef = useRef(null);
   function scrollTop() {
-    containerRef.current.scrollTo({top:0, behavior: 'smooth'});
+    containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
   }
   // 目前頁面瀏覽者ID
   const { pathname } = useLocation();

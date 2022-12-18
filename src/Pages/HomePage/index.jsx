@@ -7,9 +7,7 @@ import { getAllTweets } from "../../Api/TweetAPI";
 function HomePage() {
   const [tweetList, setTweetList] = useState("");
   const containerRef = useRef(null);
-  console.log(tweetList);
-
-  // 點擊置頂功能
+  // 點擊置頂功能 (test auto deploy)
   function scrollTop() {
     containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
   }

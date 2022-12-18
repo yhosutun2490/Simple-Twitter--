@@ -9,7 +9,7 @@ import { ReactComponent as Gear } from "../../../assets/icons/gear.svg";
 import TweetButtonSideBar from "./TweetButtonSideBar";
 
 function UserNavBar(props) {
-  const { userAvatar, curretUserID } = props;
+  // const { userAvatar, curretUserID } = props;
   // 個人資料頁使用者id 暫定為1
   const currentUserID = 1;
   return (
