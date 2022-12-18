@@ -1,13 +1,12 @@
 import { createContext } from "react";
-// import { useEffect } from "react";
-// import { useLocation } from "react-router-dom";
-import { useContext } from "react";
-import { login, register } from '../Api/AuthAPI'
+import { useState, useEffect, useContext } from "react";
+import { useLocation } from 'react-router-dom';
+import { login, register, checkPermission } from '../Api/AuthAPI'
 
 // 設定一開始context 預設值
 const defaultValue = {
   isAuthenticated: false, //是否通過後端驗證
-  currentMember: null,  //現在使用者是誰
+  currentUser: null,  //現在使用者資料
   register: null, //註冊function
   login: null, //登入function
   logout: null, // 登出function
@@ -18,36 +17,70 @@ const AuthContext = createContext(defaultValue)
 const useAuth = () => useContext(AuthContext)
 
 function AuthProvider(props) {
-  // 先放兩個狀態，一個是登入驗證是否還有效，一個拿來裝payload使用者資料
-  // const [isAuthenticated, setIsAuthenticated] = useState(false)
-  // const [payload, setPayload] = useState(false)
+  // 先放兩個狀態，一個是登入驗證是否還有效，一個拿來裝api回傳的使用者資料
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [userData, setUserData] = useState("")
+
+  const { pathname } = useLocation(); //current page
+
+  useEffect(() => {
+    const checkTokenIsValid = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setIsAuthenticated(false);
+        setUserData(null);
+        return;
+      }
+      const result = await checkPermission(token);
+
+      if (result === '200') {
+        setIsAuthenticated(true);
+        // 待後端更新api後增加這一行
+        // setUserData(後端回傳的最新個人資料)
+
+      } else {
+        setIsAuthenticated(false);
+        setUserData(null);
+      }
+    };
+    checkTokenIsValid();
+  }, [pathname]);
+
   return (
     <AuthContext.Provider value={
       {
+        isAuthenticated,
+        currentUser: userData,
         register: async (data) => {
-          const { success, token } = await register({ 
+          const { success, token, user } = await register({ 
             account: data.account, 
             name: data.nameTrimmed, 
             email: data.email, 
             password: data.password, 
             checkPassword: data.checkPassword });
           if (token) {
+            setIsAuthenticated(true);
+            setUserData(user)
             localStorage.setItem('authToken', token);
           }
           return success
         },
         login: async (data) => {
-          const { success, token } = await login({
+          const { success, token, user } = await login({
             account: data.accountTrimmed,
             password: data.passwordTrimmed,
           });
           if (token) {
+            setIsAuthenticated(true);
+            setUserData(user)
             localStorage.setItem('authToken', token);
           }
           return success;
         },
         logout: () => {
           localStorage.removeItem('authToken');
+          setUserData(null);
+          setIsAuthenticated(false);
         }
       }
     }>
