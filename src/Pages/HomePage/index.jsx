@@ -7,7 +7,7 @@ import { getAllTweets } from "../../Api/TweetAPI";
 function HomePage() {
   const [tweetList, setTweetList] = useState("");
   const containerRef = useRef(null);
-  console.log(tweetList)
+  console.log(tweetList);
 
   // 點擊置頂功能
   function scrollTop() {
@@ -36,7 +36,7 @@ function HomePage() {
         <TweetInput />
       </div>
       <div className={styles["tweet-list"]}>
-        <UserTweetList tweetList={tweetList}/>
+        <UserTweetList tweetList={tweetList} />
       </div>
     </div>
   );
