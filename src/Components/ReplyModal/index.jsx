@@ -1,7 +1,6 @@
 import styles from "./ReplyModal.module.scss";
 import { ReactComponent as Close } from "../../assets/icons/cross_orange.svg";
-import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
-// import AcLogo from "../../assets/icons/AcLogo.svg";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 import ReplyTweetButton from "./ReplyTweetButton";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
@@ -16,8 +15,7 @@ function ReplyModal(props) {
     tweeterAccount,
     tweeterName,
     content,
-    // userAvatar,
-    // userID,
+    userAvatar,
     update,
   } = props;
   // 回覆文字狀態紀錄
@@ -73,7 +71,11 @@ function ReplyModal(props) {
         <div className={styles["popup-body"]}>
           <div className={styles["tweet-info-body"]}>
             <div className={styles["avatar-main"]}>
-              <img src={tweeterAvatar} className={styles["tweeter-avatar"]} alt="tweet-avatar"/>
+              <img
+                src={tweeterAvatar ? tweeterAvatar : avatarDefault}
+                className={styles["tweeter-avatar"]}
+                alt="tweet-avatar"
+              />
               <div className={styles["connect-line"]}></div>
             </div>
             <div className={styles["tweet-content-info"]}>
@@ -91,7 +93,11 @@ function ReplyModal(props) {
           </div>
           <div className={styles["input-main-body"]}>
             <div className={styles["user-avatar"]}>
-              <Avatar />
+              <img
+                className={styles["avatar-img"]}
+                src={userAvatar !== null ? userAvatar : avatarDefault}
+                alt="user-avatar"
+              />
             </div>
             <div className={styles["input-body"]} onFocus={handleOnFocus}>
               <textarea

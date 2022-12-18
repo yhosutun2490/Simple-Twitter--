@@ -32,8 +32,7 @@ function ReplyIconButton(props) {
         tweeterName={name}
         content={content}
         update={update}
-        userAvatar
-        userId
+        userAvatar={Avatar}
       />
       <div className={styles["container"]} onClick={handleClick}>
         <Reply className={styles[size]} />
