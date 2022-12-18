@@ -3,8 +3,10 @@ import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "./TweetSubmitButton";
 import { userTweet } from "../../Api/UserAPI"; //推文API
+import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
 import Swal from "sweetalert2";
-function TweetInput() {
+function TweetInput(props) {
+  const { setTweetList } = props;
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
   // 判斷使用者是否回到輸入狀態
@@ -39,6 +41,9 @@ function TweetInput() {
         showConfirmButton: false,
       });
       setText("");
+      // 成功推文後要即時更新資料
+      const apiAllTweet = await getAllTweets();
+      setTweetList(apiAllTweet);
     } else {
       Swal.fire({
         position: "top",

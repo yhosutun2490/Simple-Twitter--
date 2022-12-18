@@ -31,7 +31,7 @@ function HomePage() {
         首頁
       </div>
       <div className={styles["tweet-input"]}>
-        <TweetInput setTweetList={setTweetList}/>
+        <TweetInput setTweetList={setTweetList} />
       </div>
       <div className={styles["tweet-list"]}>
         <UserTweetList tweetList={tweetList} />
