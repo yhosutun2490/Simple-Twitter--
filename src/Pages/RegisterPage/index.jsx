@@ -145,7 +145,7 @@ function RegisterPage() {
   }
 
   if (nameLength > nameLengthLimit) {
-    nameAlertMsg = "密碼字數超出上限";
+    nameAlertMsg = "名稱字數超出上限";
   }
 
   // 使用者有輸入且不是空值的時候判斷字數
