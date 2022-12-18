@@ -46,6 +46,9 @@ function AuthProvider(props) {
           }
           return success;
         },
+        logout: () => {
+          localStorage.removeItem('authToken');
+        }
       }
     }>
       {props.children}
