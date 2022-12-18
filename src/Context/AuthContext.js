@@ -2,7 +2,7 @@ import { createContext } from "react";
 // import { useEffect } from "react";
 // import { useLocation } from "react-router-dom";
 import { useContext } from "react";
-import { login } from '../Api/AuthAPI'
+import { login, register } from '../Api/AuthAPI'
 
 // 設定一開始context 預設值
 const defaultValue = {
@@ -24,6 +24,18 @@ function AuthProvider(props) {
   return (
     <AuthContext.Provider value={
       {
+        register: async (data) => {
+          const { success, token } = await register({ 
+            account: data.account, 
+            name: data.nameTrimmed, 
+            email: data.email, 
+            password: data.password, 
+            checkPassword: data.checkPassword });
+          if (token) {
+            localStorage.setItem('authToken', token);
+          }
+          return success
+        },
         login: async (data) => {
           const { success, token } = await login({
             account: data.accountTrimmed,
