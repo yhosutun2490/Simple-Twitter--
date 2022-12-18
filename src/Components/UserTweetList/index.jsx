@@ -14,7 +14,7 @@ function UserTweetList(props) {
             update={data?.updatedAt}
             content={data?.description}
             tweetNumber={data?.repliesCount}
-            likeNumber={data?.likeCount}
+            likesNumber={data?.likeCount}
             tweetID={data?.id}
             isLike={data?.liked}
           />
@@ -23,14 +23,14 @@ function UserTweetList(props) {
         tweetList?.map((data) => (
           <UserTweetBox
             key={data.id}
-            tweeterAccount={data?.account}
-            tweeterName={data?.name}
+            tweeterAccount={data?.User.account}
+            tweeterName={data?.User.name}
             tweeterID={data.User?.id}
             avatar={data.User?.avatar}
             update={data?.cratedAt}
             content={data?.description}
             tweetNumber={data?.replyCount}
-            likeNumber={data?.LikeCount}
+            likesNumber={data?.LikeCount}
             tweetID={data?.id}
             isLike={data?.ifliked}
           />

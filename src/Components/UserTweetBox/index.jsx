@@ -61,9 +61,7 @@ function UserTweetBox(props) {
                 update={update}
               />
             </div>
-            <p className={styles["reply-number"]}>
-              {tweetNumber ? tweetNumber : 16}
-            </p>
+            <p className={styles["reply-number"]}>{tweetNumber}</p>
           </div>
           <div className={styles["tweet-social-group"]}>
             {isLike ? (
@@ -76,9 +74,7 @@ function UserTweetBox(props) {
               </div>
             )}
 
-            <p className={styles["like-number"]}>
-              {likesNumber ? likesNumber : 5}
-            </p>
+            <p className={styles["like-number"]}>{likesNumber}</p>
           </div>
         </div>
       </div>
