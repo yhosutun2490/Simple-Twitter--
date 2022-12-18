@@ -7,11 +7,11 @@ import { ReactComponent as House } from "../../../assets/icons/house.svg";
 import { ReactComponent as Head } from "../../../assets/icons/head.svg";
 import { ReactComponent as Gear } from "../../../assets/icons/gear.svg";
 import TweetButtonSideBar from "./TweetButtonSideBar";
+import { useAuth } from "../../../Context/AuthContext";
 
-function UserNavBar(props) {
-  // const { userAvatar, curretUserID } = props;
-  // 個人資料頁使用者id 暫定為1
-  const currentUserID = 1;
+function UserNavBar() {
+  const currentUserInfo = useAuth().currentUser;
+
   return (
     <div className={styles["container"]}>
       <AcLogo className={styles["navbar-logo"]} />
@@ -44,7 +44,7 @@ function UserNavBar(props) {
       </NavBarItem>
       <NavBarItem>
         <NavLink
-          to={`/user/${currentUserID}`}
+          to={`/user/${currentUserInfo.id}`}
           className={({ isActive }) =>
             [
               `${styles["navbar-link"]}`,
@@ -82,7 +82,7 @@ function UserNavBar(props) {
           <p className={styles["navbar-link__title"]}>設定</p>
         </NavLink>
       </NavBarItem>
-      <TweetButtonSideBar userAvatar curretUserID>
+      <TweetButtonSideBar avatar={currentUserInfo.avatar}>
         推文
       </TweetButtonSideBar>
       <div className={styles["logout-btn"]}>

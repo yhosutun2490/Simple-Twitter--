@@ -8,7 +8,6 @@ export const login = async ({ account, password }) => {
       account,
       password,
     });
-
     const { token } = data;
 
     if (token) {
