@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import AuthInput from "../../Components/AuthInput";
+import { useAuth } from "../../Context/AuthContext";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
+import Swal from "sweetalert2";
 
 function RegisterPage() {
   // State Variable
@@ -13,6 +15,9 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
+
+  const { register } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -35,10 +40,10 @@ function RegisterPage() {
     /^\w+((-\w+)|(\.\w+))*@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
 
   //Check if there is space in the input value
-  const isSpaceCheck = /\s/
+  const isSpaceCheck = /\s/;
 
   // 注意現在state裡面存的value頭尾沒有消空白傳入header需要trim()，消除頭尾的空白
-  const handleClick = () => {
+  const handleClick = async () => {
     setSubmitting(true);
 
     if (accountLength === 0 || accountAlertMsg.length > 0) {
@@ -61,7 +66,35 @@ function RegisterPage() {
       return;
     }
     // If all input value is valid
-    alert("success");
+    // refactor the value of account and password
+    const nameTrimmed = name.trim();
+    const success = await register({
+      account,
+      nameTrimmed,
+      email,
+      password,
+      checkPassword,
+    });
+    
+    if (success) {
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+      navigate("/home");
+      return;
+    } else {
+      Swal.fire({
+        title: "Failed...",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+    }
   };
 
   // When user focus on the input clear the alert message
@@ -91,8 +124,8 @@ function RegisterPage() {
   }
 
   //space including check
-  if(isSpaceCheck.test(account)) {
-    accountAlertMsg="不可有空白"
+  if (isSpaceCheck.test(account)) {
+    accountAlertMsg = "不可有空白";
   }
 
   if (isSpaceCheck.test(password)) {
@@ -108,7 +141,8 @@ function RegisterPage() {
     nameAlertMsg = "密碼字數超出上限";
   }
 
-  if (passwordLength > 0 && passwordLength < 4) {
+  // 使用者有輸入且不是空值的時候判斷字數
+  if (passwordLength > 0 && passwordLength < 4 && !isSpaceCheck.test(password)) {
     passwordAlertMsg = "密碼不可小於4字元";
   }
 
