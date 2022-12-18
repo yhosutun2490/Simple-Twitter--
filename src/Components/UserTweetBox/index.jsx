@@ -27,7 +27,7 @@ function UserTweetBox(props) {
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
         <Link to={`/user/${tweeterID}`}>
-          <img src={Avatar} className={styles["avatar-img"]} alt="avatar-img" />
+          <img src={avatar} className={styles["avatar-img"]} alt="avatar-img" />
         </Link>
       </div>
       <div className={styles["tweet-detail"]}>
@@ -48,7 +48,7 @@ function UserTweetBox(props) {
           <div className={styles["tweet-social-group"]}>
             <div className={styles["reply-link"]}>
               <ReplyIconButton
-                Avatar={Avatar}
+                Avatar={avatar}
                 currentUserAvatar
                 currentUserID
                 tweetID={tweetID}
