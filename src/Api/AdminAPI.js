@@ -19,6 +19,7 @@ axiosInstance.interceptors.request.use(
   },
 );
 
+// Admin login
 export const adminLogin = async ({ account, password }) => {
   try {
     const { data } = await axios.post(`${baseUrl}/login`, {
@@ -41,6 +42,7 @@ export const adminLogin = async ({ account, password }) => {
   }
 };
 
+// Admin get all tweets
 export const adminGetAllTweets = async () => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/tweets`)
@@ -50,6 +52,17 @@ export const adminGetAllTweets = async () => {
   }
 }
 
+// Admin delete tweets
+export const adminDeleteTweet = async (id) => {
+  try {
+    const res = await axiosInstance.delete(`${baseUrl}/tweets/${id}`)
+    return res.data
+  } catch (error) {
+    console.error('[Admin Delete Tweet failed]: ', error)
+  }
+}
+
+// Admin get all users
 export const adminGetAllUsers = async () => {
   try {
     const res = await axiosInstance.get(`${baseUrl}/users`)
