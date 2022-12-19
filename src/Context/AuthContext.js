@@ -23,6 +23,8 @@ function AuthProvider(props) {
   const [userData, setUserData] = useState("")
 
   const { pathname } = useLocation(); //current page
+ 
+
 
   useEffect(() => {
     const checkTokenIsValid = async () => {
@@ -32,7 +34,10 @@ function AuthProvider(props) {
         setUserData(null);
         return;
       }
+      // if ( token && role=== user) {}
+    
       const result = await checkPermission(token);
+   
 
       if (result === '200') {
         setIsAuthenticated(true);
