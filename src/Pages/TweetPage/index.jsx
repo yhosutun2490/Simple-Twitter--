@@ -9,7 +9,6 @@ import { getOneTweetReplies } from "../../Api/RepliesAPI";
 import { useLocation } from "react-router-dom";
 
 function TweetPage() {
-  const [isLiked, setIsLiked] = useState(false);
   const [mainTweetInfo, setMainTweetInfo] = useState("");
   const [replies, setRplies] = useState("");
   const containerRef = useRef(null);
@@ -40,7 +39,7 @@ function TweetPage() {
         const apiOneTweetRplies = await getOneTweetReplies(tweetID); // 等待資料回傳後渲染
         setRplies(apiOneTweetRplies);
       } catch (error) {
-        console.error("initialize OneTweetPage error", error);
+        console.error("initialize OneTweetReply Data error", error);
       }
     };
     apiTweetsRplies();
