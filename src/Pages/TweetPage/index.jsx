@@ -6,13 +6,16 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getOneTweet } from "../../Api/TweetAPI";
 import { getOneTweetReplies } from "../../Api/RepliesAPI";
+import { useLocation } from "react-router-dom";
 
 function TweetPage() {
   const [isLiked, setIsLiked] = useState(false);
   const [mainTweetInfo, setMainTweetInfo] = useState("");
   const [replies, setRplies] = useState("");
   const containerRef = useRef(null);
-
+  const { pathname } = useLocation();
+  // 抓取路由tweet id 名稱
+  const tweetID = Number(pathname.split("/")[2]);
   // 點擊置頂功能
   function scrollTop() {
     containerRef.current.scrollTo({ top: 0, behavior: "smooth" });
@@ -22,26 +25,26 @@ function TweetPage() {
     // 定義初始資料fetch api
     const apiTweets = async () => {
       try {
-        const apiOneTweet = await getOneTweet(); // 等待資料回傳後渲染
+        const apiOneTweet = await getOneTweet(tweetID); // 等待資料回傳後渲染
         setMainTweetInfo(apiOneTweet);
       } catch (error) {
         console.error("initialize OneTweetPage error", error);
       }
     };
     apiTweets();
-  }, []);
+  }, [tweetID]);
   useEffect(() => {
     // 定義初始資料fetch api
     const apiTweetsRplies = async () => {
       try {
-        const apiOneTweetRplies = await getOneTweetReplies(); // 等待資料回傳後渲染
+        const apiOneTweetRplies = await getOneTweetReplies(tweetID); // 等待資料回傳後渲染
         setRplies(apiOneTweetRplies);
       } catch (error) {
         console.error("initialize OneTweetPage error", error);
       }
     };
     apiTweetsRplies();
-  }, []);
+  }, [tweetID]);
   return (
     <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title-wrap"]}>
@@ -54,15 +57,10 @@ function TweetPage() {
         </p>
       </div>
       <div className={styles["tweet-info-wrap"]}>
-        <TweetInfo
-          isLiked={isLiked}
-          setLikeEvent={setIsLiked}
-          mainTweetInfo={mainTweetInfo}
-          likeEvent={setIsLiked}
-        />
+        <TweetInfo mainTweetInfo={mainTweetInfo} />
       </div>
       <div className={styles["tweet-reply-wrap"]}>
-        <ReplyList repliesData={replies} mainTweetInfo={mainTweetInfo} />
+        <ReplyList repliesData={replies} />
       </div>
     </div>
   );

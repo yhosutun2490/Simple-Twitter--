@@ -23,7 +23,6 @@ function PopularUserList() {
     };
     apiTweets();
   }, []);
-  console.log(topFollower);
 
   // 之後設定PopularUserCard以map渲染
   return (

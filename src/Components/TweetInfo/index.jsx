@@ -2,30 +2,41 @@ import styles from "./TweetInfo.module.scss";
 import ReplyIconButton from "../ReplyIconButton";
 import LikeIconButton from "../LikeIconButton";
 import LikeFullIconButton from "../LikeFullIconButton";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 import { getChineseDate, TimeMeridiem } from "../../CostumHook/TransFormDate";
+import { Link } from "react-router-dom";
 function TweetInfo(props) {
   // 使用到的props參數
-  const { mainTweetInfo, isLiked, likeEvent } = props;
-  const data = mainTweetInfo ? mainTweetInfo[0] : "";
+  const { mainTweetInfo } = props;
+  const data = mainTweetInfo ? mainTweetInfo : "";
   // 愛心變換樣式
-  function handleLikeClick() {
-    likeEvent(!isLiked);
-  }
+  // function handleLikeClick() {
+  //   likeEvent(!isLiked);
+  // }
   // 提出mainTweetInfo資料
-  const avatar = data?.user?.avatar;
-  const name = data?.user?.name;
-  const account = data?.user?.account;
+  const avatar = data?.User?.avatar;
+  const name = data?.User?.name;
+  const account = data?.User?.account;
+  const userID = data?.User?.id;
   const content = data?.description;
   const update = data?.createdAt;
-  const repliesTimes = data?.replies?.length;
-  const likeTimes = data?.liked ? data.liked : "";
-  const date = getChineseDate(update);
-  const time = TimeMeridiem(update);
+  const repliesTimes = data?.replyCount;
+  const likeTimes = data?.likeCount;
+  const date = getChineseDate(data?.createdAt);
+  const isLike = data?.isLiked;
+  const time = TimeMeridiem(data?.createdAt);
   const tweetID = data?.id;
   return (
     <div className={styles["container"]}>
       <div className={styles["tweet-user-info"]}>
-        <img src={avatar} alt="user-avatar" className={styles["user-avatar"]} />
+        <Link to={`/user/${userID}`}>
+          <img
+            src={avatar ? avatar : avatarDefault}
+            alt="user-avatar"
+            className={styles["user-avatar"]}
+          />
+        </Link>
+
         <div className={styles["user-name-group"]}>
           <p className={styles["name"]}>{name}</p>
           <p className={styles["account"]}>@{account}</p>
@@ -59,8 +70,8 @@ function TweetInfo(props) {
             update={update}
           />
         </div>
-        <div className={styles["like-icon"]} onClick={handleLikeClick}>
-          {isLiked ? (
+        <div className={styles["like-icon"]}>
+          {isLike ? (
             <LikeFullIconButton large={true} />
           ) : (
             <LikeIconButton large={true} />
