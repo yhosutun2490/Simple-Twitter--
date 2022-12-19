@@ -29,13 +29,14 @@ function AdminLoginPage() {
       return;
     }
     // If all input value is valid
-    const { success } = await adminLogin({
+    const { success, token} = await adminLogin({
       account,
       password,
     });
 
     // 待後端把錯誤訊息補上補上實作錯誤訊息
     if (success) {
+      localStorage.setItem("authToken", token);
       Swal.fire({
         title: "Success!",
         icon: "success",
