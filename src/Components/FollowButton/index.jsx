@@ -3,7 +3,7 @@ function FollowButton(props) {
   // 設定本人id，傳入的使用者id，跟隨狀態，如果是使用者本人不顯示跟隨按鈕
   const { currentUserID, id, isFollow } = props;
   return Number(currentUserID) === Number(id) ? (
-    <div>是本人~!</div>
+    <div></div>
   ) : !isFollow ? (
     <button className={styles["follow-btn"]}>跟隨</button>
   ) : (
