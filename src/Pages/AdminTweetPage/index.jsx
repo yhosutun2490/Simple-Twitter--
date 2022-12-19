@@ -3,7 +3,8 @@ import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_dele
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
-import { adminGetAllTweets } from "../../Api/AdminAPI";
+import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
+import Swal from "sweetalert2";
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
@@ -45,39 +46,43 @@ function AdminTweetBox(props) {
 
 function AdminTweetPage() {
   const [tweetList, setTweetList] = useState([]);
+  const [deleteTrigger, setDeleteTrigger] = useState(false); //delete function是否被觸發
 
-  //Delete function
-  //  const handleDelete = async (id) => {
-  //   try {
-  //     await deleteTodo(id);
+  const getAllTweetsAsync = async () => {
+    try {
+      const data = await adminGetAllTweets();
+      setTweetList(data);
+      setDeleteTrigger(false);
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  //     setTweetList((preTweetList) => {
-  //       return preTweetList.filter((tweet) => tweet.id !== id);
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // };
-
-  const handleDelete = (id) => {
-    setTweetList((preTweetList) => {
-      return preTweetList.filter((tweet) => tweet.id !== id);
-    });
+  const handleDelete = async (id) => {
+    try {
+      await adminDeleteTweet(id);
+      setDeleteTrigger(true);
+      Swal.fire({
+        title: "刪除成功",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      }); 
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    const getAllTweetsAsync = async () => {
-      try {
-        const data = await adminGetAllTweets();
-        setTweetList(data);
-        console.log(data)
-      } catch (error) {
-        console.log(error);
-      }
-    };
     getAllTweetsAsync();
   }, []);
+
+  //如果delete function被觸發，再次向後端重新請求tweet list
+  if(deleteTrigger) {
+    getAllTweetsAsync()
+  }
 
   return (
     <div className={styles["container"]}>
