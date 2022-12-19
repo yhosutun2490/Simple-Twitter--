@@ -32,3 +32,16 @@ export const getOneTweetReplies = async (id) => {
   }
 
 }
+
+// 回覆某一則貼文
+export const replyOneTweet  = async(id,text) => {
+    try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${id}/replies`,{"comment":text})
+    return res
+  }
+  catch (error) {
+    console.error('[Post OneTweetReply Data failed]: ', error);
+  }
+
+
+}

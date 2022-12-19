@@ -11,8 +11,10 @@ import { useLocation } from "react-router-dom";
 function TweetPage() {
   const [mainTweetInfo, setMainTweetInfo] = useState("");
   const [replies, setRplies] = useState("");
+  const mainTweeter = mainTweetInfo?.User?.account;
   const containerRef = useRef(null);
   const { pathname } = useLocation();
+  console.log(replies);
   // 抓取路由tweet id 名稱
   const tweetID = Number(pathname.split("/")[2]);
   // 點擊置頂功能
@@ -59,7 +61,7 @@ function TweetPage() {
         <TweetInfo mainTweetInfo={mainTweetInfo} />
       </div>
       <div className={styles["tweet-reply-wrap"]}>
-        <ReplyList repliesData={replies} />
+        <ReplyList repliesData={replies} mainTweeter={mainTweeter} />
       </div>
     </div>
   );

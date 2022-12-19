@@ -5,18 +5,28 @@ import ReplyTweetButton from "./ReplyTweetButton";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
+import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文API
+import { getOneTweet } from "../../Api/TweetAPI"; //取得單支貼文資訊API
+import { getOneTweetReplies } from "../../Api/RepliesAPI"; //取得單支貼文列表API
+import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
+import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
+import Swal from "sweetalert2";
 function ReplyModal(props) {
+  // 目前位置名稱
+  const { pathname } = useLocation();
+  const nowPageName = pathname.split("/")[1]; //判斷 現在在home 還是 tweet
   // 設定props 打開與否和關閉事件
   const {
     trigger,
     closeEvent,
-    // tweetID,
+    tweetID,
     tweeterAvatar,
     tweeterAccount,
     tweeterName,
     content,
     userAvatar,
     update,
+    setAllTweetList, //三個狀態同步畫面
   } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
@@ -32,12 +42,41 @@ function ReplyModal(props) {
     setText(e.value);
   }
   // 處理回覆貼文送出
-  function handleReplyTweet() {
+  async function handleReplyTweet() {
     if (text.length > 140) {
       return;
     }
     if (text.length === 0) {
       setIsBlank(true);
+    }
+    const tweetResponse = await replyOneTweet(tweetID, text);
+    console.log(tweetResponse);
+    if (tweetResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "成功推文！",
+        timer: 2000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setText("");
+      // 成功回覆推文後要再更新資料(homepage)
+      if (nowPageName === "home") {
+        const newTweetListData = await getAllTweets(); //取得最新所有貼文
+        setAllTweetList(newTweetListData); // 刷新tweetlist (homepage)
+        closeEvent(false); //關掉彈窗
+      }
+
+      // 關閉視窗
+      closeEvent(false);
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
     }
   }
   // 使用者重複輸入時，不重複顯示空白提示

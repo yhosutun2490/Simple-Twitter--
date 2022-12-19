@@ -6,7 +6,9 @@ import UserInfo from "./UserInfo";
 import LikeFullIconButton from "../LikeFullIconButton";
 import LikeIconButton from "../LikeIconButton";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
+import { useTweetList } from "../../Context/TweetContext"; //控制homePageTweetLsit的狀態更新
 function UserTweetBox(props) {
+  const { setAllTweetList } = useTweetList(); //刷新tweetList的set function
   // 先設定好要傳入的資料props
   // 資料要傳給ReplyIconButton 跳窗才會正常顯示資料
   const {
@@ -60,6 +62,7 @@ function UserTweetBox(props) {
                 name={tweeterName}
                 account={tweeterAccount}
                 update={update}
+                setAllTweetList={setAllTweetList}
               />
             </div>
             <p className={styles["reply-number"]}>{tweetNumber}</p>

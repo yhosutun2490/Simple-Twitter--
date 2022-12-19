@@ -6,7 +6,7 @@ import { getAllTweets } from "../../Api/TweetAPI";
 import { useTweetList } from "../../Context/TweetContext"; //引入context
 
 function HomePage() {
-  const { allTweetList, setAllTweetList } = useTweetList();
+  const { allTweetList, setAllTweetList } = useTweetList(); //由外層總狀態管理
   const containerRef = useRef(null);
   // 點擊置頂功能 (test auto deploy)
   function scrollTop() {

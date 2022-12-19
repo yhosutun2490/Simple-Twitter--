@@ -38,8 +38,8 @@ function TweetInfo(props) {
         </Link>
 
         <div className={styles["user-name-group"]}>
-          <p className={styles["name"]}>{name}</p>
-          <p className={styles["account"]}>@{account}</p>
+          <p className={styles["name"]}>{name ? name : "Apple"}</p>
+          <p className={styles["account"]}>@{account ? account : "apple"}</p>
         </div>
       </div>
       <div className={styles["tweet-content"]}>{content}</div>
