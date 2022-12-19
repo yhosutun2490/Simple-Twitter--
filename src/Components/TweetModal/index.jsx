@@ -6,16 +6,20 @@ import avatarDefault from "../../assets/icons/AcLogo.svg";
 import { useTweetList } from "../../Context/TweetContext"; //引入context推文同步更新用
 import { userTweet } from "../../Api/UserAPI"; //推文API
 import { getAllTweets } from "../../Api/TweetAPI";
+import { useAuth } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 function TweetModal(props) {
   // 設定推文列表清單的狀態
   const { setAllTweetList } = useTweetList();
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
-  const { trigger, closeEvent, avatar } = props;
+  const { trigger, closeEvent } = props;
   const [text, setText] = useState("");
   const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);
+  // 使用者個人資料
+  const { currentUser } = useAuth();
+  const currentUserAvatar = currentUser.avatar;
 
   //  textarea輸入框隨使用者輸入高度變化
   function textAreaChange(e) {
@@ -88,7 +92,7 @@ function TweetModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-avatar"]}>
             <img
-              src={avatar ? avatar : avatarDefault}
+              src={currentUserAvatar ? currentUserAvatar : avatarDefault}
               alt="avatar-img"
               className={styles["avatar-img"]}
             />

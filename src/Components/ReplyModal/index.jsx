@@ -5,6 +5,7 @@ import ReplyTweetButton from "./ReplyTweetButton";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
+import { useAuth } from "../../Context/AuthContext";
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文API
 import { getOneTweet } from "../../Api/TweetAPI"; //取得單支貼文資訊API
 import { getOneTweetReplies } from "../../Api/RepliesAPI"; //取得單支貼文列表API
@@ -25,7 +26,6 @@ function ReplyModal(props) {
     tweeterAccount,
     tweeterName,
     content,
-    userAvatar,
     update,
     setAllTweetList, //三個同步畫面的setFunction
     setReplies,
@@ -39,6 +39,10 @@ function ReplyModal(props) {
   const textAreaRef = useRef(null);
   // 日期資料轉換
   const date = TimeFromNow(update);
+  // 使用者個人資料
+  const { currentUser } = useAuth();
+  const currentUserAvatar = currentUser.avatar;
+
   function textAreaChange(e) {
     e.style.height = "auto";
     e.style.height = e.scrollHeight + "px";
@@ -145,7 +149,7 @@ function ReplyModal(props) {
             <div className={styles["user-avatar"]}>
               <img
                 className={styles["avatar-img"]}
-                src={userAvatar !== null ? userAvatar : avatarDefault}
+                src={currentUserAvatar ? currentUserAvatar : avatarDefault}
                 alt="user-avatar"
               />
             </div>
