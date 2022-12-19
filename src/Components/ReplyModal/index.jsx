@@ -15,6 +15,7 @@ function ReplyModal(props) {
   // 目前位置名稱
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[1]; //判斷 現在在home 還是 tweet
+  const currentTweetID = pathname.split("/")[2]; //現在回覆文的ID
   // 設定props 打開與否和關閉事件
   const {
     trigger,
@@ -26,7 +27,9 @@ function ReplyModal(props) {
     content,
     userAvatar,
     update,
-    setAllTweetList, //三個狀態同步畫面
+    setAllTweetList, //三個同步畫面的setFunction
+    setReplies,
+    setMainTweetInfo,
   } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
@@ -66,7 +69,15 @@ function ReplyModal(props) {
         setAllTweetList(newTweetListData); // 刷新tweetlist (homepage)
         closeEvent(false); //關掉彈窗
       }
-
+      // 在推文回覆列表頁後更新資料
+      if (nowPageName === "tweet") {
+        const newRepliesData = await getOneTweetReplies(currentTweetID); //取得最新單一貼文回覆資料
+        setReplies(newRepliesData);
+        const newMainTweetData = await getOneTweet(currentTweetID); //取得單一推文主資料
+        setMainTweetInfo(newMainTweetData);
+        closeEvent(false); //關掉彈窗
+        return;
+      }
       // 關閉視窗
       closeEvent(false);
     } else {

@@ -58,7 +58,11 @@ function TweetPage() {
         </p>
       </div>
       <div className={styles["tweet-info-wrap"]}>
-        <TweetInfo mainTweetInfo={mainTweetInfo} />
+        <TweetInfo
+          mainTweetInfo={mainTweetInfo}
+          setReplies={setRplies}
+          setMainTweetInfo={setMainTweetInfo}
+        />
       </div>
       <div className={styles["tweet-reply-wrap"]}>
         <ReplyList repliesData={replies} mainTweeter={mainTweeter} />

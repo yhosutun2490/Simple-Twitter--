@@ -7,7 +7,7 @@ import { getChineseDate, TimeMeridiem } from "../../CostumHook/TransFormDate";
 import { Link } from "react-router-dom";
 function TweetInfo(props) {
   // 使用到的props參數
-  const { mainTweetInfo } = props;
+  const { mainTweetInfo, setReplies, setMainTweetInfo } = props;
   const data = mainTweetInfo ? mainTweetInfo : "";
   // 愛心變換樣式
   // function handleLikeClick() {
@@ -68,6 +68,8 @@ function TweetInfo(props) {
             name={name}
             account={account}
             update={update}
+            setReplies={setReplies}
+            setMainTweetInfo={setMainTweetInfo}
           />
         </div>
         <div className={styles["like-icon"]}>
