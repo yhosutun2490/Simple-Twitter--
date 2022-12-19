@@ -3,8 +3,13 @@ import { ReactComponent as Close } from "../../assets/icons/cross_orange.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "../TweetInput/TweetSubmitButton";
 import avatarDefault from "../../assets/icons/AcLogo.svg";
-
+import { useTweetList } from "../../Context/TweetContext"; //引入context推文同步更新用
+import { userTweet } from "../../Api/UserAPI"; //推文API
+import { getAllTweets } from "../../Api/TweetAPI";
+import Swal from "sweetalert2";
 function TweetModal(props) {
+  // 設定推文列表清單的狀態
+  const { setAllTweetList } = useTweetList();
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
   const { trigger, closeEvent, avatar } = props;
@@ -18,16 +23,8 @@ function TweetModal(props) {
     e.style.height = e.scrollHeight + "px";
     setText(e.value);
   }
-  function tweetApi() {
-    setTimeout(() => {
-      // 改回預設值狀態
-      setText("");
-      setIsBlank(false);
-      alert("推文成功");
-      closeEvent(false);
-    }, 1000);
-  }
-  function handleTweetSubmit() {
+
+  async function handleTweetSubmit() {
     // 換行空白處理
     // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
     // 超過140字和空白內文不送出推文表單
@@ -38,9 +35,29 @@ function TweetModal(props) {
       setIsBlank(true);
       return;
     }
-
-    // 用setTimeout 假設Api回傳成功後清除輸入
-    tweetApi();
+    const tweetResponse = await userTweet(text);
+    if (tweetResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "成功推文！",
+        timer: 2000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setText("");
+      // 成功推文後要即時更新資料
+      const apiAllTweet = await getAllTweets();
+      setAllTweetList(apiAllTweet);
+      closeEvent(false);
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+    }
   }
   function handleOnFocus() {
     setIsBlank(false);
