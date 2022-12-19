@@ -92,6 +92,8 @@
     line-height: 26px;
     font-weight: 400;
     margin-left: 8px;
+    /*內容太長要換行*/
+    word-break: break-all;
   }
   .response-to-user {
     display: flex;

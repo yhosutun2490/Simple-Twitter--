@@ -25,6 +25,8 @@
     font-size: 16px;
     line-height: 26px;
     font-weight: 400;
+    /* 內容太長換行*/
+    word-break: break-all;
   }
 }
 .tweet-social-list{
