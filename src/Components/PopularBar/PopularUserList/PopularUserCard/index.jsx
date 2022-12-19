@@ -1,13 +1,17 @@
 import styles from "./PopularUserCard.module.scss";
-import { ReactComponent as UserFakeAvatar } from "../../../../assets/icons/AcLogo.svg";
+import userAvatarDefault from "../../../../assets/icons/AcLogo.svg";
 import { Link } from "react-router-dom";
 import FollowButton from "../../../FollowButton";
 function PopularUserCard(props) {
-  const { userName, accountName, id, isFollowed } = props;
+  const { userName, accountName, avatar, id, isFollowed } = props;
   return (
     <div className={styles["container"]}>
-      <Link to={`/user/${accountName}`}>
-        <UserFakeAvatar className={styles["user-avatar"]} />
+      <Link to={`/user/${id}`}>
+        <img
+          src={avatar ? avatar : userAvatarDefault}
+          alt="user-avatar"
+          className={styles["user-avatar"]}
+        />
       </Link>
       <div className={styles["user-info"]}>
         <p className={styles["user-name"]}>

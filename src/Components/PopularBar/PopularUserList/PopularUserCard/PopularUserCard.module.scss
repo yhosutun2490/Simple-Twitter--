@@ -10,16 +10,24 @@
 .user-info {
   margin-right: auto;
   margin-left: 8px;
+  /* 調整寬度 */
+  width: 40%;
 }
-.user-avatar path {
-  fill: rgb(237, 230, 230);
-  filter: brightness(0.6);
+.user-avatar  {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+
 }
 .user-name {
   color: var(--color-dark-black);
   font-size: 16px;
   font-weight: 700;
   line-height: 26px;
+  /* 超過寬度顯示...*/
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .user-account {
   color: var(--color-dark-grey);

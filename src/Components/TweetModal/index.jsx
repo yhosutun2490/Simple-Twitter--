@@ -37,6 +37,9 @@ function TweetModal(props) {
     }
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
+      setText("");
+      // 成功推文後要即時更新資料
+      const apiAllTweet = await getAllTweets();
       await Swal.fire({
         position: "top",
         title: "成功推文！",
@@ -44,9 +47,6 @@ function TweetModal(props) {
         icon: "success",
         showConfirmButton: false,
       });
-      setText("");
-      // 成功推文後要即時更新資料
-      const apiAllTweet = await getAllTweets();
       setAllTweetList(apiAllTweet);
       closeEvent(false);
     } else {

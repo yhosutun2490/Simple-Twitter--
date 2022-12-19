@@ -97,3 +97,14 @@ export const userTweet = async (text) => {
     return error;
   }
 };
+
+// 使用者追隨名單前10名
+export const getTopFollower = async () => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/topFollow`)
+    return res.data;
+  } catch (error) {
+    console.error("[Get TopFollowers Failed]:", error);
+    return error;
+  }
+};
