@@ -49,3 +49,12 @@ export const adminGetAllTweets = async () => {
     console.error('[Admin Get All Tweets failed]: ', error);
   }
 }
+
+export const adminGetAllUsers = async () => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/users`)
+    return res.data
+  } catch (error) {
+    console.error('[Admin Get All Users failed]: ', error)
+  }
+}
