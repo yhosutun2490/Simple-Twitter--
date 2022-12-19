@@ -1,11 +1,12 @@
 import styles from "./HomePage.module.scss";
 import TweetInput from "../../Components/TweetInput";
 import UserTweetList from "../../Components/UserTweetList";
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { getAllTweets } from "../../Api/TweetAPI";
+import { useTweetList } from "../../Context/TweetContext"; //引入context
 
 function HomePage() {
-  const [tweetList, setTweetList] = useState("");
+  const { allTweetList, setAllTweetList } = useTweetList();
   const containerRef = useRef(null);
   // 點擊置頂功能 (test auto deploy)
   function scrollTop() {
@@ -17,13 +18,13 @@ function HomePage() {
     const apiTweets = async () => {
       try {
         const apiAllTweet = await getAllTweets(); // 等待資料回傳後渲染
-        setTweetList(apiAllTweet);
+        setAllTweetList(apiAllTweet);
       } catch (error) {
         console.error("initialize allTweets error", error);
       }
     };
     apiTweets();
-  }, []);
+  }, [setAllTweetList]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
@@ -31,10 +32,10 @@ function HomePage() {
         首頁
       </div>
       <div className={styles["tweet-input"]}>
-        <TweetInput setTweetList={setTweetList} />
+        <TweetInput setTweetList={setAllTweetList} />
       </div>
       <div className={styles["tweet-list"]}>
-        <UserTweetList tweetList={tweetList} />
+        <UserTweetList tweetList={allTweetList} />
       </div>
     </div>
   );
