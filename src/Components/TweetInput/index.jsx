@@ -1,10 +1,12 @@
 import styles from "./TweetInput.module.scss";
-import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "./TweetSubmitButton";
 import { userTweet } from "../../Api/UserAPI"; //推文API
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
+import { useAuth } from "../../Context/AuthContext"; // 取得登入使用者資料
 import Swal from "sweetalert2";
+
 function TweetInput(props) {
   const { setTweetList } = props;
   // 推文內容記錄狀態用
@@ -12,6 +14,11 @@ function TweetInput(props) {
   // 判斷使用者是否回到輸入狀態
   const [isOnSubmit, setIsOnSubmit] = useState(false);
   const textAreaRef = useRef(null);
+  // 使用者個人資料
+  const { currentUser } = useAuth();
+  const currentUserID = currentUser.id;
+  const currentUserAvatar = currentUser.avatar;
+
   //  textarea輸入框隨使用者輸入高度變化
   function textAreaChange(e) {
     e.style.height = "auto";
@@ -63,7 +70,11 @@ function TweetInput(props) {
     <div className={styles["container"]}>
       <div className={styles["input-body"]} onFocus={handleOnFocus}>
         <div className={styles["user-avatar"]}>
-          <Avatar />
+          <img
+            src={currentUserAvatar ? currentUserAvatar : avatarDefault}
+            alt="avatar-img"
+            className={styles["avatar-img"]}
+          />
         </div>
         <textarea
           className={styles["input-textarea"]}

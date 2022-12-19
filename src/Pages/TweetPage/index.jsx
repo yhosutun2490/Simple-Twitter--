@@ -14,7 +14,7 @@ function TweetPage() {
   const mainTweeter = mainTweetInfo?.User?.account;
   const containerRef = useRef(null);
   const { pathname } = useLocation();
-  console.log(replies);
+
   // 抓取路由tweet id 名稱
   const tweetID = Number(pathname.split("/")[2]);
   // 點擊置頂功能

@@ -9,10 +9,7 @@ function TweetInfo(props) {
   // 使用到的props參數
   const { mainTweetInfo, setReplies, setMainTweetInfo } = props;
   const data = mainTweetInfo ? mainTweetInfo : "";
-  // 愛心變換樣式
-  // function handleLikeClick() {
-  //   likeEvent(!isLiked);
-  // }
+  
   // 提出mainTweetInfo資料
   const avatar = data?.User?.avatar;
   const name = data?.User?.name;
