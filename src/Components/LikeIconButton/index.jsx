@@ -27,7 +27,7 @@ function LikeIconButton(props) {
       // 如果目前在homePage首頁的話
       if (pageName === "home") {
         const newAllTweetsData = await getAllTweets();
-        setAllTweetList(newAllTweetsData);
+        setAllTweetList(newAllTweetsData); // 目前這段畫面沒跑到更新
       }
       // 如果目前在UserPage個人資料推文頁
       if (pageName === "user") {

@@ -23,8 +23,6 @@ function AuthProvider(props) {
   const [userData, setUserData] = useState("")
 
   const { pathname } = useLocation(); //current page
- 
-
 
   useEffect(() => {
     const checkTokenIsValid = async () => {
