@@ -108,3 +108,24 @@ export const getTopFollower = async () => {
     return error;
   }
 };
+
+// 使用者like某貼文
+export const userLikeTweet = async (tweetID) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${tweetID}/like`)
+    return res;
+  } catch (error) {
+    console.error("[like OneTweet Failed]:", error);
+    return error;
+  }
+};
+// 使用者unlike不喜歡某貼文
+export const userDisLikeTweet =  async (tweetID) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${tweetID}/unlike`)
+    return res;
+  } catch (error) {
+    console.error("[Dislike OneTweet Failed]:", error);
+    return error;
+  }
+};

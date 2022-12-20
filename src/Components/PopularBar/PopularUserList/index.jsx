@@ -39,6 +39,7 @@ function PopularUserList() {
               isFollowed={user.isFollowing}
               avatar={user.avatar}
               currentUserID={currentUserID}
+              setTopFollower={setTopFollower}
             />
           ))}
       </div>

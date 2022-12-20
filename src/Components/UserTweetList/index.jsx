@@ -17,7 +17,7 @@ function UserTweetList(props) {
             tweetNumber={data?.repliesCount}
             likesNumber={data?.likeCount}
             tweetID={data?.id}
-            isLike={data?.liked}
+            isLike={data?.isLiked}
           />
         ))}
       {tweetList &&
@@ -33,7 +33,7 @@ function UserTweetList(props) {
             tweetNumber={data?.replyCount}
             likesNumber={data?.likeCount}
             tweetID={data?.id}
-            isLike={data?.ifliked}
+            isLike={data?.isLiked}
           />
         ))}
     </div>
