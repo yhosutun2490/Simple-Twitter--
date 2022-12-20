@@ -10,7 +10,7 @@ import { useAuth } from "../../Context/AuthContext"; // context傳入現在登�
 function ProfilePage() {
   // 頁面資料狀態
   const [userProfile, setUserProfile] = useState(""); //個人資料
-  const [selfTweetList, setSelfTweetLsit] = useState("");
+  const [selfTweetList, setSelfTweetList] = useState("");
   // 目前使用者ID
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id;
@@ -43,7 +43,7 @@ function ProfilePage() {
     const apiUserTweets = async () => {
       try {
         const userTweet = await getOneUserTweets(viewID);
-        setSelfTweetLsit(userTweet);
+        setSelfTweetList(userTweet);
       } catch (error) {
         console.error("initialize UserTweets(ProfilePage) error", error);
       }
@@ -60,7 +60,10 @@ function ProfilePage() {
         userProfile={userProfile}
       />
       <div>
-        <UserTweetList selfTweet={selfTweetList} />
+        <UserTweetList
+          selfTweet={selfTweetList}
+          setSelfTweetList={setSelfTweetList}
+        />
       </div>
     </div>
   );

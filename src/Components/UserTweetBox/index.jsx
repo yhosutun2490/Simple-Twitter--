@@ -22,6 +22,7 @@ function UserTweetBox(props) {
     likesNumber,
     tweetID,
     isLike,
+    setSelfTweetList, //個人頁面同步更新用
   } = props;
   // 日期資料轉換
   const date = TimeFromNow(update);
@@ -63,6 +64,7 @@ function UserTweetBox(props) {
                 account={tweeterAccount}
                 update={update}
                 setAllTweetList={setAllTweetList}
+                setSelfTweetList={setSelfTweetList}
               />
             </div>
             <p className={styles["reply-number"]}>{tweetNumber}</p>
@@ -86,12 +88,20 @@ function UserTweetBox(props) {
             )}
             {isLike === false && (
               <div className={styles["like-btn"]}>
-                <LikeIconButton tweetID={tweetID} />
+                <LikeIconButton
+                  tweetID={tweetID}
+                  tweeterID={tweetID}
+                  setSelfTweetList={setSelfTweetList}
+                />
               </div>
             )}
             {isLike === true && (
               <div className={styles["like-btn"]}>
-                <LikeFullIconButton tweetID={tweetID} />
+                <LikeFullIconButton
+                  tweetID={tweetID}
+                  tweeterID={tweetID}
+                  setSelfTweetList={setSelfTweetList}
+                />
               </div>
             )}
 
