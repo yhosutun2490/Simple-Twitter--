@@ -31,7 +31,8 @@ function AdminTweetBox(props) {
           userName={tweeterName}
           update={date}
         />
-        <div className={styles["tweet-content"]}>{content}</div>
+        {/* 超過50字的部分以"..."代替 */}
+        <div className={styles["tweet-content"]}>{content.length > 50 ? content.slice(0, 51) + "..." : content}</div>
       </div>
 
       <div
