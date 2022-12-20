@@ -9,7 +9,6 @@ import { useAuth } from "../../Context/AuthContext"; // context傳入現在登�
 function ProfilePage() {
   // 頁面資料狀態
   const [userProfile, setUserProfile] = useState("");
-  console.log(userProfile);
   // 目前使用者ID
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id;

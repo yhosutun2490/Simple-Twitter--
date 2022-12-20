@@ -4,9 +4,12 @@ import initialBackground from "../../assets/icons/background.svg";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
+import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
+  // 目前登入者資料
+  const currentUserInfo = useAuth().currentUser;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   // 上傳資料儲存狀態
@@ -17,8 +20,8 @@ function ProfileEditModal(props) {
   const [photoData, setPhotoData] = useState({ bgImage: "", avatar: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
   // 字數錯誤參數
-  const nameError = name.trim().length > 50 ? "error" : "";
-  const introductionError = introduction.trim().length > 160 ? "error" : "";
+  const nameError = name?.trim().length > 50 ? "error" : "";
+  const introductionError = introduction?.trim().length > 160 ? "error" : "";
   // handlBgeFileChange 取出上傳圖片物件
   function handleBgFileChange(e) {
     const { files } = e.target;
@@ -44,7 +47,7 @@ function ProfileEditModal(props) {
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   function handleSubmit() {
-    // 如果自介或名稱內容是空白，顯示錯誤再輸入欄底下
+    // 如果自介或名稱內容是空白(defult)，顯示錯誤再輸入欄底下
     if (name.length === 0 || introduction.length === 0) {
       setIsSubmitting(true);
       return;
@@ -74,8 +77,8 @@ function ProfileEditModal(props) {
           icon: "success",
           showConfirmButton: false,
         });
-        setIsSubmitting(false);
-        closeEditModal(); //api回傳成功關閉彈窗
+        resetModalStatus();
+        closeEvent(false); //api回傳成功關閉彈窗
       } catch (error) {
         console.error("[API failed]: ", error);
         await Swal.fire({
@@ -89,16 +92,16 @@ function ProfileEditModal(props) {
     };
     api();
   }
-  // 關掉視窗時自己的所有狀態要歸零(因為元件在同一位置)
-  function closeEditModal() {
-    setAvatarUrl("");
+  // function 關掉視窗後重置狀態(DOM tree在同樣位置)
+  function resetModalStatus() {
     setBackgroundUrl("");
+    setAvatarUrl("");
     setName("");
     setIntroduction("");
     setPhotoData("");
     setIsSubmitting(false);
-    closeEvent(false);
   }
+
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
   function handleOnFocus() {
     setIsSubmitting(false);
@@ -110,7 +113,7 @@ function ProfileEditModal(props) {
       <div
         className={styles["popup-backdrop"]}
         onClick={() => {
-          closeEditModal();
+          resetModalStatus();
           closeEvent(false);
         }}
       ></div>
@@ -119,7 +122,8 @@ function ProfileEditModal(props) {
           <CrossOrange
             className={styles["btn-cross-orange"]}
             onClick={() => {
-              closeEditModal();
+              resetModalStatus();
+              closeEvent(false);
             }}
           />
           <p className={styles["popup-title"]}>編輯個人資料</p>
@@ -187,7 +191,13 @@ function ProfileEditModal(props) {
                 placeholder="請輸入名稱"
                 id="name"
                 className={styles["form-input"]}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  if (!name.length) {
+                    setName(currentUserInfo.name);
+                  }
+                  setName(e.target.value);
+                }}
+                defaultValue={currentUserInfo.name}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -197,7 +207,7 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {name.length === 0 && isSubmitting ? (
+                {name?.length === 0 && isSubmitting ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
@@ -205,7 +215,7 @@ function ProfileEditModal(props) {
               </div>
 
               <div className={styles["text-length"]}>
-                {name.trim().length}/50
+                {name?.trim()?.length}/50
               </div>
             </div>
             <div
@@ -221,6 +231,7 @@ function ProfileEditModal(props) {
                 className={`${styles["form-input"]} ${styles["form-input-intro"]}`}
                 onChange={(e) => setIntroduction(e.target.value)}
                 rows="7"
+                defaultValue={currentUserInfo.introduction}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -237,7 +248,7 @@ function ProfileEditModal(props) {
                 )}
               </div>
               <div className={styles["text-length"]}>
-                {introduction.trim().length}/160
+                {introduction?.trim()?.length}/160
               </div>
             </div>
           </div>
