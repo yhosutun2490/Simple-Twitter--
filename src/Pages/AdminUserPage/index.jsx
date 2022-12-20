@@ -78,7 +78,7 @@ function AdminUserPage() {
             avatar={user.avatar}
             account={user.account}
             userName={user.name}
-            tweetNum={user.tweetsCount}
+            tweetNum={user.tweetCount}
             likedNum={user.likeCount}
             followingNum={user.followingCount}
             followerNum={user.followerCount}
