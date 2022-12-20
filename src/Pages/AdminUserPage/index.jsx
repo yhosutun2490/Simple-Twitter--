@@ -1,9 +1,10 @@
+import { useState, useEffect } from "react";
 import styles from "./AdminUserPage.module.scss";
 import { ReactComponent as TweetFeather } from "../../assets/icons/tweet_feather_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/icons/like_icon.svg";
+import { adminGetAllUsers } from "../../Api/AdminAPI";
 
 function AdminUserCard(props) {
-  //須從後端取得的資料
   const {
     coverImg,
     avatar,
@@ -50,123 +51,26 @@ function AdminUserCard(props) {
 }
 
 function AdminUserPage() {
-  // fake data 待後端api測試檔通過後再次查看response格式 [Get]api/admin/users
-  const fakeUserList = [
-    {
-      id: 1,
-      account: "Rafael",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Rafael Captain",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 1,
-      likeCount: 798,
-      followerCount: 100,
-      followingCount: 1,
-    },
-    {
-      id: 2,
-      account: "Ann",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Ann Kawasaki",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 56,
-      likeCount: 23,
-      followerCount: 120,
-      followingCount: 56,
-    },
-    {
-      id: 3,
-      account: "Gina",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Gina Koboyashi",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 0,
-      likeCount: 0,
-      followerCount: 3,
-      followingCount: 112,
-    },
-    {
-      id: 4,
-      account: "Gina",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Gina Koboyashi",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 0,
-      likeCount: 0,
-      followerCount: 3,
-      followingCount: 112,
-    },
-    {
-      id: 5,
-      account: "Gina",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Gina Koboyashi",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 0,
-      likeCount: 0,
-      followerCount: 3,
-      followingCount: 112,
-    },
-    {
-      id: 5,
-      account: "Gina",
-      email: "Javon_Gutmann@gmail.com",
-      name: "Gina Koboyashi",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=27.075767759341794",
-      introduction:
-        "Vitae quasi fuga odio ut accusamus qui.\nQui consequatur soluta consequatur.\nEum dolor quia sed corporis assumenda veniam dicta veniam.",
-      cover: "https://loremflickr.com/639/200/image?random=20.808405107494043",
-      role: "0",
-      createdAt: "2020-11-27T00:01:30.000Z",
-      updatedAt: "2022-01-16T02:32:34.000Z",
-      tweetsCount: 0,
-      likeCount: 0,
-      followerCount: 3,
-      followingCount: 112,
-    },
-  ];
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    const getAllUsersAsync = async () => {
+      try {
+        const data = await adminGetAllUsers();
+        setUserList(data);
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getAllUsersAsync();
+  }, []);
 
   return (
     <div className={styles["container"]}>
       <div className={styles["title"]}>使用者列表</div>
       <div className={styles["user-list"]}>
-        {fakeUserList.map((user) => (
+        {userList.map((user) => (
           <AdminUserCard
             key={user.id}
             user={user}
@@ -174,7 +78,7 @@ function AdminUserPage() {
             avatar={user.avatar}
             account={user.account}
             userName={user.name}
-            tweetNum={user.tweetsCount}
+            tweetNum={user.tweetCount}
             likedNum={user.likeCount}
             followingNum={user.followingCount}
             followerNum={user.followerCount}

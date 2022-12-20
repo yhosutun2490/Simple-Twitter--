@@ -1,15 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import AuthInput from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
+import { adminLogin } from "../../Api/AdminAPI";
 import styles from "./AdminLoginPage.module.scss";
+import Swal from "sweetalert2";
 
 function AdminLoginPage() {
   // State Variable
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -19,14 +22,39 @@ function AdminLoginPage() {
   const accountLength = account.trim().length;
   const passwordLength = password.trim().length;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSubmitting(true);
 
     if (accountLength === 0 || passwordLength === 0) {
       return;
     }
     // If all input value is valid
-    alert("success");
+    const { success, token} = await adminLogin({
+      account,
+      password,
+    });
+
+    // 待後端把錯誤訊息補上補上實作錯誤訊息
+    if (success) {
+      localStorage.setItem("authToken", token);
+      Swal.fire({
+        title: "Success!",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+      navigate("/admin/tweetlist");
+      return;
+    } else {
+      Swal.fire({
+        title: "Failed...",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+    }
   };
 
   // When user focus on the input clear the alert message
