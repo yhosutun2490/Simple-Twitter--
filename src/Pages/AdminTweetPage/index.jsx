@@ -56,7 +56,6 @@ function AdminTweetPage() {
       const data = await adminGetAllTweets();
       setTweetList(data);
       setDeleteTrigger(false);
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
