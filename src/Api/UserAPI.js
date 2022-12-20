@@ -20,37 +20,28 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {console.error(error)}
 )
-//取得所有推文
-export const getOneUserTweets = async () => {
+//取得某位使用者所有推文(特定id)
+export const getOneUserTweets = async (userID) => {
   try {
-    // const res = await axiosInstance.get(`${baseUrl}/api/tweets`)
-    const resfakeData ={
-  "status": "success",
-   "data" :[
-      {
-      "id": 1,
-      "description": "我在推文",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "repliesCount": 4,
-      "likeCount": 10,
-      },
-      {
-      "id": 2,
-      "description": "我在推文2",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "repliesCount":4,
-      "likeCount":8
-      }
-    ]
-  }
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/tweets`)
 
-    return resfakeData
+    return res.data
   }
   catch (error) {
     console.error('[Get AllTweetData failed]: ', error);
   }
+}
+// 取得某位使用者回覆貼文的列表資料
+export const getOneUsersReplies  = async (userID) => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/replied_tweets`)
+
+    return res.data
+  }
+  catch (error) {
+    console.error('[Get OneUserReplies failed]: ', error);
+  }
+
 }
 
 //取得某位使用者資料
@@ -123,3 +114,6 @@ export const userEditPhotoModal = async (userID,payload) => {
     return error;
   }
 };
+
+
+

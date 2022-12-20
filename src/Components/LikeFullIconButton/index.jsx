@@ -54,6 +54,7 @@ function LikeFullIconButton(props) {
       });
     }
   }
+
   return (
     <div className={styles["container"]} onClick={handleLikeClick}>
       <LikeFull className={styles[size]} />

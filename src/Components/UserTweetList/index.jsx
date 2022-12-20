@@ -9,15 +9,16 @@ function UserTweetList(props) {
         selfTweet?.map((data) => (
           <UserTweetBox
             key={data?.id}
-            tweeterAccount={data?.account}
-            tweeterName={data?.name}
-            avatar={data?.avatar}
+            tweeterAccount={data?.User?.account}
+            tweeterName={data?.User?.name}
+            tweeterID={data?.User?.id}
+            avatar={data?.User?.avatar}
             update={data?.updatedAt}
             content={data?.description}
-            tweetNumber={data?.repliesCount}
+            tweetNumber={data?.replyCount}
             likesNumber={data?.likeCount}
             tweetID={data?.id}
-            isLike={data?.isLiked}
+            isLike={data?.liked}
           />
         ))}
       {tweetList &&
