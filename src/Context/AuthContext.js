@@ -44,7 +44,8 @@ function AuthProvider(props) {
         setUserData(null);
       }
     };
-    checkTokenIsValid();
+    // admin related pages not applied  
+    if (!pathname.includes("/admin")) { checkTokenIsValid() };
   }, [pathname]);
 
   return (
@@ -54,12 +55,13 @@ function AuthProvider(props) {
         currentUser: userData,
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
-          const { success, token, user } = await register({ 
-            account: data.account, 
-            name: data.nameTrimmed, 
-            email: data.email, 
-            password: data.password, 
-            checkPassword: data.checkPassword });
+          const { success, token, user } = await register({
+            account: data.account,
+            name: data.nameTrimmed,
+            email: data.email,
+            password: data.password,
+            checkPassword: data.checkPassword
+          });
           if (token) {
             setIsAuthenticated(true);
             setUserData(user)
