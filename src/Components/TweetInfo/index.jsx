@@ -17,7 +17,7 @@ function TweetInfo(props) {
   const userID = data?.User?.id;
   const content = data?.description;
   const update = data?.createdAt;
-  const repliesTimes = data?.replyCount;
+  const repliesTimes = data?.tweetCount;
   const likeTimes = data?.likeCount;
   const date = getChineseDate(data?.createdAt);
   const isLike = data?.isLiked;
