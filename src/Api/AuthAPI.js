@@ -55,7 +55,7 @@ export const checkPermission = async (token) => {
         Authorization: "Bearer " + token,
       },
     });
-    return response.data.status;
+    return response.data;
   } catch (error) {
     console.error("[Check Permission Failed]:", error);
   }
