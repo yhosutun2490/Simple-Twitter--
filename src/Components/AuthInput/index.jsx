@@ -44,4 +44,4 @@ function AuthInput(props) {
   );
 }
 
-export default AuthInput
+export default AuthInput;

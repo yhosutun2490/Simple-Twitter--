@@ -70,12 +70,18 @@ function UserTweetBox(props) {
           <div className={styles["tweet-social-group"]}>
             {isLike === 1 && (
               <div className={styles["like-btn"]}>
-                <LikeFullIconButton tweetID={tweetID} />
+                <LikeFullIconButton
+                  tweetID={tweetID}
+                  setAllTweetList={setAllTweetList}
+                />
               </div>
             )}
             {isLike === 0 && (
               <div className={styles["like-btn"]}>
-                <LikeIconButton tweetID={tweetID} />
+                <LikeIconButton
+                  tweetID={tweetID}
+                  setAllTweetList={setAllTweetList}
+                />
               </div>
             )}
 

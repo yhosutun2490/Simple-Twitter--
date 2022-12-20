@@ -35,7 +35,7 @@ function LoginPage() {
     // refactor the value of account and password
     const accountTrimmed = account.trim();
     const passwordTrimmed = password.trim();
-    const success = await login({ accountTrimmed, passwordTrimmed }); 
+    const success = await login({ accountTrimmed, passwordTrimmed });
 
     // 待後端把錯誤訊息補上補上實作錯誤訊息
     if (success) {
