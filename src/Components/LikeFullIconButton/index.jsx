@@ -1,12 +1,13 @@
 import styles from "./LikeFullIconButton.module.scss";
 import { userDisLikeTweet } from "../../Api/UserAPI"; //使用者unLike貼文API
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
+import { getOneTweet } from "../../Api/TweetAPI"; //取得推文主要資料
 import { ReactComponent as LikeFull } from "../../assets/icons/like_full_icon.svg";
 import Swal from "sweetalert2";
 import { useLocation } from "react-router-dom"; //抓目前網址path
 function LikeFullIconButton(props) {
   // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)
-  const { large, tweetID, setAllTweetList } = props; // 需要傳進該Tweet貼文id，判斷API該打哪個params
+  const { large, tweetID, setAllTweetList, setMainTweetInfo } = props; // 需要傳進該Tweet貼文id，判斷API該打哪個params
   const size = large ? "large" : "";
   // 取得目前所在頁面
   const { pathname } = useLocation();
@@ -29,6 +30,11 @@ function LikeFullIconButton(props) {
       if (pageName === "home") {
         const newAllTweetsData = await getAllTweets();
         setAllTweetList(newAllTweetsData);
+      }
+      // 如果目前在推文回覆資料頁的話
+      if (pageName === "tweet") {
+        const newOneTweetData = await getOneTweet(tweetID);
+        setMainTweetInfo(newOneTweetData);
       }
       // 如果目前在UserPage個人資料推文頁
       if (pageName === "user") {

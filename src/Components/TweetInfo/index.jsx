@@ -9,7 +9,7 @@ function TweetInfo(props) {
   // 使用到的props參數
   const { mainTweetInfo, setReplies, setMainTweetInfo } = props;
   const data = mainTweetInfo ? mainTweetInfo : "";
-  
+
   // 提出mainTweetInfo資料
   const avatar = data?.User?.avatar;
   const name = data?.User?.name;
@@ -71,9 +71,17 @@ function TweetInfo(props) {
         </div>
         <div className={styles["like-icon"]}>
           {isLike ? (
-            <LikeFullIconButton large={true} />
+            <LikeFullIconButton
+              large={true}
+              tweetID={tweetID}
+              setMainTweetInfo={setMainTweetInfo}
+            />
           ) : (
-            <LikeIconButton large={true} />
+            <LikeIconButton
+              large={true}
+              tweetID={tweetID}
+              setMainTweetInfo={setMainTweetInfo}
+            />
           )}
         </div>
       </div>
