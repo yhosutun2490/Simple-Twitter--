@@ -1,6 +1,6 @@
 import styles from "./ProfileEditModal.module.scss";
-import { useState } from "react";
-import initialBackground from "../../assets/icons/background.svg";
+import { useState, useRef } from "react";
+// import initialBackground from "../../assets/icons/background.svg";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
@@ -12,13 +12,16 @@ function ProfileEditModal(props) {
   const currentUserInfo = useAuth().currentUser;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
-  // 上傳資料儲存狀態
-  const [background, setBackgroundUrl] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [name, setName] = useState("");
-  const [introduction, setIntroduction] = useState("");
+  //上傳資料儲存狀態
+  const [background, setBackgroundUrl] = useState(currentUserInfo.cover);
+  const [avatarUrl, setAvatarUrl] = useState(currentUserInfo.avatar);
+  const [name, setName] = useState(currentUserInfo.name);
+  const [introduction, setIntroduction] = useState(
+    currentUserInfo.introduction
+  );
   const [photoData, setPhotoData] = useState({ bgImage: "", avatar: "" });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   // 字數錯誤參數
   const nameError = name?.trim().length > 50 ? "error" : "";
   const introductionError = introduction?.trim().length > 160 ? "error" : "";
@@ -94,11 +97,11 @@ function ProfileEditModal(props) {
   }
   // function 關掉視窗後重置狀態(DOM tree在同樣位置)
   function resetModalStatus() {
-    setBackgroundUrl("");
-    setAvatarUrl("");
-    setName("");
-    setIntroduction("");
-    setPhotoData("");
+    // setBackgroundUrl(currentUserInfo.cover);
+    // setAvatarUrl("");
+    // setName(currentUserInfo.name);
+    // setIntroduction("");
+    // setPhotoData("");
     setIsSubmitting(false);
   }
 
@@ -139,7 +142,7 @@ function ProfileEditModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : initialBackground}
+              src={background ? background : currentUserInfo.cover}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -161,7 +164,7 @@ function ProfileEditModal(props) {
           <div className={styles["user-avatar"]}>
             <div className={styles["avatar-image-wrap"]}>
               <img
-                src={avatarUrl ? avatarUrl : "https://picsum.photos/50/50"}
+                src={avatarUrl ? avatarUrl : currentUserInfo.avatar}
                 alt="person-avatar"
                 className={styles["avatar-image"]}
               />
@@ -192,9 +195,6 @@ function ProfileEditModal(props) {
                 id="name"
                 className={styles["form-input"]}
                 onChange={(e) => {
-                  if (!name.length) {
-                    setName(currentUserInfo.name);
-                  }
                   setName(e.target.value);
                 }}
                 defaultValue={currentUserInfo.name}
@@ -215,7 +215,7 @@ function ProfileEditModal(props) {
               </div>
 
               <div className={styles["text-length"]}>
-                {name?.trim()?.length}/50
+                {name === "" ? 0 : name?.trim().length}/50
               </div>
             </div>
             <div
@@ -241,14 +241,15 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {introduction.length === 0 && isSubmitting ? (
+                {introduction?.length === 0 && isSubmitting ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
                 )}
               </div>
               <div className={styles["text-length"]}>
-                {introduction?.trim()?.length}/160
+                {introduction == null ? 0 : introduction?.trim().length}
+                /160
               </div>
             </div>
           </div>
