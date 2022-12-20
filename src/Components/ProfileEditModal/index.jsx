@@ -1,15 +1,17 @@
 import styles from "./ProfileEditModal.module.scss";
-import { useState, useRef } from "react";
+import { useState } from "react";
 // import initialBackground from "../../assets/icons/background.svg";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
+import { userEditPhotoModal } from "../../Api/UserAPI"; //使用者編輯個人資料API
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
   // 目前登入者資料
   const currentUserInfo = useAuth().currentUser;
+  const userID = currentUserInfo.id;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
@@ -19,7 +21,8 @@ function ProfileEditModal(props) {
   const [introduction, setIntroduction] = useState(
     currentUserInfo.introduction
   );
-  const [photoData, setPhotoData] = useState({ bgImage: "", avatar: "" });
+  const [avatarPhoto, setAvatarPhoto] = useState("");
+  const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 字數錯誤參數
@@ -35,7 +38,7 @@ function ProfileEditModal(props) {
     // 否則產生預覽圖
     const imageURL = window.URL.createObjectURL(files[0]);
     setBackgroundUrl(imageURL);
-    setPhotoData({ ...photoData, bgImage: files[0] });
+    setCoverPhoto(files[0]);
   }
   function handleAvatarFileChange(e) {
     const { files } = e.target;
@@ -46,12 +49,12 @@ function ProfileEditModal(props) {
     // 否則產生預覽圖
     const imageURL = window.URL.createObjectURL(files[0]);
     setAvatarUrl(imageURL);
-    setPhotoData({ ...photoData, avatar: files[0] });
+    setAvatarPhoto(files[0]);
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
-  function handleSubmit() {
-    // 如果自介或名稱內容是空白(defult)，顯示錯誤再輸入欄底下
-    if (name.length === 0 || introduction.length === 0) {
+  async function handleSubmit() {
+    // 如果名稱是空白，顯示錯誤再輸入欄底下
+    if (name.length === 0) {
       setIsSubmitting(true);
       return;
     }
@@ -67,42 +70,42 @@ function ProfileEditModal(props) {
       });
       return;
     }
-    const api = async () => {
-      try {
-        console.log(photoData);
-        console.log(name);
-        console.log(introduction);
-        // 修改成功訊息
-        await Swal.fire({
-          position: "top",
-          title: "成功更新！",
-          timer: 2000,
-          icon: "success",
-          showConfirmButton: false,
-        });
-        resetModalStatus();
-        closeEvent(false); //api回傳成功關閉彈窗
-      } catch (error) {
-        console.error("[API failed]: ", error);
-        await Swal.fire({
-          position: "top",
-          title: "修改失敗！(伺服器連線問題)",
-          timer: 1000,
-          icon: "error",
-          showConfirmButton: false,
-        });
-      }
+    let payLoad = {
+      name:name,
+      introduction:introduction,
+      avatar: avatarPhoto,
+      cover: coverPhoto
     };
-    api();
+    // 上傳資料整合
+    // if (!avatarPhoto && !coverPhoto) {
+    //   payLoad = {
+    //     name: name,
+    //     introduction: introduction,
+    //   };
+    // } else if (!avatarPhoto) {
+    //   payLoad = {
+    //     name: name,
+    //     introduction: introduction,
+    //     cover: coverPhoto,
+    //   };
+    // } else if (!coverPhoto) {
+    //   payLoad = {
+    //     name: name,
+    //     introduction: introduction,
+    //     avatar: avatarPhoto,
+    //   };
+    // }
+    console.log(payLoad)
+    const editResponse = await userEditPhotoModal(userID, payLoad);
+    console.log(editResponse);
+    resetModalStatus();
   }
-  // function 關掉視窗後重置狀態(DOM tree在同樣位置)
+  // function 關掉視窗後重置狀態
   function resetModalStatus() {
-    // setBackgroundUrl(currentUserInfo.cover);
-    // setAvatarUrl("");
-    // setName(currentUserInfo.name);
-    // setIntroduction("");
-    // setPhotoData("");
     setIsSubmitting(false);
+    setBackgroundUrl("");
+    setAvatarUrl("");
+    closeEvent(false);
   }
 
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
@@ -241,11 +244,11 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {introduction?.length === 0 && isSubmitting ? (
+                {/* {introduction?.length === 0 && isSubmitting ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
-                )}
+                )} */}
               </div>
               <div className={styles["text-length"]}>
                 {introduction == null ? 0 : introduction?.trim().length}
