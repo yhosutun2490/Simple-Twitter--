@@ -34,10 +34,10 @@ function AuthProvider(props) {
       }
       const result = await checkPermission(token);
 
-      if (result === '200') {
+      if (result.status === '200') {
         setIsAuthenticated(true);
-        // 待後端更新api後增加這一行
-        // setUserData(後端回傳的最新個人資料)
+        //api回傳個人資料更新
+        setUserData(result.user)
 
       } else {
         setIsAuthenticated(false);
