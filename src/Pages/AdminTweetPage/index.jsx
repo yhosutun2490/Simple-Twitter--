@@ -32,7 +32,9 @@ function AdminTweetBox(props) {
           update={date}
         />
         {/* 超過50字的部分以"..."代替 */}
-        <div className={styles["tweet-content"]}>{content.length > 50 ? content.slice(0, 51) + "..." : content}</div>
+        <div className={styles["tweet-content"]}>
+          {content.length > 50 ? content.slice(0, 50) + "..." : content}
+        </div>
       </div>
 
       <div
@@ -70,7 +72,7 @@ function AdminTweetPage() {
         showConfirmButton: false,
         timer: 1000,
         position: "top",
-      }); 
+      });
     } catch (error) {
       console.error(error);
     }
@@ -81,8 +83,8 @@ function AdminTweetPage() {
   }, []);
 
   //如果delete function被觸發，再次向後端重新請求tweet list
-  if(deleteTrigger) {
-    getAllTweetsAsync()
+  if (deleteTrigger) {
+    getAllTweetsAsync();
   }
 
   return (
