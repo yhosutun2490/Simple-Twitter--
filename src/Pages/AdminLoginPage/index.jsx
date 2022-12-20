@@ -29,7 +29,7 @@ function AdminLoginPage() {
       return;
     }
     // If all input value is valid
-    const { success, token} = await adminLogin({
+    const { success, token } = await adminLogin({
       account,
       password,
     });

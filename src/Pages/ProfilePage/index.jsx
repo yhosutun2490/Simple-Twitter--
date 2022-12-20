@@ -1,12 +1,18 @@
 import styles from "./ProfilePage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
-import { useRef } from "react";
+import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主要資料的API
+import { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 
 function ProfilePage() {
+  // 頁面資料狀態
+  const [userProfile, setUserProfile] = useState("");
+  console.log(userProfile);
   // 目前使用者ID
-  const currentUserID = 1;
+  const currentUserInfo = useAuth().currentUser;
+  const currentUserID = currentUserInfo.id;
   // 置頂功能
   const containerRef = useRef(null);
   function scrollTop() {
@@ -72,6 +78,19 @@ function ProfilePage() {
       },
     },
   ];
+  // 定義初始資料fetch api
+  useEffect(() => {
+    // 定義初始資料fetch api
+    const apiTweets = async () => {
+      try {
+        const userData = await getOneUserData(viewID);
+        setUserProfile(userData);
+      } catch (error) {
+        console.error("initialize UserData(ProfilePage) error", error);
+      }
+    };
+    apiTweets();
+  }, [viewID]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
@@ -79,6 +98,7 @@ function ProfilePage() {
         viewID={viewID}
         currentUserID={currentUserID}
         scrollTop={scrollTop}
+        userProfile={userProfile}
       />
       <div>
         <UserTweetList tweetList={tweetList} />

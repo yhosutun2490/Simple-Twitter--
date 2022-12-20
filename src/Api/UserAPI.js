@@ -53,37 +53,15 @@ export const getOneUserTweets = async () => {
   }
 }
 
-//取得所有推文
-export const getOneUserData = async () => {
+//取得某位使用者資料
+export const getOneUserData = async (userID) => {
   try {
-    // const res = await axiosInstance.get(`${baseUrl}/api/tweets`)
-    const resfakeData ={
-  "status": "success",
-   "data" :[
-      {
-      "id": 1,
-      "account": "user1",
-      "email": "user1@example.com",
-      "name":"handsome",
-      "avatar": "https://picsum.photos/50/50",
-      "introduction": "我是大帥哥",
-      "role": 1,
-      "cover": "https://imgur.com/kaoge55g",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "following": true,
-      "followingCount":3,
-      "follower": 2,
-      "tweetsCount":"4"
-}
-
-    ]
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}`)
+      return res.data
   }
 
-    return resfakeData
-  }
   catch (error) {
-    console.error('[Get AllTweetData failed]: ', error);
+    console.error('[Get Get OneUser Data failed]: ', error);
   }
 }
 
@@ -129,3 +107,4 @@ export const userDisLikeTweet =  async (tweetID) => {
     return error;
   }
 };
+
