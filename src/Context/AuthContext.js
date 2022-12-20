@@ -34,17 +34,18 @@ function AuthProvider(props) {
       }
       const result = await checkPermission(token);
 
-      if (result === '200') {
+      if (result.status === '200') {
         setIsAuthenticated(true);
-        // 待後端更新api後增加這一行
-        // setUserData(後端回傳的最新個人資料)
+        //api回傳個人資料更新
+        setUserData(result.user)
 
       } else {
         setIsAuthenticated(false);
         setUserData(null);
       }
     };
-    checkTokenIsValid();
+    // admin related pages not applied  
+    if (!pathname.includes("/admin")) { checkTokenIsValid() };
   }, [pathname]);
 
   return (
@@ -54,12 +55,13 @@ function AuthProvider(props) {
         currentUser: userData,
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
-          const { success, token, user } = await register({ 
-            account: data.account, 
-            name: data.nameTrimmed, 
-            email: data.email, 
-            password: data.password, 
-            checkPassword: data.checkPassword });
+          const { success, token, user } = await register({
+            account: data.account,
+            name: data.nameTrimmed,
+            email: data.email,
+            password: data.password,
+            checkPassword: data.checkPassword
+          });
           if (token) {
             setIsAuthenticated(true);
             setUserData(user)

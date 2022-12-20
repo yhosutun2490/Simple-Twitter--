@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg";
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
+import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
+import Swal from "sweetalert2";
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
@@ -29,7 +31,10 @@ function AdminTweetBox(props) {
           userName={tweeterName}
           update={date}
         />
-        <div className={styles["tweet-content"]}>{content}</div>
+        {/* 超過50字的部分以"..."代替 */}
+        <div className={styles["tweet-content"]}>
+          {content.length > 50 ? content.slice(0, 50) + "..." : content}
+        </div>
       </div>
 
       <div
@@ -43,82 +48,43 @@ function AdminTweetBox(props) {
 }
 
 function AdminTweetPage() {
-  // fake data 待後端api測試檔通過後再次查看response格式 [Get]api/admin/tweets
-  // 是否該做分頁待討論，設計稿上沒有指定
-  const fakeTweetList = [
-    {
-      id: 11,
-      UserId: 2,
-      description: "voluptatibus iure quidem",
-      createdAt: "2020-09-20T16:41:19.000Z",
-      updatedAt: "2022-05-01T01:06:44.000Z",
-      userId: 2,
-      User: {
-        id: 2,
-        account: "user1",
-        name: "user1",
-        avatar:
-          "https://loremflickr.com/140/140/people/?random=70.97604245559303",
-        cover:
-          "https://loremflickr.com/639/200/image/?random=78.61165147050005",
-      },
-    },
-    {
-      id: 12,
-      UserId: 2,
-      description: "voluptatibus iure quidem",
-      createdAt: "2020-09-20T16:41:19.000Z",
-      updatedAt: "2022-05-01T01:06:44.000Z",
-      userId: 2,
-      User: {
-        id: 2,
-        account: "user1",
-        name: "user1",
-        avatar:
-          "https://loremflickr.com/140/140/people/?random=70.97604245559303",
-        cover:
-          "https://loremflickr.com/639/200/image/?random=78.61165147050005",
-      },
-    },
-    {
-      id: 13,
-      UserId: 2,
-      description: "voluptatibus iure quidem",
-      createdAt: "2020-09-20T16:41:19.000Z",
-      updatedAt: "2022-05-01T01:06:44.000Z",
-      userId: 2,
-      User: {
-        id: 2,
-        account: "user1",
-        name: "user1",
-        avatar:
-          "https://loremflickr.com/140/140/people/?random=70.97604245559303",
-        cover:
-          "https://loremflickr.com/639/200/image/?random=78.61165147050005",
-      },
-    },
-  ];
-  const [tweetList, setTweetList] = useState(fakeTweetList);
+  const [tweetList, setTweetList] = useState([]);
+  const [deleteTrigger, setDeleteTrigger] = useState(false); //delete function是否被觸發
 
-  //Delete function
-  //  const handleDelete = async (id) => {
-  //   try {
-  //     await deleteTodo(id);
-
-  //     setTweetList((preTweetList) => {
-  //       return preTweetList.filter((tweet) => tweet.id !== id);
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
-  // };
-
-  const handleDelete = (id) => {
-    setTweetList((preTweetList) => {
-      return preTweetList.filter((tweet) => tweet.id !== id);
-    });
+  const getAllTweetsAsync = async () => {
+    try {
+      const data = await adminGetAllTweets();
+      setTweetList(data);
+      setDeleteTrigger(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await adminDeleteTweet(id);
+      setDeleteTrigger(true);
+      Swal.fire({
+        title: "刪除成功",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllTweetsAsync();
+  }, []);
+
+  //如果delete function被觸發，再次向後端重新請求tweet list
+  if (deleteTrigger) {
+    getAllTweetsAsync();
+  }
 
   return (
     <div className={styles["container"]}>
