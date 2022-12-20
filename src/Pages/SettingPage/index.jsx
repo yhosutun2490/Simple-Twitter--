@@ -3,18 +3,22 @@ import UserSideBar from "../../Components/UserSideBar";
 import AuthInput from "../../Components/AuthInput";
 import Button from "../../Components/Button";
 import styles from "./SettingPage.module.scss";
+import { useAuth } from "../../Context/AuthContext";
+import { setUserData } from "../../Api/UserSettingAPI";
+import Swal from "sweetalert2";
 
 function SettingPage() {
-  //useEffect透過api獲取現在登入使用者的資料，用setState讓畫面可以顯示default帳號、名稱、信箱
-  // [GET]/api/users/:id，需要token
-
+  //透過useAuth獲取現在登入使用者的資料，顯示default帳號、名稱、信箱
+  const { currentUser, isAuthenticated } = useAuth();
+  console.log(currentUser);
   // State Variable
-  const [account, setAccount] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [account, setAccount] = useState(currentUser.account);
+  const [name, setName] = useState(currentUser.name);
+  const [email, setEmail] = useState(currentUser.email);
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  console.log(name);
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -38,7 +42,7 @@ function SettingPage() {
   //Check if there is space in the input value
   const isSpaceCheck = /\s/;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSubmitting(true);
 
     if (accountLength === 0 || accountAlertMsg.length > 0) {
@@ -61,9 +65,38 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
-    //密碼如果沒有input value便不做更動
+    //密碼如果沒有input value便維持原本的password
     //其他欄位如果和default value不一樣要做更動
-    alert("success");
+    const nameTrimmed = name.trim();
+    const { success } = await setUserData({
+      id: currentUser.id,
+      account: account,
+      name: nameTrimmed,
+      email: email,
+      password: password,
+      checkPassword: checkPassword,
+    });
+
+    if (success) {
+      Swal.fire({
+        title: "更新成功！",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+      setPassword("");
+      setCheckPassword("");
+      return;
+    } else {
+      Swal.fire({
+        title: "Failed...",
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1000,
+        position: "top",
+      });
+    }
   };
 
   // When user focus on the input clear the alert message
