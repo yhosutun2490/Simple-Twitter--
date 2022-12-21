@@ -10,7 +10,7 @@ function ProfileUserNavBar(props) {
       <div className={styles["profile-title"]}>
         <ProfilePageTitle
           name={userProfile?.name}
-          tweetCount={userProfile?.tweetCount}
+          tweetCount={userProfile?.tweetsCount}
           scrollTop={scrollTop}
         />
       </div>
