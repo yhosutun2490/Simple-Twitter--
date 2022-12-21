@@ -7,13 +7,28 @@ import { getOneUserData } from "../../Api/UserAPI"; //取得使用者資本資�
 import { useState, useEffect } from "react";
 function FolloweringListPage() {
   // 使用者儲存自己追隨資料的狀態
+  const [userData, setUserData] = useState("");
   const [selfFollowing, setSelfFollowing] = useState("");
 
   // 現在瀏覽使用者的ID
   const { pathname } = useLocation();
   const pathNameArr = pathname.split("/");
   const viewID = pathNameArr[2];
-  // 由API獲取所有Tweet資料 (只有第一次mount呼叫useEffect)
+  // 自己的個人資料、推文數
+  useEffect(() => {
+    // 定義初始資料fetch api
+    const apiUserData = async () => {
+      try {
+        const apiResUserData = await getOneUserData(viewID); // 等待資料回傳後渲染
+        setUserData(apiResUserData);
+      } catch (error) {
+        console.error("initialize UserData(Following Page) error", error);
+      }
+    };
+    apiUserData();
+  }, [viewID]);
+
+  // 由API獲取所有Following User資料 (只有第一次mount呼叫useEffect)
   useEffect(() => {
     // 定義初始資料fetch api
     const apiFollowingData = async () => {
@@ -21,7 +36,7 @@ function FolloweringListPage() {
         const apiFollowingData = await getOneUserFollowing(viewID); // 等待資料回傳後渲染
         setSelfFollowing(apiFollowingData);
       } catch (error) {
-        console.error("initialize allTweets error", error);
+        console.error("initialize Following User error", error);
       }
     };
     apiFollowingData();
@@ -30,7 +45,7 @@ function FolloweringListPage() {
   return (
     <div className={styles["container"]}>
       <div className={styles["profile-navbar"]}>
-        <ProfileFollowNavBar viewID={viewID} />
+        <ProfileFollowNavBar viewID={viewID} userData={userData} />
       </div>
       <div className={styles["follow-list"]}>
         <ProfileFollowList followingData={selfFollowing} />
