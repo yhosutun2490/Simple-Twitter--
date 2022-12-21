@@ -155,7 +155,7 @@ function SettingPage() {
   }
 
   //passwordCheck unmatched alert
-  if (checkPassword > 0 && checkPassword !== password) {
+  if (checkPassword >= 0 && checkPassword !== password) {
     checkPasswordAlertMsg = "密碼不相符";
   }
 
