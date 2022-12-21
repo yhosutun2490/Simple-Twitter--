@@ -6,6 +6,7 @@ import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
 import { userEditPhotoModal } from "../../Api/UserAPI"; //使用者編輯個人資料API
+import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
@@ -70,33 +71,22 @@ function ProfileEditModal(props) {
       });
       return;
     }
-    let payLoad = {
-      name: name,
-      introduction: introduction,
-      avatar: avatarPhoto,
-      cover: coverPhoto,
-    };
-    // 上傳資料整合
-    // if (!avatarPhoto && !coverPhoto) {
-    //   payLoad = {
-    //     name: name,
-    //     introduction: introduction,
-    //   };
-    // } else if (!avatarPhoto) {
-    //   payLoad = {
-    //     name: name,
-    //     introduction: introduction,
-    //     cover: coverPhoto,
-    //   };
-    // } else if (!coverPhoto) {
-    //   payLoad = {
-    //     name: name,
-    //     introduction: introduction,
-    //     avatar: avatarPhoto,
-    //   };
-    // }
-    console.log(payLoad);
-    const editResponse = await userEditPhotoModal(userID, payLoad);
+    let formData = new FormData();
+    formData.append("avatar", avatarPhoto);
+    formData.append("cover", coverPhoto);
+    formData.append("name", name);
+    formData.append("introduction", introduction);
+    // let payLoad = {
+    //   name: name,
+    //   introduction: introduction,
+    //   avatar: avatarPhoto,
+    //   cover: coverPhoto,
+    // };
+
+    for (let [name, value] of formData.entries()) {
+      console.log(name + ": " + value);
+    }
+    const editResponse = await userEditPhotoModalNew(userID, formData);
     console.log(editResponse);
     resetModalStatus();
   }

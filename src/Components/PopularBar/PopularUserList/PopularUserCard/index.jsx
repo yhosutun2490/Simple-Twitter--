@@ -3,7 +3,8 @@ import userAvatarDefault from "../../../../assets/icons/AcLogo.svg";
 import { Link } from "react-router-dom";
 import FollowButton from "../../../FollowButton";
 function PopularUserCard(props) {
-  const { userName, accountName, avatar, userID, isFollowed } = props;
+  const { userName, accountName, avatar, userID, isFollowed, setTopFollower } =
+    props;
   return (
     <div className={styles["container"]}>
       <Link to={`/user/${userID}`}>
@@ -22,7 +23,11 @@ function PopularUserCard(props) {
         </p>
       </div>
 
-      <FollowButton userID={userID} isFollow={isFollowed} />
+      <FollowButton
+        userID={userID}
+        isFollow={isFollowed}
+        setTopFollower={setTopFollower}
+      />
     </div>
   );
 }

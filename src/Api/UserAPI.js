@@ -119,7 +119,7 @@ export const userEditPhotoModal = async (userID,payload) => {
     avatar: payload.avatar
   }
   try {
-    const res = await axiosInstance.put(`${baseUrl}/api/users/${userID}`,data )
+    const res = await axiosInstance.put(`${baseUrl}/api/users/${userID}`,data)
     return res;
   } catch (error) {
     console.error("[Edit Profile Failed]:", error);

@@ -3,6 +3,7 @@ import { addfollowUser } from "../../Api/FollowShipsAPI"; //增加跟隨
 import { deletefollowUser } from "../../Api/FollowShipsAPI"; //取消跟隨
 import { getOneUserFollower } from "../../Api/FollowShipsAPI"; //被跟隨名單API
 import { getOneUserFollowing } from "../../Api/FollowShipsAPI"; //追隨中名單API
+import { getTopFollower } from "../../Api/UserAPI"; //推薦跟隨API
 import { useAuth } from "../../Context/AuthContext"; //取得現在登入者資料
 import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -11,7 +12,13 @@ function FollowButton(props) {
   // 設定本人id，傳入的使用者id，跟隨狀態，如果是使用者本人不顯示跟隨按鈕
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id; // 登入使用者自己的id
-  const { userID, isFollow, setSelfFollower, setSelfFollowing } = props; // userID指的是卡片使用者id
+  const {
+    userID,
+    isFollow,
+    setSelfFollower, // 被跟隨者更新
+    setSelfFollowing, // 使用者跟隨中更新
+    setTopFollower, // 推薦跟隨更新用
+  } = props; // userID指的是卡片使用者id
   let newIsFollowering = isFollow; // 處理後端資料格式不一樣
   if (Number(newIsFollowering) === 1) {
     newIsFollowering = true;
@@ -35,6 +42,13 @@ function FollowButton(props) {
         icon: "success",
         showConfirmButton: false,
       });
+      // 加入追隨後同步更新
+      if (nowPageName === "follower") {
+        const apiNewFollower = await getOneUserFollower(viewID);
+        setSelfFollower(apiNewFollower);
+      }
+      const apiTopFollower = await getTopFollower();
+      setTopFollower(apiTopFollower);
     } else {
       await Swal.fire({
         position: "top",
@@ -66,6 +80,8 @@ function FollowButton(props) {
         const apiNewFollower = await getOneUserFollower(viewID);
         setSelfFollower(apiNewFollower);
       }
+      const apiTopFollower = await getTopFollower();
+      setTopFollower(apiTopFollower);
     } else {
       await Swal.fire({
         position: "top",

@@ -18,7 +18,7 @@ function UserTweetList(props) {
             tweetNumber={data?.replyCount}
             likesNumber={data?.likeCount}
             tweetID={data?.id}
-            isLike={data?.like}
+            isLike={data?.liked}
             setSelfTweetList={setSelfTweetList}
           />
         ))}
