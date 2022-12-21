@@ -22,24 +22,24 @@ axiosInstance.interceptors.request.use(
 )
 
 //對某位使用者按追隨
-export const unfollowUser = async (userID) => {
+export const addfollowUser = async (userID) => {
   try {
     const res = await axiosInstance.post(`${baseUrl}/api/followships`,{id:Number(userID)})
-    return res.data
+    return res
   }
   catch (error) {
-    console.error('[Follow User request failed]: ', error);
+    console.error('[Add Follow User request failed]: ', error);
   }
 }
 
 //對某位使用者取消追隨
-export const followUser = async (userID,unFollowerID) => {
+export const deletefollowUser = async (userID,unFollowerID) => {
   try {
     const res = await axiosInstance.delete(`${baseUrl}/api/followships/${unFollowerID}`,{id:Number(userID)})
-    return res.data
+    return res
   }
   catch (error) {
-    console.error('[Follow User request failed]: ', error);
+    console.error('[Delete Follow User request failed]: ', error);
   }
 }
 
