@@ -10,7 +10,7 @@ function ProfileReplyPage() {
   // 頁面資料狀態
   const [userProfile, setUserProfile] = useState(""); //個人資料
   const [selfReplyData, setSelfReplyData] = useState(""); //個人回覆資料
-  console.log(selfReplyData);
+
   // 目前使用者ID
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id;
@@ -24,51 +24,6 @@ function ProfileReplyPage() {
   const pathNameArr = pathname.split("/");
   const viewID = pathNameArr[2];
 
-  // API文件假資料
-  const repliesData = [
-    {
-      id: 1,
-      description: "我在推文",
-      createdAt: "2022-11-17T15:32:31.000z",
-      updatedAt: "2022-11-17T15:32:31.000z",
-      user: {
-        account: "user1",
-        id: 5,
-      },
-      replied: [
-        {
-          id: 1,
-          comment: "第一則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-        {
-          id: 2,
-          comment: "第二則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-      ],
-    },
-    {
-      id: 2,
-      description: "我在推文2",
-      createdAt: "2022-11-17T15:32:31.000z",
-      updatedAt: "2022-11-17T15:32:31.000z",
-      user: {
-        account: "user1",
-        id: 5,
-      },
-      replied: [
-        {
-          id: 1,
-          comment: "第一則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-      ],
-    },
-  ];
   // 定義初始資料fetch api
   useEffect(() => {
     // 定義初始資料fetch api
@@ -83,7 +38,7 @@ function ProfileReplyPage() {
     apiTweets();
   }, [viewID]);
 
-  // fecth使用者回覆貼文的資覅
+  // fecth使用者回覆貼文的資料
   useEffect(() => {
     // 定義初始資料fetch api
     const apiUserReplies = async () => {

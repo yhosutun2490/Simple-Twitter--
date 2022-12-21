@@ -43,6 +43,18 @@ export const getOneUsersReplies  = async (userID) => {
   }
 
 }
+// 取得某位使用者喜歡貼文的列表資料
+export const getOneUsersLikes = async (userID) => { 
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/likes`)
+
+    return res.data
+  }
+  catch (error) {
+    console.error('[Get OneUserLikes failed]: ', error);
+  }
+
+}
 
 //取得某位使用者資料
 export const getOneUserData = async (userID) => {

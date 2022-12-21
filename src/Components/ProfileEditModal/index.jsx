@@ -71,10 +71,10 @@ function ProfileEditModal(props) {
       return;
     }
     let payLoad = {
-      name:name,
-      introduction:introduction,
+      name: name,
+      introduction: introduction,
       avatar: avatarPhoto,
-      cover: coverPhoto
+      cover: coverPhoto,
     };
     // 上傳資料整合
     // if (!avatarPhoto && !coverPhoto) {
@@ -95,7 +95,7 @@ function ProfileEditModal(props) {
     //     avatar: avatarPhoto,
     //   };
     // }
-    console.log(payLoad)
+    console.log(payLoad);
     const editResponse = await userEditPhotoModal(userID, payLoad);
     console.log(editResponse);
     resetModalStatus();
