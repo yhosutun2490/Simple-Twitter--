@@ -32,12 +32,12 @@ function PopularUserList() {
         {topFollower &&
           topFollower?.map((user) => (
             <PopularUserCard
-              key={user.id}
-              id={user.id}
-              accountName={user.account}
-              userName={user.name}
-              isFollowed={user.isFollowing}
-              avatar={user.avatar}
+              key={user?.id}
+              userID={user?.id}
+              accountName={user?.account}
+              userName={user?.name}
+              isFollowed={user?.isFollowing}
+              avatar={user?.avatar}
               currentUserID={currentUserID}
               setTopFollower={setTopFollower}
             />
