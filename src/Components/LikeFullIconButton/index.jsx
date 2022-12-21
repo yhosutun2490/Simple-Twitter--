@@ -13,7 +13,6 @@ function LikeFullIconButton(props) {
     tweetID,
     setAllTweetList, //首頁用
     setMainTweetInfo, //首頁用
-    tweeterID, // 個人資料頁用
     setSelfTweetList, // 個人資料頁用
   } = props; // 需要傳進該Tweet貼文id，判斷API該打哪個params
 
