@@ -50,7 +50,7 @@ function UserTweetList(props) {
             content={data?.Tweet?.description}
             tweetNumber={data?.Tweet?.ReplyCount}
             likesNumber={data?.Tweet?.LikeCount}
-            tweetID={data?.id}
+            tweetID={data?.TweetId}
             isLike={data?.Tweet?.isLiked}
             setSelfTweetList={setSelfTweetList}
           />

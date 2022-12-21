@@ -3,10 +3,10 @@ import { ReactComponent as PreArrow } from "../../assets/icons/arrowPre.svg";
 import TweetInfo from "../../Components/TweetInfo";
 import ReplyList from "../../Components/ReplyList";
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import { getOneTweet } from "../../Api/TweetAPI";
 import { getOneTweetReplies } from "../../Api/RepliesAPI";
 import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function TweetPage() {
   const [mainTweetInfo, setMainTweetInfo] = useState("");
@@ -14,6 +14,7 @@ function TweetPage() {
   const mainTweeter = mainTweetInfo?.User?.account;
   const containerRef = useRef(null);
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   // 抓取路由tweet id 名稱
   const tweetID = Number(pathname.split("/")[2]);
@@ -49,10 +50,13 @@ function TweetPage() {
   return (
     <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title-wrap"]}>
-        <Link to={"/home"}>
+        <div
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
           <PreArrow className={styles["arrow-img"]} />
-        </Link>
-
+        </div>
         <p className={styles["page-title"]} onClick={scrollTop}>
           推文
         </p>
