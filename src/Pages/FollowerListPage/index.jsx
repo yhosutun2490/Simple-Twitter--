@@ -56,7 +56,10 @@ function FollowerListPage() {
         />
       </div>
       <div className={styles["follow-list"]}>
-        <ProfileFollowList followedData={selfFollower} />
+        <ProfileFollowList
+          followedData={selfFollower}
+          setSelfFollower={setSelfFollower}
+        />
       </div>
     </div>
   );

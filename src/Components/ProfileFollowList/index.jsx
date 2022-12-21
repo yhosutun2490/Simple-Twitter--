@@ -2,7 +2,8 @@ import styles from "./ProfileFollowList.module.scss";
 import FollowUserCard from "./FollowUserCard";
 
 function ProfileFollowList(props) {
-  const { followedData, followingData } = props;
+  const { followedData, followingData, setSelfFollower, setSelfFollowing } =
+    props;
   return (
     <div className={styles["container"]}>
       {followedData && followedData.length === 0 && (
@@ -20,6 +21,7 @@ function ProfileFollowList(props) {
             description={data?.introduction}
             isFollow={data?.Following}
             userID={data.id}
+            setSelfFollower={setSelfFollower}
           />
         ))}
       {followingData &&
@@ -31,6 +33,7 @@ function ProfileFollowList(props) {
             description={data?.introduction}
             isFollow={data?.Following}
             userID={data.id}
+            setSelfFollowing={setSelfFollowing}
           />
         ))}
     </div>

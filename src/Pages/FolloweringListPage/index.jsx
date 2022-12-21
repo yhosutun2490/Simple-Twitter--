@@ -48,7 +48,10 @@ function FolloweringListPage() {
         <ProfileFollowNavBar viewID={viewID} userData={userData} />
       </div>
       <div className={styles["follow-list"]}>
-        <ProfileFollowList followingData={selfFollowing} />
+        <ProfileFollowList
+          followingData={selfFollowing}
+          setSelfFollowing={setSelfFollowing}
+        />
       </div>
     </div>
   );

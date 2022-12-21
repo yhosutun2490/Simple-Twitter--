@@ -2,7 +2,15 @@ import styles from "./FollowUserCard.module.scss";
 import FollowButton from "../../FollowButton";
 import { Link } from "react-router-dom";
 function FollowUserCard(props) {
-  const { avatar, userName, description, isFollow, userID } = props;
+  const {
+    avatar,
+    userName,
+    description,
+    isFollow,
+    userID,
+    setSelfFollower, //畫面同步更新用
+    setSelfFollowing, //畫面同步更新用
+  } = props;
   return (
     <div className={styles["container"]}>
       <div className={styles["user-avatar"]}>
@@ -17,6 +25,8 @@ function FollowUserCard(props) {
             isFollow={isFollow}
             className={styles["follow-btn"]}
             userID={userID}
+            setSelfFollower={setSelfFollower}
+            setSelfFollowing={setSelfFollowing}
           />
         </div>
         <div className={styles["user-description"]}>{description}</div>
