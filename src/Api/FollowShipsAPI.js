@@ -42,3 +42,26 @@ export const followUser = async (userID,unFollowerID) => {
     console.error('[Follow User request failed]: ', error);
   }
 }
+
+// 看見某位使用者被跟隨的人
+export const getOneUserFollower = async (userID) => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/followers`)
+    return res.data
+  }
+  catch (error) {
+    console.error('[Get OneUser Follower request failed]: ', error);
+  }
+}
+// 看見某位使用者跟隨中的名單
+export const getOneUserFollowing = async (userID) => {
+   try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/followings`)
+    return res.data
+  }
+  catch (error) {
+    console.error('[Get OneUser Following Data request failed]: ', error);
+  }
+
+}
+

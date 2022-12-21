@@ -27,8 +27,8 @@ function ProfileUserNavBar(props) {
           account={userProfile?.account}
           content={userProfile?.introduction}
           Avatar={userProfile?.avatar}
-          followingCount={userProfile?.followingCount}
-          followerCount={userProfile?.followerCount}
+          followingCount={userProfile?.followerCount}
+          followerCount={userProfile?.followingCount}
           viewID={viewID}
           currentUserID={currentUserID}
         />

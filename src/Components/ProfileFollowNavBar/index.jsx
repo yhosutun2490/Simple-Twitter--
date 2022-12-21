@@ -3,13 +3,13 @@ import ProfilePageTitle from "../ProfilePageTitle";
 import FollowNavLink from "./FollowNavLink";
 
 function ProfileFollowNavBar(props) {
-  const { viewID, scrollTop } = props;
+  const { viewID, scrollTop, tweetCount, name } = props;
   return (
     <div className={styles["container"]}>
       <div className={styles["follow-page-title"]}>
         <ProfilePageTitle
-          name={"Natsu"}
-          tweetCount={25}
+          name={name}
+          tweetCount={tweetCount}
           scrollTop={scrollTop}
         />
       </div>

@@ -1,9 +1,12 @@
 import styles from "./FollowerListPage.module.scss";
 import ProfileFollowNavBar from "../../Components/ProfileFollowNavBar";
 import ProfileFollowList from "../../Components/ProfileFollowList";
+import { getOneUserFollower } from "../../Api/FollowShipsAPI"; //取得某位使用者被跟隨清單
 import { useLocation } from "react-router-dom";
 import { useRef } from "react";
 function FollowerListPage() {
+  // 使用者的被跟隨名單狀態
+
   // 點擊使用者名稱置頂
   const containerRef = useRef(null);
   function scrollTop() {

@@ -2,62 +2,38 @@ import styles from "./FolloweringListPage.module.scss";
 import { useLocation } from "react-router-dom";
 import ProfileFollowNavBar from "../../Components/ProfileFollowNavBar";
 import ProfileFollowList from "../../Components/ProfileFollowList";
+import { getOneUserFollowing } from "../../Api/FollowShipsAPI"; //取得使用者追隨中清單
+import { getOneUserData } from "../../Api/UserAPI"; //取得使用者資本資料
+import { useState, useEffect } from "react";
 function FolloweringListPage() {
-  // apiData
-  const apiData = [
-    {
-      followerId: 3,
-      followingId: 2,
-      createdAt: "2022-12-12T00:00:00.000Z",
-      updatedAt: "2022-12-12T00:00:00.000Z",
-      id: 2,
-      account: "user1",
-      name: "user1",
-      introduction:
-        "Inventore ipsa ut nisi ducimus culpa nesciunt. Et nobis alias quis earum deleniti quas voluptas officia.",
-      avatar: "https://loremflickr.com/140/140/people/?random=1.7767842498287",
-      Following: 0,
-    },
-    {
-      followerId: 3,
-      followingId: 4,
-      createdAt: "2022-12-12T00:00:00.000Z",
-      updatedAt: "2022-12-12T00:00:00.000Z",
-      id: 4,
-      account: "architecto",
-      name: "Mattie Borer",
-      introduction:
-        "Ducimus nihil cum distinctio ut. Doloribus aut sed voluptatem. Totam quo error expedita consequatur quis veritatis eius culpa. Dolorem odio ipsa sit omnis omnis",
-      avatar: "https://loremflickr.com/140/140/people/?random=93.4816219787695",
-      Following: 0,
-    },
-    {
-      followerId: 3,
-      followingId: 5,
-      createdAt: "2022-12-12T00:00:00.000Z",
-      updatedAt: "2022-12-12T00:00:00.000Z",
-      id: 5,
-      account: "aspernatur",
-      name: "Bertha Harvey",
-      introduction:
-        "Molestias non culpa perferendis eaque et labore ipsum sapiente. Consequatur voluptas velit totam autem sit ea fugit ut.",
-      avatar:
-        "https://loremflickr.com/140/140/people/?random=89.36766613202873",
-      Following: 0,
-    },
-  ];
+  // 使用者儲存自己追隨資料的狀態
+  const [selfFollowing, setSelfFollowing] = useState("");
 
   // 現在瀏覽使用者的ID
   const { pathname } = useLocation();
   const pathNameArr = pathname.split("/");
   const viewID = pathNameArr[2];
+  // 由API獲取所有Tweet資料 (只有第一次mount呼叫useEffect)
+  useEffect(() => {
+    // 定義初始資料fetch api
+    const apiFollowingData = async () => {
+      try {
+        const apiFollowingData = await getOneUserFollowing(viewID); // 等待資料回傳後渲染
+        setSelfFollowing(apiFollowingData);
+      } catch (error) {
+        console.error("initialize allTweets error", error);
+      }
+    };
+    apiFollowingData();
+  }, [viewID]);
+
   return (
     <div className={styles["container"]}>
       <div className={styles["profile-navbar"]}>
         <ProfileFollowNavBar viewID={viewID} />
       </div>
       <div className={styles["follow-list"]}>
-        <ProfileFollowList followingData={apiData} />
+        <ProfileFollowList followingData={selfFollowing} />
       </div>
     </div>
   );
