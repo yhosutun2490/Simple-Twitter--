@@ -13,9 +13,9 @@ function SettingPage() {
   const { currentUser, isAuthenticated } = useAuth();
 
   // State Variable
-  const [account, setAccount] = useState(currentUser.account);
-  const [name, setName] = useState(currentUser.name);
-  const [email, setEmail] = useState(currentUser.email);
+  const [account, setAccount] = useState(currentUser?.account);
+  const [name, setName] = useState(currentUser?.name);
+  const [email, setEmail] = useState(currentUser?.email);
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -67,7 +67,7 @@ function SettingPage() {
     }
     // If all input value is valid
     const nameTrimmed = name.trim();
-    const { success } = await setUserData({
+    const { success, errMsg } = await setUserData({
       id: currentUser.id,
       account: account,
       name: nameTrimmed,
@@ -92,15 +92,17 @@ function SettingPage() {
       return;
     } else {
       Swal.fire({
-        title: "使用者錯誤",
+        title: errMsg,
         color: "#000000",
         icon: "error",
         iconColor: "#FC5A5A",
         toast: "true",
+        width: "30%",
         showConfirmButton: false,
         timer: 1500,
         position: "top",
       });
+      return;
     }
   };
 
@@ -144,7 +146,7 @@ function SettingPage() {
   }
 
   if (nameLength > nameLengthLimit) {
-    nameAlertMsg = "密碼字數超出上限";
+    nameAlertMsg = "名稱字數超出上限";
   }
 
   if (passwordLength > 0 && passwordLength < 4) {
