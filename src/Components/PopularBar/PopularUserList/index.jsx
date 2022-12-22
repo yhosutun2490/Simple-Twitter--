@@ -2,14 +2,14 @@ import styles from "./PopularUserList.module.scss";
 import PopularUserCard from "./PopularUserCard";
 import { useAuth } from "../../../Context/AuthContext"; // 取得當前使用者id context狀態
 import { useEffect, useState } from "react";
-import { getTopFollower } from "../../../Api/UserAPI"; //前10大追隨者清單
+import { getTopFollower } from "../../../Api/UserAPI"; //前10大追隨者清單API
+import { useFollowBtn } from "../../../Context/FollowBtnContext"; //推薦跟隨狀態由context共享
 
 function PopularUserList() {
+  const { topFollower, setTopFollower } = useFollowBtn(); //推薦追隨資料放在共享context
   // 現在使用者資料
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id;
-  // fetch 資料存放狀態
-  const [topFollower, setTopFollower] = useState("");
   // 由API獲取Top Follower資料 (只有第一次mount呼叫useEffect)
   useEffect(() => {
     // 定義初始資料fetch api

@@ -5,10 +5,12 @@ import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主�
 import { getOneUsersReplies } from "../../Api/UserAPI"; // 取得某位使用者自己的回覆列表
 import { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useFollowBtn } from "../../Context/FollowBtnContext"; // 追隨按鈕共用狀態用
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 function ProfileReplyPage() {
+  // 共用狀態
+  const { userProfile, setUserProfile } = useFollowBtn();
   // 頁面資料狀態
-  const [userProfile, setUserProfile] = useState(""); //個人資料
   const [selfReplyData, setSelfReplyData] = useState(""); //個人回覆資料
 
   // 目前使用者ID

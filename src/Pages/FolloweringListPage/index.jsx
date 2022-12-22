@@ -5,10 +5,11 @@ import ProfileFollowList from "../../Components/ProfileFollowList";
 import { getOneUserFollowing } from "../../Api/FollowShipsAPI"; //取得使用者追隨中清單
 import { getOneUserData } from "../../Api/UserAPI"; //取得使用者資本資料
 import { useState, useEffect } from "react";
+import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕共用狀態
 function FolloweringListPage() {
-  // 使用者儲存自己追隨資料的狀態
+  const { selfFollowing, setSelfFollowing } = useFollowBtn(); //追隨清單按鈕共用狀態
+  // 使用者儲存自己資料的狀態
   const [userData, setUserData] = useState("");
-  const [selfFollowing, setSelfFollowing] = useState("");
 
   // 現在瀏覽使用者的ID
   const { pathname } = useLocation();

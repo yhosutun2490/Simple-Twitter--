@@ -6,10 +6,12 @@ import { getOneUserTweets } from "../../Api/UserAPI"; // 取得某位使用者�
 import { useRef, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
+import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕狀態控制context
 
 function ProfilePage() {
+  // 共用狀態
+  const { userProfile, setUserProfile } = useFollowBtn();
   // 頁面資料狀態
-  const [userProfile, setUserProfile] = useState(""); //個人資料
   const [selfTweetList, setSelfTweetList] = useState("");
   // 目前使用者ID
   const currentUserInfo = useAuth().currentUser;
@@ -36,7 +38,7 @@ function ProfilePage() {
       }
     };
     apiTweets();
-  }, [viewID]);
+  }, [viewID, setUserProfile]);
 
   useEffect(() => {
     /// 定義初始資料fetch api

@@ -13,8 +13,8 @@ function FollowBtnProvider(props) {
   // 追隨按鈕共用狀態
   const [userProfile, setUserProfile] = useState("")  // 使用者個人資料卡片
   const [selfFollowing,setSelfFollowing] = useState("") //追隨中頁面清單狀態
-  const [selfFollower,setSelfFollower] = useState("")
-  const [topFollower, setTopFollower] = useState("")
+  const [selfFollower,setSelfFollower] = useState("") //被追隨狀態
+  const [topFollower, setTopFollower] = useState("") // 推薦十大使用者
 
 
   return (

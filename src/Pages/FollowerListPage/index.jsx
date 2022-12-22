@@ -5,10 +5,11 @@ import { getOneUserFollower } from "../../Api/FollowShipsAPI"; //取得某位使
 import { getOneUserData } from "../../Api/UserAPI";
 import { useLocation } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
+import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕共用狀態
 function FollowerListPage() {
+  const { selfFollower, setSelfFollower } = useFollowBtn(); //被跟隨名單由共用狀態控制
   // 使用者的被跟隨名單狀態
   const [userData, setUserData] = useState("");
-  const [selfFollower, setSelfFollower] = useState("");
 
   // 點擊使用者名稱置頂
   const containerRef = useRef(null);
