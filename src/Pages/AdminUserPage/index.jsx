@@ -56,9 +56,8 @@ function AdminUserPage() {
   useEffect(() => {
     const getAllUsersAsync = async () => {
       try {
-        const data = await adminGetAllUsers();
-        setUserList(data);
-        console.log(data);
+        const res = await adminGetAllUsers();
+        setUserList(res.filter(data => data.role !== "admin"));
       } catch (error) {
         console.log(error);
       }

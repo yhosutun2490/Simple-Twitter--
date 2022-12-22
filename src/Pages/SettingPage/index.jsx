@@ -1,20 +1,25 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import UserSideBar from "../../Components/UserSideBar";
 import AuthInput from "../../Components/AuthInput";
 import Button from "../../Components/Button";
 import styles from "./SettingPage.module.scss";
+import { useAuth } from "../../Context/AuthContext";
+import { setUserData } from "../../Api/UserSettingAPI";
+import Swal from "sweetalert2";
 
 function SettingPage() {
-  //useEffect透過api獲取現在登入使用者的資料，用setState讓畫面可以顯示default帳號、名稱、信箱
-  // [GET]/api/users/:id，需要token
+  //透過useAuth獲取現在登入使用者的資料，顯示default帳號、名稱、信箱
+  const { currentUser, isAuthenticated } = useAuth();
 
   // State Variable
-  const [account, setAccount] = useState("");
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [account, setAccount] = useState(currentUser?.account);
+  const [name, setName] = useState(currentUser?.name);
+  const [email, setEmail] = useState(currentUser?.email);
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const navigate = useNavigate();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -24,10 +29,10 @@ function SettingPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account.length;
-  const nameLength = name.trim().length;
-  const passwordLength = password.length;
-  const emailLength = email.length;
+  const accountLength = account?.length;
+  const nameLength = name?.trim().length;
+  const passwordLength = password?.length;
+  const emailLength = email?.length;
   const accountLengthLimit = 50;
   const nameLengthLimit = 50;
 
@@ -38,7 +43,7 @@ function SettingPage() {
   //Check if there is space in the input value
   const isSpaceCheck = /\s/;
 
-  const handleClick = () => {
+  const handleClick = async () => {
     setSubmitting(true);
 
     if (accountLength === 0 || accountAlertMsg.length > 0) {
@@ -61,15 +66,57 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
-    //密碼如果沒有input value便不做更動
-    //其他欄位如果和default value不一樣要做更動
-    alert("success");
+    const nameTrimmed = name.trim();
+    const { success, errMsg } = await setUserData({
+      id: currentUser.id,
+      account: account,
+      name: nameTrimmed,
+      email: email,
+      password: password,
+      checkPassword: checkPassword,
+    });
+    if (success) {
+      Swal.fire({
+        title: "更新成功！",
+        color: "#000000",
+        icon: "success",
+        iconColor: "#82C43C",
+        toast: "true",
+        showConfirmButton: false,
+        timer: 1500,
+        position: "top",
+        timerProgressBar: true,
+      });
+      setPassword("");
+      setCheckPassword("");
+      return;
+    } else {
+      Swal.fire({
+        title: errMsg,
+        color: "#000000",
+        icon: "error",
+        iconColor: "#FC5A5A",
+        toast: "true",
+        width: "30%",
+        showConfirmButton: false,
+        timer: 1500,
+        position: "top",
+      });
+      return;
+    }
   };
 
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
   };
+
+  //if user is authenticated, navigate to home page
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated]);
 
   // Input blank check
   if (submitting && accountLength === 0) {
@@ -99,7 +146,7 @@ function SettingPage() {
   }
 
   if (nameLength > nameLengthLimit) {
-    nameAlertMsg = "密碼字數超出上限";
+    nameAlertMsg = "名稱字數超出上限";
   }
 
   if (passwordLength > 0 && passwordLength < 4) {
@@ -116,7 +163,7 @@ function SettingPage() {
   }
 
   //passwordCheck unmatched alert
-  if (checkPassword > 0 && checkPassword !== password) {
+  if (checkPassword >= 0 && checkPassword !== password) {
     checkPasswordAlertMsg = "密碼不相符";
   }
 
