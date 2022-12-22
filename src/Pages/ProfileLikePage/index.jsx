@@ -38,7 +38,7 @@ function ProfileLikePage() {
       }
     };
     apiTweets();
-  }, [viewID]);
+  }, [viewID,setUserProfile]);
 
   // fecth使用者likes的資料
   useEffect(() => {

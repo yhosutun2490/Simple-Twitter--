@@ -71,7 +71,6 @@ function FollowButton(props) {
 
   async function handleDeleteFollow() {
     const apiResponse = await deletefollowUser(currentUserID, userID);
-    console.log(apiResponse);
     if (apiResponse.status === 200) {
       await Swal.fire({
         position: "top",

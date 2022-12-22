@@ -38,7 +38,7 @@ function ProfileReplyPage() {
       }
     };
     apiTweets();
-  }, [viewID]);
+  }, [viewID, setUserProfile]);
 
   // fecth使用者回覆貼文的資料
   useEffect(() => {

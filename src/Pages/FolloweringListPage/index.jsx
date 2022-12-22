@@ -41,7 +41,7 @@ function FolloweringListPage() {
       }
     };
     apiFollowingData();
-  }, [viewID]);
+  }, [viewID,setSelfFollowing]);
 
   return (
     <div className={styles["container"]}>

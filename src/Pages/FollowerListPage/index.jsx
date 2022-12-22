@@ -45,7 +45,7 @@ function FollowerListPage() {
       }
     };
     apiFollowerData();
-  }, [viewID]);
+  }, [viewID,setSelfFollower]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
