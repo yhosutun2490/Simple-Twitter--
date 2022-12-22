@@ -1,12 +1,17 @@
 import styles from "./FolloweringListPage.module.scss";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import ProfileFollowNavBar from "../../Components/ProfileFollowNavBar";
 import ProfileFollowList from "../../Components/ProfileFollowList";
 import { getOneUserFollowing } from "../../Api/FollowShipsAPI"; //取得使用者追隨中清單
 import { getOneUserData } from "../../Api/UserAPI"; //取得使用者資本資料
 import { useState, useEffect } from "react";
 import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕共用狀態
+import { useAuth } from "../../Context/AuthContext";
+
 function FolloweringListPage() {
+  //驗證用
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const { selfFollowing, setSelfFollowing } = useFollowBtn(); //追隨清單按鈕共用狀態
   // 使用者儲存自己資料的狀態
   const [userData, setUserData] = useState("");
@@ -41,7 +46,14 @@ function FolloweringListPage() {
       }
     };
     apiFollowingData();
-  }, [viewID,setSelfFollowing]);
+  }, [viewID, setSelfFollowing]);
+
+  useEffect(() => {
+    // 如果token驗證狀態沒過
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated]);
 
   return (
     <div className={styles["container"]}>

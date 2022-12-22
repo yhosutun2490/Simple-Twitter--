@@ -4,11 +4,13 @@ import UserTweetList from "../../Components/UserTweetList";
 import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主要資料的API
 import { getOneUserTweets } from "../../Api/UserAPI"; // 取得某位使用者自己的推文
 import { useRef, useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕狀態控制context
 
 function ProfilePage() {
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   // 共用狀態
   const { userProfile, setUserProfile } = useFollowBtn();
   // 頁面資料狀態
@@ -52,6 +54,14 @@ function ProfilePage() {
     };
     apiUserTweets();
   }, [viewID]);
+
+  // 如果使用者沒有取得登入授權狀態(或憑證過期)
+  useEffect(() => {
+    // 如果token驗證狀態沒過
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>

@@ -5,12 +5,14 @@ import ReplyList from "../../Components/ReplyList";
 import { useState, useRef, useEffect } from "react";
 import { getOneTweet } from "../../Api/TweetAPI";
 import { getOneTweetReplies } from "../../Api/RepliesAPI";
+import { useAuth } from "../../Context/AuthContext";
 import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 function TweetPage() {
   const [mainTweetInfo, setMainTweetInfo] = useState("");
   const [replies, setRplies] = useState("");
+  const { isAuthenticated } = useAuth();
   const mainTweeter = mainTweetInfo?.User?.account;
   const containerRef = useRef(null);
   const { pathname } = useLocation();
@@ -47,6 +49,15 @@ function TweetPage() {
     };
     apiTweetsRplies();
   }, [tweetID]);
+
+  // 如果使用者沒有取得登入授權狀態(或憑證過期)
+  useEffect(() => {
+    // 如果token驗證狀態沒過
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated]);
+
   return (
     <div className={styles["container"]} ref={containerRef}>
       <div className={styles["page-title-wrap"]}>
