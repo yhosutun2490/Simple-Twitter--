@@ -17,6 +17,7 @@ function ReplyList(props) {
             userID={data?.User?.id}
             comment={data?.comment}
             replyTo={mainTweeter}
+            replyUserID={data?.User?.id}
           />
         ))}
       {selfReplies &&
@@ -30,6 +31,7 @@ function ReplyList(props) {
             userID={selfProfile?.id}
             comment={data?.comment}
             replyTo={data?.Tweet?.User?.account}
+            replyUserID={data?.Tweet?.User?.id}
           />
         ))}
     </div>
