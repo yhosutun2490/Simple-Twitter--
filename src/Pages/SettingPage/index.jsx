@@ -75,24 +75,30 @@ function SettingPage() {
       password: password,
       checkPassword: checkPassword,
     });
-
     if (success) {
       Swal.fire({
         title: "更新成功！",
+        color: "#000000",
         icon: "success",
+        iconColor: "#82C43C",
+        toast: "true",
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1500,
         position: "top",
+        timerProgressBar: true,
       });
       setPassword("");
       setCheckPassword("");
       return;
     } else {
       Swal.fire({
-        title: "Failed...",
+        title: "使用者錯誤",
+        color: "#000000",
         icon: "error",
+        iconColor: "#FC5A5A",
+        toast: "true",
         showConfirmButton: false,
-        timer: 1000,
+        timer: 1500,
         position: "top",
       });
     }
