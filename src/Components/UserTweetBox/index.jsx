@@ -23,6 +23,8 @@ function UserTweetBox(props) {
     tweetID,
     isLike,
     setSelfTweetList, //個人頁面同步更新用
+    setSelfLikeTweet, // 個人喜歡貼文同步更新用
+    isOnLikePage,
   } = props;
   // 日期資料轉換
   const date = TimeFromNow(update);
@@ -75,6 +77,8 @@ function UserTweetBox(props) {
                 <LikeFullIconButton
                   tweetID={tweetID}
                   setAllTweetList={setAllTweetList}
+                  setSelfLikeTweet={setSelfLikeTweet}
+                  isOnLikePage={isOnLikePage}
                 />
               </div>
             )}
@@ -83,6 +87,8 @@ function UserTweetBox(props) {
                 <LikeIconButton
                   tweetID={tweetID}
                   setAllTweetList={setAllTweetList}
+                  setSelfLikeTweet={setSelfLikeTweet}
+                  isOnLikePage={isOnLikePage}
                 />
               </div>
             )}
@@ -92,6 +98,7 @@ function UserTweetBox(props) {
                   tweetID={tweetID}
                   tweeterID={tweetID}
                   setSelfTweetList={setSelfTweetList}
+                  isOnLikePage={isOnLikePage}
                 />
               </div>
             )}
@@ -101,6 +108,7 @@ function UserTweetBox(props) {
                   tweetID={tweetID}
                   tweeterID={tweetID}
                   setSelfTweetList={setSelfTweetList}
+                  isOnLikePage={isOnLikePage}
                 />
               </div>
             )}

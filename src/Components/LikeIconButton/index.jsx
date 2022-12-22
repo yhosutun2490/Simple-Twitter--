@@ -4,7 +4,8 @@ import { getAllTweets } from "../../Api/TweetAPI";
 import { getOneTweet } from "../../Api/TweetAPI"; //取得推文主要資料
 import { userLikeTweet } from "../../Api/UserAPI"; //使用者對貼文按喜歡API
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得某位使用者的貼文
-import { useLocation } from "react-router-dom";
+import { getOneUsersLikes } from "../../Api/UserAPI"; //取得某位使用者喜歡的貼文
+import { useLocation, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 function LikeIconButton(props) {
   // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)
@@ -14,13 +15,13 @@ function LikeIconButton(props) {
     setAllTweetList, //首頁用
     setMainTweetInfo, //首頁用
     setSelfTweetList, // 個人資料頁用
+    setSelfLikeTweet, // 個人喜歡貼文用
+    isOnLikePage,
   } = props;
   const size = large ? "large" : "";
   // 取得目前所在頁面
   const { pathname } = useLocation();
   const pageName = pathname.split("/")[1]; //路由前墜
-  const userLikePageName =
-    pathname.split("/").length >= 4 ? pathname.split("/")[3] : ""; //抓到使用者like頁面路由params名名稱(like)
   const viewUserID = pathname.split("/")[2];
 
   async function handleLikeClick() {
@@ -45,14 +46,16 @@ function LikeIconButton(props) {
         setMainTweetInfo(newOneTweetData);
       }
       // 如果目前在UserPage個人資料推文頁
-      if (pageName === "user") {
+      if (pageName === "user" && !isOnLikePage) {
         const userNewTweetData = await getOneUserTweets(viewUserID);
         setSelfTweetList(userNewTweetData);
         return;
       }
 
       // 如果目前在UserPage個人資料喜歡頁
-      if (userLikePageName === "like") {
+      if (isOnLikePage) {
+        const userNewLikeTweet = await getOneUsersLikes(viewUserID);
+        setSelfLikeTweet(userNewLikeTweet);
         return;
       }
     } else {

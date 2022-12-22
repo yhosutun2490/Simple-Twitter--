@@ -38,7 +38,7 @@ function ProfileLikePage() {
       }
     };
     apiTweets();
-  }, [viewID,setUserProfile]);
+  }, [viewID, setUserProfile]);
 
   // fecth使用者likes的資料
   useEffect(() => {
@@ -62,7 +62,10 @@ function ProfileLikePage() {
         userProfile={userProfile}
       />
       <div>
-        <UserTweetList selfLikeTweet={selfLikeData} />
+        <UserTweetList
+          selfLikeTweet={selfLikeData}
+          setSelfLikeTweet={setSelfLikeData}
+        />
       </div>
     </div>
   );

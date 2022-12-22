@@ -1,7 +1,13 @@
 import UserTweetBox from "../UserTweetBox";
 
 function UserTweetList(props) {
-  const { tweetList, selfTweet, setSelfTweetList, selfLikeTweet } = props;
+  const {
+    tweetList,
+    selfTweet,
+    setSelfTweetList,
+    selfLikeTweet,
+    setSelfLikeTweet,
+  } = props;
 
   return (
     <div>
@@ -52,7 +58,8 @@ function UserTweetList(props) {
             likesNumber={data?.Tweet?.LikeCount}
             tweetID={data?.TweetId}
             isLike={data?.Tweet?.isLiked}
-            setSelfTweetList={setSelfTweetList}
+            setSelfLikeTweet={setSelfLikeTweet}
+            isOnLikePage={true}
           />
         ))}
     </div>
