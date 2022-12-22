@@ -5,7 +5,7 @@ import { getOneTweet } from "../../Api/TweetAPI"; //取得推文主要資料
 import { userLikeTweet } from "../../Api/UserAPI"; //使用者對貼文按喜歡API
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得某位使用者的貼文
 import { getOneUsersLikes } from "../../Api/UserAPI"; //取得某位使用者喜歡的貼文
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 function LikeIconButton(props) {
   // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)

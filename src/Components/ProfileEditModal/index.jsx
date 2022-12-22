@@ -5,7 +5,6 @@ import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
-import { userEditPhotoModal } from "../../Api/UserAPI"; //使用者編輯個人資料API
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import Swal from "sweetalert2";
 
