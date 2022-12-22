@@ -44,6 +44,7 @@ function UserTweetBox(props) {
           userName={tweeterName}
           account={tweeterAccount}
           update={date}
+          tweeterID={tweeterID}
         />
         <div className={styles["tweet-content"]}>
           <Link
