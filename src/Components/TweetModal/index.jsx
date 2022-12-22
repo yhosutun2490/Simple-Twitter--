@@ -6,11 +6,14 @@ import avatarDefault from "../../assets/icons/AcLogo.svg";
 import { useTweetList } from "../../Context/TweetContext"; //引入context推文同步更新用
 import { userTweet } from "../../Api/UserAPI"; //推文API
 import { getAllTweets } from "../../Api/TweetAPI";
+import { getOneUserTweets } from "../../Api/UserAPI";
 import { useAuth } from "../../Context/AuthContext";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
+
 function TweetModal(props) {
   // 設定推文列表清單的狀態
-  const { setAllTweetList } = useTweetList();
+  const { setAllTweetList, setSelfTweetList } = useTweetList();
   // 設定trigger參數，true or false決定彈窗打開與否
   // 設定關掉彈窗的set function (父層傳入)
   const { trigger, closeEvent } = props;
@@ -20,6 +23,12 @@ function TweetModal(props) {
   // 使用者個人資料
   const { currentUser } = useAuth();
   const currentUserAvatar = currentUser.avatar;
+  const currentUserID = Number(currentUser.id);
+  // 現在觀看的使用者頁面id、頁面名稱
+  const { pathname } = useLocation();
+  const pathNameArr = pathname.split("/");
+  const currentPageName = pathNameArr[1];
+  const viewID = Number(pathNameArr[2]);
 
   //  textarea輸入框隨使用者輸入高度變化
   function textAreaChange(e) {
@@ -42,8 +51,6 @@ function TweetModal(props) {
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
       setText("");
-      // 成功推文後要即時更新資料
-      const apiAllTweet = await getAllTweets();
       await Swal.fire({
         position: "top",
         title: "成功推文！",
@@ -51,8 +58,18 @@ function TweetModal(props) {
         icon: "success",
         showConfirmButton: false,
       });
-      setAllTweetList(apiAllTweet);
-      closeEvent(false);
+      if (currentPageName === "home") {
+        // 成功推文後要即時更新資料(homepage)
+        const apiAllTweet = await getAllTweets();
+        setAllTweetList(apiAllTweet);
+        closeEvent(false);
+      }
+      // 成功推文後要即時更新資料(個人頁面)
+      if (currentPageName === "user" && currentUserID === viewID) {
+        const apiSelfTweet = await getOneUserTweets(currentUserID);
+        setSelfTweetList(apiSelfTweet);
+        closeEvent(false);
+      }
     } else {
       Swal.fire({
         position: "top",

@@ -1,7 +1,7 @@
 import styles from "./ProfileLikePage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import UserTweetList from "../../Components/UserTweetList";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useAuth } from "../../Context/AuthContext"; // 登入使用者狀態共用
 import { useFollowBtn } from "../../Context/FollowBtnContext"; // 按鈕共用狀態用
@@ -9,8 +9,6 @@ import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者資�
 import { getOneUsersLikes } from "../../Api/UserAPI"; // 取得某位使用者喜歡的推文
 
 function ProfileLikePage() {
-  const { isAuthenticated } = useAuth;
-  const navigate = useNavigate();
   // 共用狀態
   const { userProfile, setUserProfile } = useFollowBtn();
   // 頁面資料狀態
@@ -55,14 +53,6 @@ function ProfileLikePage() {
     };
     apiUserLikes();
   }, [viewID]);
-
-  // 如果使用者沒有取得登入授權狀態(或憑證過期)
-  useEffect(() => {
-    // 如果token驗證狀態沒過
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
-  }, [navigate, isAuthenticated]);
 
   return (
     <div className={styles["container"]} ref={containerRef}>
