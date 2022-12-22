@@ -1,7 +1,7 @@
 // 引入axios
 import axios from 'axios';
 // 後端Heroku網址
-const baseUrl =""
+const baseUrl ="https://floating-forest-88499.herokuapp.com"
 
 // 產生axios 實例來管理API
 const axiosInstance = axios.create({
@@ -20,69 +20,112 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {console.error(error)}
 )
-//取得所有推文
-export const getOneUserTweets = async () => {
+//取得某位使用者所有推文(特定id)
+export const getOneUserTweets = async (userID) => {
   try {
-    // const res = await axiosInstance.get(`${baseUrl}/api/tweets`)
-    const resfakeData ={
-  "status": "success",
-   "data" :[
-      {
-      "id": 1,
-      "description": "我在推文",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "repliesCount": 4,
-      "likeCount": 10,
-      },
-      {
-      "id": 2,
-      "description": "我在推文2",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "repliesCount":4,
-      "likeCount":8
-      }
-    ]
-  }
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/tweets`)
 
-    return resfakeData
+    return res.data
   }
   catch (error) {
     console.error('[Get AllTweetData failed]: ', error);
   }
 }
-
-//取得所有推文
-export const getOneUserData = async () => {
+// 取得某位使用者回覆貼文的列表資料
+export const getOneUsersReplies  = async (userID) => {
   try {
-    // const res = await axiosInstance.get(`${baseUrl}/api/tweets`)
-    const resfakeData ={
-  "status": "success",
-   "data" :[
-      {
-      "id": 1,
-      "account": "user1",
-      "email": "user1@example.com",
-      "name":"handsome",
-      "avatar": "https://picsum.photos/50/50",
-      "introduction": "我是大帥哥",
-      "role": 1,
-      "cover": "https://imgur.com/kaoge55g",
-      "createdAt": "2022-11-17T15:32:31.000z",
-      "updatedAt": "2022-11-17T15:32:31.000z",
-      "following": true,
-      "followingCount":3,
-      "follower": 2,
-      "tweetsCount":"4"
-}
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/replied_tweets`)
 
-    ]
-  }
-
-    return resfakeData
+    return res.data
   }
   catch (error) {
-    console.error('[Get AllTweetData failed]: ', error);
+    console.error('[Get OneUserReplies failed]: ', error);
+  }
+
+}
+// 取得某位使用者喜歡貼文的列表資料
+export const getOneUsersLikes = async (userID) => { 
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}/likes`)
+
+    return res.data
+  }
+  catch (error) {
+    console.error('[Get OneUserLikes failed]: ', error);
+  }
+
+}
+
+//取得某位使用者資料
+export const getOneUserData = async (userID) => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/${userID}`)
+      return res.data
+  }
+
+  catch (error) {
+    console.error('[Get Get OneUser Data failed]: ', error);
   }
 }
+
+//使用者推文
+export const userTweet = async (text) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets`,{description:text})
+    return res;
+  } catch (error) {
+    console.error("[Submit Tweet Failed]:", error);
+    return error;
+  }
+};
+
+// 使用者追隨名單前10名
+export const getTopFollower = async () => {
+  try {
+    const res = await axiosInstance.get(`${baseUrl}/api/users/topFollow`)
+    return res.data;
+  } catch (error) {
+    console.error("[Get TopFollowers Failed]:", error);
+    return error;
+  }
+};
+
+// 使用者like某貼文
+export const userLikeTweet = async (tweetID) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${tweetID}/like`)
+    return res;
+  } catch (error) {
+    console.error("[like OneTweet Failed]:", error);
+    return error;
+  }
+};
+// 使用者unlike不喜歡某貼文
+export const userDisLikeTweet =  async (tweetID) => {
+  try {
+    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${tweetID}/unlike`)
+    return res;
+  } catch (error) {
+    console.error("[Dislike OneTweet Failed]:", error);
+    return error;
+  }
+};
+// 使用者編輯視窗上傳圖片、修改自介名稱api
+export const userEditPhotoModal = async (userID,payload) => {
+  const data = {
+    name: payload.name,
+    introduction: payload.introduction,
+    cover: payload.cover,
+    avatar: payload.avatar
+  }
+  try {
+    const res = await axiosInstance.put(`${baseUrl}/api/users/${userID}`,data)
+    return res;
+  } catch (error) {
+    console.error("[Edit Profile Failed]:", error);
+    return error;
+  }
+};
+
+
+

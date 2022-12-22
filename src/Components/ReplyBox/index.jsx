@@ -5,7 +5,16 @@ import { TimeFromNow } from "../../CostumHook/TransFormDate";
 
 function ReplyBox(props) {
   // 這邊傳進來的是回覆的使用者
-  const { name, account, avatar, update, userID, replyTo, comment } = props;
+  const {
+    name,
+    account,
+    avatar,
+    update,
+    userID,
+    replyTo,
+    replyUserID,
+    comment,
+  } = props;
   const date = TimeFromNow(update);
   return (
     <div className={styles["container"]}>
@@ -18,7 +27,9 @@ function ReplyBox(props) {
         <UserInfo userName={name} account={account} update={date} />
         <div className={styles["response-to"]}>
           <p className={styles["response-title-1"]}>回覆</p>
-          <p className={styles["response-title-2"]}>@{replyTo}</p>
+          <Link to={`/user/${replyUserID}`} className={styles["response-to-link"]}>
+            <p className={styles["response-title-2"]}>@{replyTo}</p>
+          </Link>
         </div>
         <div className={styles["response-text"]}>{comment}</div>
       </div>

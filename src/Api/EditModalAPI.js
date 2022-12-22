@@ -2,7 +2,6 @@
 import axios from 'axios';
 // 後端Heroku網址
 const baseUrl ="https://floating-forest-88499.herokuapp.com"
-
 // 產生axios 實例來管理API
 const axiosInstance = axios.create({
   baseURL: baseUrl,
@@ -21,27 +20,14 @@ axiosInstance.interceptors.request.use(
   (error) => {console.error(error)}
 )
 
-//取得特定推文回覆資料
-export const getOneTweetReplies = async (id) => {
+// 使用者編輯視窗上傳圖片、修改自介名稱api
+export const userEditPhotoModalNew = async (userID,formData) => {
   try {
-    const res = await axiosInstance.get(`${baseUrl}/api/tweets/${id}/replies`)
-    return res.data
+    const res = await axiosInstance.put(`${baseUrl}/api/users/${userID}`,formData
+)
+    return res;
+  } catch (error) {
+    console.error("[Edit Profile Failed]:", error);
+    return error;
   }
-  catch (error) {
-    console.error('[Get OneTweetReply Data failed]: ', error);
-  }
-
-}
-
-// 回覆某一則貼文
-export const replyOneTweet  = async(id,text) => {
-    try {
-    const res = await axiosInstance.post(`${baseUrl}/api/tweets/${id}/replies`,{"comment":text})
-    return res
-  }
-  catch (error) {
-    console.error('[Post OneTweetReply Data failed]: ', error);
-  }
-
-
-}
+};

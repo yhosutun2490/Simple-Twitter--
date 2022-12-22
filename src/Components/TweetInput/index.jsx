@@ -1,20 +1,32 @@
 import styles from "./TweetInput.module.scss";
-import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 import { useState, useRef } from "react";
 import TweetSubmitButton from "./TweetSubmitButton";
-function TweetInput() {
+import { userTweet } from "../../Api/UserAPI"; //推文API
+import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
+import { useAuth } from "../../Context/AuthContext"; // 取得登入使用者資料
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
+
+function TweetInput(props) {
+  const { setTweetList } = props;
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
   // 判斷使用者是否回到輸入狀態
   const [isOnSubmit, setIsOnSubmit] = useState(false);
   const textAreaRef = useRef(null);
+  // 使用者個人資料
+  const { currentUser } = useAuth();
+  const currentUserAvatar = currentUser.avatar;
+  const currentUserID = currentUser.id;
+
   //  textarea輸入框隨使用者輸入高度變化
   function textAreaChange(e) {
     e.style.height = "auto";
     e.style.height = e.scrollHeight + "px";
     setText(e.value);
   }
-  function handleTweetSubmit() {
+  async function handleTweetSubmit() {
     // 換行空白處理
     // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
 
@@ -27,14 +39,28 @@ function TweetInput() {
       setIsOnSubmit(true);
       return;
     }
-
-    // 用setTimeout 假設Api回傳成功後清除輸入
-    setTimeout(() => {
-      // 改回預設值狀態
+    const tweetResponse = await userTweet(text);
+    if (tweetResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "成功推文！",
+        timer: 2000,
+        icon: "success",
+        showConfirmButton: false,
+      });
       setText("");
-      setIsOnSubmit(false);
-      alert("推文成功");
-    }, 1000);
+      // 成功推文後要即時更新資料
+      const apiAllTweet = await getAllTweets();
+      setTweetList(apiAllTweet);
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+    }
   }
   function handleOnFocus() {
     setIsOnSubmit(false);
@@ -45,7 +71,13 @@ function TweetInput() {
     <div className={styles["container"]}>
       <div className={styles["input-body"]} onFocus={handleOnFocus}>
         <div className={styles["user-avatar"]}>
-          <Avatar />
+          <Link to={`/user/${currentUserID}`}>
+            <img
+              src={currentUserAvatar ? currentUserAvatar : avatarDefault}
+              alt="avatar-img"
+              className={styles["avatar-img"]}
+            />
+          </Link>
         </div>
         <textarea
           className={styles["input-textarea"]}

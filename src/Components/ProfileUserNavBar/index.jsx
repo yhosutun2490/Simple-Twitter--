@@ -4,29 +4,31 @@ import ProfilePageTitle from "../ProfilePageTitle";
 import ProfileNavLink from "../ProfileNavLink";
 import fakeBackgroundImg from "../../assets/icons/background.svg";
 function ProfileUserNavBar(props) {
-  const { currentUserID, viewID, scrollTop } = props;
+  const { currentUserID, viewID, scrollTop, userProfile } = props;
   return (
     <div className={styles["container"]}>
       <div className={styles["profile-title"]}>
-        <ProfilePageTitle name={"Natsu"} tweetCount={25} scrollTop={scrollTop}/>
+        <ProfilePageTitle
+          name={userProfile?.name}
+          tweetCount={userProfile?.tweetsCount}
+          scrollTop={scrollTop}
+        />
       </div>
       <div className={styles["background-avatar"]}>
         <img
-          src={fakeBackgroundImg}
+          src={userProfile?.cover ? userProfile.cover : fakeBackgroundImg}
           alt="background"
           className={styles["avatar-img"]}
         />
       </div>
       <div className={styles["user-profile-info"]}>
         <ProfileInfo
-          name={"Natsu"}
-          account={"NatsuTW"}
-          content={
-            "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour"
-          }
-          Avatar={"https://picsum.photos/50/50"}
-          followingCount={25}
-          followerCount={30}
+          name={userProfile?.name}
+          account={userProfile?.account}
+          content={userProfile?.introduction}
+          Avatar={userProfile?.avatar}
+          followingCount={userProfile?.followingCount}
+          followerCount={userProfile?.followerCount}
           viewID={viewID}
           currentUserID={currentUserID}
         />

@@ -1,24 +1,42 @@
 import styles from "./ReplyModal.module.scss";
 import { ReactComponent as Close } from "../../assets/icons/cross_orange.svg";
-import { ReactComponent as Avatar } from "../../assets/icons/user_fake.svg";
-// import AcLogo from "../../assets/icons/AcLogo.svg";
+import avatarDefault from "../../assets/icons/AcLogo.svg";
 import ReplyTweetButton from "./ReplyTweetButton";
 import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
+import { useAuth } from "../../Context/AuthContext";
+import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文API
+import { getOneTweet } from "../../Api/TweetAPI"; //取得單支貼文資訊API
+import { getOneTweetReplies } from "../../Api/RepliesAPI"; //取得單支貼文列表API
+import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
+import { getOneUserTweets } from "../../Api/UserAPI"; //取得使用者貼文列表
+import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
+import Swal from "sweetalert2";
 function ReplyModal(props) {
+  // 目前位置名稱
+  const { pathname } = useLocation();
+  const nowPageName = pathname.split("/")[1]; //判斷 現在在home 還是 tweet
+  const currentTweetID = pathname.split("/")[2]; //現在回覆文的ID
+  // 個人資料頁觀看者的viewID
+  let viewID = "";
+  if (nowPageName === "user") {
+    viewID = pathname.split("/")[2];
+  }
   // 設定props 打開與否和關閉事件
   const {
     trigger,
     closeEvent,
-    // tweetID,
+    tweetID,
     tweeterAvatar,
     tweeterAccount,
     tweeterName,
     content,
-    // userAvatar,
-    // userID,
     update,
+    setAllTweetList, //三個同步畫面的setFunction
+    setReplies,
+    setMainTweetInfo,
+    setSelfTweetList, // 使用者個人推文頁更新用
   } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
@@ -28,18 +46,63 @@ function ReplyModal(props) {
   const textAreaRef = useRef(null);
   // 日期資料轉換
   const date = TimeFromNow(update);
+  // 使用者個人資料
+  const { currentUser } = useAuth();
+  const currentUserAvatar = currentUser.avatar;
+
   function textAreaChange(e) {
     e.style.height = "auto";
     e.style.height = e.scrollHeight + "px";
     setText(e.value);
   }
   // 處理回覆貼文送出
-  function handleReplyTweet() {
+  async function handleReplyTweet() {
     if (text.length > 140) {
       return;
     }
     if (text.length === 0) {
       setIsBlank(true);
+    }
+    const tweetResponse = await replyOneTweet(tweetID, text);
+    if (tweetResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "成功推文！",
+        timer: 2000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+      setText("");
+      // 成功回覆推文後要再更新資料(homepage)
+      if (nowPageName === "home") {
+        const newTweetListData = await getAllTweets(); //取得最新所有貼文
+        setAllTweetList(newTweetListData); // 刷新tweetlist (homepage)
+        closeEvent(false); //關掉彈窗
+      }
+      // 在推文回覆列表頁後更新資料
+      if (nowPageName === "tweet") {
+        const newRepliesData = await getOneTweetReplies(currentTweetID); //取得最新單一貼文回覆資料
+        setReplies(newRepliesData);
+        const newMainTweetData = await getOneTweet(currentTweetID); //取得單一推文主資料
+        setMainTweetInfo(newMainTweetData);
+        closeEvent(false); //關掉彈窗
+        return;
+      }
+      // 在個人推文列表頁
+      if (nowPageName === "user") {
+        const newSelfTweetData = await getOneUserTweets(viewID);
+        setSelfTweetList(newSelfTweetData);
+      }
+      // 關閉視窗
+      closeEvent(false);
+    } else {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
     }
   }
   // 使用者重複輸入時，不重複顯示空白提示
@@ -73,7 +136,11 @@ function ReplyModal(props) {
         <div className={styles["popup-body"]}>
           <div className={styles["tweet-info-body"]}>
             <div className={styles["avatar-main"]}>
-              <img src={tweeterAvatar} className={styles["tweeter-avatar"]} alt="tweet-avatar"/>
+              <img
+                src={tweeterAvatar ? tweeterAvatar : avatarDefault}
+                className={styles["tweeter-avatar"]}
+                alt="tweet-avatar"
+              />
               <div className={styles["connect-line"]}></div>
             </div>
             <div className={styles["tweet-content-info"]}>
@@ -91,7 +158,11 @@ function ReplyModal(props) {
           </div>
           <div className={styles["input-main-body"]}>
             <div className={styles["user-avatar"]}>
-              <Avatar />
+              <img
+                className={styles["avatar-img"]}
+                src={currentUserAvatar ? currentUserAvatar : avatarDefault}
+                alt="user-avatar"
+              />
             </div>
             <div className={styles["input-body"]} onFocus={handleOnFocus}>
               <textarea

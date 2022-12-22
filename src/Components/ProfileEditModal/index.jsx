@@ -1,24 +1,34 @@
 import styles from "./ProfileEditModal.module.scss";
 import { useState } from "react";
-import initialBackground from "../../assets/icons/background.svg";
+// import initialBackground from "../../assets/icons/background.svg";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
+import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
+import { userEditPhotoModal } from "../../Api/UserAPI"; //使用者編輯個人資料API
+import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
+  // 目前登入者資料
+  const currentUserInfo = useAuth().currentUser;
+  const userID = currentUserInfo.id;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
-  // 上傳資料儲存狀態
-  const [background, setBackgroundUrl] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [name, setName] = useState("");
-  const [introduction, setIntroduction] = useState("");
-  const [photoData, setPhotoData] = useState({ bgImage: "", avatar: "" });
+  //上傳資料儲存狀態
+  const [background, setBackgroundUrl] = useState(currentUserInfo.cover);
+  const [avatarUrl, setAvatarUrl] = useState(currentUserInfo.avatar);
+  const [name, setName] = useState(currentUserInfo.name);
+  const [introduction, setIntroduction] = useState(
+    currentUserInfo.introduction
+  );
+  const [avatarPhoto, setAvatarPhoto] = useState("");
+  const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
   // 字數錯誤參數
-  const nameError = name.trim().length > 50 ? "error" : "";
-  const introductionError = introduction.trim().length > 160 ? "error" : "";
+  const nameError = name?.trim().length > 50 ? "error" : "";
+  const introductionError = introduction?.trim().length > 160 ? "error" : "";
   // handlBgeFileChange 取出上傳圖片物件
   function handleBgFileChange(e) {
     const { files } = e.target;
@@ -29,7 +39,7 @@ function ProfileEditModal(props) {
     // 否則產生預覽圖
     const imageURL = window.URL.createObjectURL(files[0]);
     setBackgroundUrl(imageURL);
-    setPhotoData({ ...photoData, bgImage: files[0] });
+    setCoverPhoto(files[0]);
   }
   function handleAvatarFileChange(e) {
     const { files } = e.target;
@@ -40,12 +50,12 @@ function ProfileEditModal(props) {
     // 否則產生預覽圖
     const imageURL = window.URL.createObjectURL(files[0]);
     setAvatarUrl(imageURL);
-    setPhotoData({ ...photoData, avatar: files[0] });
+    setAvatarPhoto(files[0]);
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
-  function handleSubmit() {
-    // 如果自介或名稱內容是空白，顯示錯誤再輸入欄底下
-    if (name.length === 0 || introduction.length === 0) {
+  async function handleSubmit() {
+    // 如果名稱是空白，顯示錯誤再輸入欄底下
+    if (name.length === 0) {
       setIsSubmitting(true);
       return;
     }
@@ -61,44 +71,33 @@ function ProfileEditModal(props) {
       });
       return;
     }
-    const api = async () => {
-      try {
-        console.log(photoData);
-        console.log(name);
-        console.log(introduction);
-        // 修改成功訊息
-        await Swal.fire({
-          position: "top",
-          title: "成功更新！",
-          timer: 2000,
-          icon: "success",
-          showConfirmButton: false,
-        });
-        setIsSubmitting(false);
-        closeEditModal(); //api回傳成功關閉彈窗
-      } catch (error) {
-        console.error("[API failed]: ", error);
-        await Swal.fire({
-          position: "top",
-          title: "修改失敗！(伺服器連線問題)",
-          timer: 1000,
-          icon: "error",
-          showConfirmButton: false,
-        });
-      }
-    };
-    api();
+    let formData = new FormData();
+    formData.append("avatar", avatarPhoto);
+    formData.append("cover", coverPhoto);
+    formData.append("name", name);
+    formData.append("introduction", introduction);
+    // let payLoad = {
+    //   name: name,
+    //   introduction: introduction,
+    //   avatar: avatarPhoto,
+    //   cover: coverPhoto,
+    // };
+
+    for (let [name, value] of formData.entries()) {
+      console.log(name + ": " + value);
+    }
+    const editResponse = await userEditPhotoModalNew(userID, formData);
+    console.log(editResponse);
+    resetModalStatus();
   }
-  // 關掉視窗時自己的所有狀態要歸零(因為元件在同一位置)
-  function closeEditModal() {
-    setAvatarUrl("");
-    setBackgroundUrl("");
-    setName("");
-    setIntroduction("");
-    setPhotoData("");
+  // function 關掉視窗後重置狀態
+  function resetModalStatus() {
     setIsSubmitting(false);
+    setBackgroundUrl("");
+    setAvatarUrl("");
     closeEvent(false);
   }
+
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
   function handleOnFocus() {
     setIsSubmitting(false);
@@ -110,7 +109,7 @@ function ProfileEditModal(props) {
       <div
         className={styles["popup-backdrop"]}
         onClick={() => {
-          closeEditModal();
+          resetModalStatus();
           closeEvent(false);
         }}
       ></div>
@@ -119,7 +118,8 @@ function ProfileEditModal(props) {
           <CrossOrange
             className={styles["btn-cross-orange"]}
             onClick={() => {
-              closeEditModal();
+              resetModalStatus();
+              closeEvent(false);
             }}
           />
           <p className={styles["popup-title"]}>編輯個人資料</p>
@@ -135,7 +135,7 @@ function ProfileEditModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : initialBackground}
+              src={background ? background : currentUserInfo.cover}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -157,7 +157,7 @@ function ProfileEditModal(props) {
           <div className={styles["user-avatar"]}>
             <div className={styles["avatar-image-wrap"]}>
               <img
-                src={avatarUrl ? avatarUrl : "https://picsum.photos/50/50"}
+                src={avatarUrl ? avatarUrl : currentUserInfo.avatar}
                 alt="person-avatar"
                 className={styles["avatar-image"]}
               />
@@ -187,7 +187,10 @@ function ProfileEditModal(props) {
                 placeholder="請輸入名稱"
                 id="name"
                 className={styles["form-input"]}
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => {
+                  setName(e.target.value);
+                }}
+                defaultValue={currentUserInfo.name}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -197,7 +200,7 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {name.length === 0 && isSubmitting ? (
+                {name?.length === 0 && isSubmitting ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
@@ -205,7 +208,7 @@ function ProfileEditModal(props) {
               </div>
 
               <div className={styles["text-length"]}>
-                {name.trim().length}/50
+                {name === "" ? 0 : name?.trim().length}/50
               </div>
             </div>
             <div
@@ -221,6 +224,7 @@ function ProfileEditModal(props) {
                 className={`${styles["form-input"]} ${styles["form-input-intro"]}`}
                 onChange={(e) => setIntroduction(e.target.value)}
                 rows="7"
+                defaultValue={currentUserInfo.introduction}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -230,14 +234,15 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {introduction.length === 0 && isSubmitting ? (
+                {/* {introduction?.length === 0 && isSubmitting ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
-                )}
+                )} */}
               </div>
               <div className={styles["text-length"]}>
-                {introduction.trim().length}/160
+                {introduction == null ? 0 : introduction?.trim().length}
+                /160
               </div>
             </div>
           </div>

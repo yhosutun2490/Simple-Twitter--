@@ -32,7 +32,10 @@ function AuthProvider(props) {
         setUserData(null);
         return;
       }
+      // if ( token && role=== user) {}
+    
       const result = await checkPermission(token);
+   
 
       if (result.status === '200') {
         setIsAuthenticated(true);

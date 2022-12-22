@@ -1,11 +1,23 @@
 import styles from "./ProfileReplyPage.module.scss";
 import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import ReplyList from "../../Components/ReplyList";
-import { useLocation } from "react-router-dom";
-import { useRef } from "react";
+import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主要資料的API
+import { getOneUsersReplies } from "../../Api/UserAPI"; // 取得某位使用者自己的回覆列表
+import { useRef, useEffect, useState } from "react";
+import { useLocation ,useNavigate } from "react-router-dom";
+import { useFollowBtn } from "../../Context/FollowBtnContext"; // 追隨按鈕共用狀態用
+import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 function ProfileReplyPage() {
+  const {isAuthenticated} = useAuth()
+  const navigate = useNavigate()
+  // 共用狀態
+  const { userProfile, setUserProfile } = useFollowBtn();
+  // 頁面資料狀態
+  const [selfReplyData, setSelfReplyData] = useState(""); //個人回覆資料
+
   // 目前使用者ID
-  const currentUserID = 1;
+  const currentUserInfo = useAuth().currentUser;
+  const currentUserID = currentUserInfo.id;
   // 置頂功能
   const containerRef = useRef(null);
   function scrollTop() {
@@ -15,78 +27,51 @@ function ProfileReplyPage() {
   const { pathname } = useLocation();
   const pathNameArr = pathname.split("/");
   const viewID = pathNameArr[2];
-  //  API文件某位使用者假資料
-  const user = {
-    id: 1,
-    account: "NatsuTW",
-    email: "user1@example.com",
-    name: "Natsu",
-    avatar: "https://picsum.photos/50/50",
-    introduction: "我是大帥哥",
-    role: "1",
-    cover: "https://imgur.com/kaoge55g",
-    createdAt: "2022-11-17T15:32:31.000z",
-    updatedAt: "2022-11-17T15:32:31.000z",
-    following: "true",
-    followingCount: 3,
-    follower: 2,
-    tweetsCount: 4,
-  };
 
-  // API文件假資料
-  const repliesData = [
-    {
-      id: 1,
-      description: "我在推文",
-      createdAt: "2022-11-17T15:32:31.000z",
-      updatedAt: "2022-11-17T15:32:31.000z",
-      user: {
-        account: "user1",
-        id: 5,
-      },
-      replied: [
-        {
-          id: 1,
-          comment: "第一則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-        {
-          id: 2,
-          comment: "第二則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-      ],
-    },
-    {
-      id: 2,
-      description: "我在推文2",
-      createdAt: "2022-11-17T15:32:31.000z",
-      updatedAt: "2022-11-17T15:32:31.000z",
-      user: {
-        account: "user1",
-        id: 5,
-      },
-      replied: [
-        {
-          id: 1,
-          comment: "第一則回覆",
-          createdAt: "2022-11-17T15:32:31.000z",
-          updatedAt: "2022-11-17T15:32:31.000z",
-        },
-      ],
-    },
-  ];
+  // 定義初始資料fetch api
+  useEffect(() => {
+    // 定義初始資料fetch api
+    const apiTweets = async () => {
+      try {
+        const userData = await getOneUserData(viewID);
+        setUserProfile(userData);
+      } catch (error) {
+        console.error("initialize UserData(ProfileReplyPage) error", error);
+      }
+    };
+    apiTweets();
+  }, [viewID, setUserProfile]);
+
+  // fecth使用者回覆貼文的資料
+  useEffect(() => {
+    // 定義初始資料fetch api
+    const apiUserReplies = async () => {
+      try {
+        const apiUserReplies = await getOneUsersReplies(viewID); // 等待資料回傳後渲染
+        setSelfReplyData(apiUserReplies);
+      } catch (error) {
+        console.error("initialize OneTweetReply Data error", error);
+      }
+    };
+    apiUserReplies();
+  }, [viewID]);
+
+  useEffect(() => {
+    // 如果token驗證狀態沒過
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  }, [navigate, isAuthenticated]);
   return (
     <div className={styles["container"]} ref={containerRef}>
       <ProfileUserNavBar
         viewID={viewID}
         currentUserID={currentUserID}
         scrollTop={scrollTop}
+        userProfile={userProfile}
       />
       <div>
-        <ReplyList selfReplies={repliesData} selfAccount={user} />
+        <ReplyList selfReplies={selfReplyData} selfProfile={userProfile} />
       </div>
     </div>
   );

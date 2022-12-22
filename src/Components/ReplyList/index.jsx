@@ -2,38 +2,36 @@ import styles from "./ReplyList.module.scss";
 import ReplyBox from "../ReplyBox";
 function ReplyList(props) {
   // 會用回覆者清單作渲染 (因為有不同資料，怕API格式不同以不同map渲染)
-  const { repliesData, mainTweetInfo, selfAccount, selfReplies } = props;
-  // 主要回覆清單資料
-  const replyTweets = repliesData?.data;
-  // 回文首頁用回覆人
-  const mainTweeterAccount = mainTweetInfo ? mainTweetInfo[0].user.account : "";
+  const { repliesData, mainTweeter, selfProfile, selfReplies } = props;
 
   return (
     <div className={styles["container"]}>
-      {replyTweets &&
-        replyTweets[0].replies?.map((data) => (
+      {repliesData &&
+        repliesData?.map((data) => (
           <ReplyBox
             key={data.id}
-            avatar={data?.user?.avatar}
-            account={data?.user?.account}
-            name={data?.user?.name}
+            avatar={data?.User?.avatar}
+            account={data?.User?.account}
+            name={data?.User?.name}
             update={data?.updatedAt}
-            userID={data?.user?.id}
+            userID={data?.User?.id}
             comment={data?.comment}
-            replyTo={mainTweeterAccount}
+            replyTo={mainTweeter}
+            replyUserID={data?.User?.id}
           />
         ))}
       {selfReplies &&
         selfReplies?.map((data) => (
           <ReplyBox
             key={data.id}
-            avatar={selfAccount?.avatar}
-            account={selfAccount?.account}
-            name={selfAccount?.name}
-            update={data?.updatedAt}
-            userID={selfAccount?.id}
-            comment={data?.description}
-            replyTo={data?.user.account}
+            avatar={selfProfile?.avatar}
+            account={selfProfile?.account}
+            name={selfProfile?.name}
+            update={data?.createdAt}
+            userID={selfProfile?.id}
+            comment={data?.comment}
+            replyTo={data?.Tweet?.User?.account}
+            replyUserID={data?.Tweet?.User?.id}
           />
         ))}
     </div>
