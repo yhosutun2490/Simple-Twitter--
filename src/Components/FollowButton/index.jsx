@@ -30,6 +30,8 @@ function FollowButton(props) {
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[3]; //區分現在在following or follow頁面
   const viewID = pathname.split("/")[2]; //要轉成數字，不然api吃不到
+  console.log(nowPageName);
+  console.log(viewID);
 
   // 點擊打api用
   async function handleAddFollow() {
@@ -43,6 +45,10 @@ function FollowButton(props) {
         showConfirmButton: false,
       });
       // 加入追隨後同步更新
+      if (nowPageName === "following") {
+        const apiNewFollowing = await getOneUserFollowing(viewID);
+        setSelfFollowing(apiNewFollowing);
+      }
       if (nowPageName === "follower") {
         const apiNewFollower = await getOneUserFollower(viewID);
         setSelfFollower(apiNewFollower);
@@ -75,10 +81,14 @@ function FollowButton(props) {
       if (nowPageName === "following") {
         const apiNewFollowing = await getOneUserFollowing(viewID);
         setSelfFollowing(apiNewFollowing);
+        const apiTopFollower = await getTopFollower();
+        setTopFollower(apiTopFollower);
       }
       if (nowPageName === "follower") {
         const apiNewFollower = await getOneUserFollower(viewID);
         setSelfFollower(apiNewFollower);
+        const apiTopFollower = await getTopFollower();
+        setTopFollower(apiTopFollower);
       }
       const apiTopFollower = await getTopFollower();
       setTopFollower(apiTopFollower);

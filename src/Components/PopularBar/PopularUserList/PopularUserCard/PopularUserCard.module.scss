@@ -34,6 +34,9 @@
   font-size: 14px;
   font-weight: 500;
   line-height: 22px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .follow-btn {
   background-color: rgb(51, 171, 171);
