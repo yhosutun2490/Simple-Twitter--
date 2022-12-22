@@ -16,6 +16,7 @@ function ReplyIconButton(props) {
     setAllTweetList,
     setReplies,
     setMainTweetInfo,
+    setSelfTweetList,
   } = props;
   const [isOpenModal, setIsOpenModal] = useState(false);
   const size = large ? "large" : "";
@@ -38,6 +39,7 @@ function ReplyIconButton(props) {
         setAllTweetList={setAllTweetList}
         setReplies={setReplies}
         setMainTweetInfo={setMainTweetInfo}
+        setSelfTweetList={setSelfTweetList}
       />
       <div className={styles["container"]} onClick={handleClick}>
         <Reply className={styles[size]} />

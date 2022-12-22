@@ -10,6 +10,7 @@ import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文API
 import { getOneTweet } from "../../Api/TweetAPI"; //取得單支貼文資訊API
 import { getOneTweetReplies } from "../../Api/RepliesAPI"; //取得單支貼文列表API
 import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
+import { getOneUserTweets } from "../../Api/UserAPI"; //取得使用者貼文列表
 import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
 import Swal from "sweetalert2";
 function ReplyModal(props) {
@@ -17,6 +18,11 @@ function ReplyModal(props) {
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[1]; //判斷 現在在home 還是 tweet
   const currentTweetID = pathname.split("/")[2]; //現在回覆文的ID
+  // 個人資料頁觀看者的viewID
+  let viewID = "";
+  if (nowPageName === "user") {
+    viewID = pathname.split("/")[2];
+  }
   // 設定props 打開與否和關閉事件
   const {
     trigger,
@@ -30,6 +36,7 @@ function ReplyModal(props) {
     setAllTweetList, //三個同步畫面的setFunction
     setReplies,
     setMainTweetInfo,
+    setSelfTweetList, // 使用者個人推文頁更新用
   } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
@@ -57,7 +64,6 @@ function ReplyModal(props) {
       setIsBlank(true);
     }
     const tweetResponse = await replyOneTweet(tweetID, text);
-    console.log(tweetResponse);
     if (tweetResponse.status === 200) {
       await Swal.fire({
         position: "top",
@@ -81,6 +87,11 @@ function ReplyModal(props) {
         setMainTweetInfo(newMainTweetData);
         closeEvent(false); //關掉彈窗
         return;
+      }
+      // 在個人推文列表頁
+      if (nowPageName === "user") {
+        const newSelfTweetData = await getOneUserTweets(viewID);
+        setSelfTweetList(newSelfTweetData);
       }
       // 關閉視窗
       closeEvent(false);
