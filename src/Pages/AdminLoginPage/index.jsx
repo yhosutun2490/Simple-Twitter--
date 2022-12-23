@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import AuthInput from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
 import { adminLogin } from "../../Api/AdminAPI";
+import { useAuth } from "../../Context/AuthContext";
 import styles from "./AdminLoginPage.module.scss";
 import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
@@ -14,6 +15,8 @@ function AdminLoginPage() {
   const [submitting, setSubmitting] = useState(false);
   const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -65,6 +68,13 @@ function AdminLoginPage() {
     setSubmitting(false);
     setErrCode("");
   };
+
+  //if user is authenticated, navigate to tweetlist page
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/admin/tweetlist");
+    }
+  }, [navigate, isAuthenticated]);
 
   // 以下為錯誤驗證------------------------------
   // Input blank check
