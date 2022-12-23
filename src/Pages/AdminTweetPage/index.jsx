@@ -6,7 +6,7 @@ import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
 import { useAuth } from "../../Context/AuthContext";
-import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
@@ -84,6 +84,9 @@ function AdminTweetPage() {
   //if user is not authenticated, navigate to login page
   useEffect(() => {
     if (!isAuthenticated) {
+      ToastFail.fire({
+        title: "帳號不存在！",
+      });
       navigate("/admin");
     }
   }, [navigate, isAuthenticated]);

@@ -5,6 +5,7 @@ import { ReactComponent as TweetFeather } from "../../assets/icons/tweet_feather
 import { ReactComponent as LikeIcon } from "../../assets/icons/like_icon.svg";
 import { adminGetAllUsers } from "../../Api/AdminAPI";
 import { useAuth } from "../../Context/AuthContext";
+import { ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function AdminUserCard(props) {
   const {
@@ -61,6 +62,9 @@ function AdminUserPage() {
   //if user is authenticated, navigate to tweetlist page
   useEffect(() => {
     if (!isAuthenticated) {
+      ToastFail.fire({
+        title: "帳號不存在！",
+      });
       navigate("/admin");
       return
     }
