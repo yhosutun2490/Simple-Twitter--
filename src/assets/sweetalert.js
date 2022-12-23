@@ -17,7 +17,7 @@ export const ToastFail = Swal.mixin({
   icon: "error",
   iconColor: "#FC5A5A",
   toast: "true",
-  width: "25%",
+  width: "30%",
   showConfirmButton: false,
   timer: 1000,
   position: "top",
