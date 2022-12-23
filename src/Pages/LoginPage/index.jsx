@@ -60,7 +60,7 @@ function LoginPage() {
         title: "發生未預期錯誤...",
       });
     } else {
-    // input欄顯示錯誤在click function外處理，所以需將errCode存起來
+      // input欄顯示錯誤在click function外處理，所以需將errCode存起來
       setErrCode(errCode);
     }
   };
@@ -78,9 +78,9 @@ function LoginPage() {
     }
   }, [navigate, isAuthenticated]);
 
-  // 前端驗證錯誤
+  // 以下為錯誤驗證------------------------------
   // Input blank check
-  if (submitting && accountLength === 0 ) {
+  if (submitting && accountLength === 0) {
     accountAlertMsg = "此欄為必填欄位";
   }
 
@@ -98,6 +98,8 @@ function LoginPage() {
   if (errCode === 402) {
     passwordAlertMsg = "密碼錯誤";
   }
+
+  // 以上為錯誤驗證------------------------------
 
   return (
     <div className={styles["container"]}>
