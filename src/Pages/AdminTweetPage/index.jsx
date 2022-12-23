@@ -6,7 +6,7 @@ import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
 import { useAuth } from "../../Context/AuthContext";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
@@ -70,15 +70,14 @@ function AdminTweetPage() {
     try {
       await adminDeleteTweet(id);
       setDeleteTrigger(true);
-      Swal.fire({
+      ToastSuccess.fire({
         title: "刪除成功",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
       });
     } catch (error) {
       console.error(error);
+      ToastFail.fire({
+        title: "刪除失敗...",
+      });
     }
   };
 
