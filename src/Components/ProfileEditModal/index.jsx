@@ -5,13 +5,17 @@ import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
+import { useFollowBtn } from "../../Context/FollowBtnContext"; //傳入使用者資料卡片共用狀態
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
+import { getOneUserData } from "../../Api/UserAPI"; //個人資料API
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
   // 目前登入者資料
   const currentUserInfo = useAuth().currentUser;
   const userID = currentUserInfo.id;
+  // 共用狀態
+  const { setUserProfile } = useFollowBtn();
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
@@ -28,12 +32,12 @@ function ProfileEditModal(props) {
   // 字數錯誤參數
   const nameError = name?.trim().length > 50 ? "error" : "";
   const introductionError = introduction?.trim().length > 160 ? "error" : "";
+
   // 檢查圖片格式和大小的函式
   async function checkPhotoValid(files) {
     const fileType = files[0].type.slice(0, 5); //檔案類型 (image)
     const imageType = files[0].type.slice(6);
     const fileSize = files[0].size; //檔案大小 (最大1000KB)
-    console.log(fileSize);
     let checkResult = false;
     if (files.length === 0) {
       // 使用者沒有選擇上傳的檔案
@@ -132,6 +136,10 @@ function ProfileEditModal(props) {
         icon: "success",
         showConfirmButton: false,
       });
+      //返回使用者頁面，同步更新個人資料頁
+      const newSelfPrfileData = await getOneUserData(userID);
+      setUserProfile(newSelfPrfileData);
+      resetModalStatus();
     } else {
       await Swal.fire({
         position: "top",
@@ -141,7 +149,6 @@ function ProfileEditModal(props) {
         showConfirmButton: false,
       });
     }
-    resetModalStatus();
   }
   // function 關掉視窗後重置狀態
   function resetModalStatus() {

@@ -29,7 +29,7 @@ function ProfileInfo(props) {
           <p className={styles["user-account"]}>@{account}</p>
         </div>
         <div className={styles["user-description"]}>
-          {!content === null ? content : ""}
+          {content !== null ? content : ""}
         </div>
         <div className={styles["user-track-info"]}>
           <div className={styles["user-following"]}>
