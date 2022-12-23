@@ -41,7 +41,7 @@ function ProfileEditButton(props) {
                 className={styles["avatar-img"]}
               />
             </div>
-            <FollowButton isFollow={isFollowing} />
+            <FollowButton isFollow={isFollowing} userID={viewID} />
           </div>
         )}
       </div>
