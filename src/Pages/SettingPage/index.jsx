@@ -1,4 +1,4 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import UserSideBar from "../../Components/UserSideBar";
 import AuthInput from "../../Components/AuthInput";
@@ -68,14 +68,23 @@ function SettingPage() {
     }
     // If all input value is valid
     const nameTrimmed = name.trim();
-    const { success, errCode } = await setUserData({
-      id: currentUser.id,
-      account: account,
-      name: nameTrimmed,
-      email: email,
-      password: password,
-      checkPassword: checkPassword,
-    });
+    const id = currentUser.id
+    //打包資料成formData
+    let formData = new FormData();
+    formData.append("account", account);
+    formData.append("name", nameTrimmed);
+    formData.append("email", email);
+    formData.append("password", password);
+    formData.append("checkPassword", checkPassword);
+
+    for (let [name, value] of formData.entries()) {
+      console.log(name + ": " + value);
+    }
+    if(!formData) {
+      return
+    }
+
+    const { success, errCode } = await setUserData(id, formData);
     if (success) {
       ToastSuccess.fire({
         title: "更新成功！",
@@ -104,6 +113,7 @@ function SettingPage() {
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
+    setErrCode("")
   };
 
   //if user is authenticated, navigate to home page

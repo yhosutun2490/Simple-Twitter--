@@ -19,12 +19,9 @@ axiosInstance.interceptors.request.use(
   },
 );
 
-export const setUserData = async (payload) => {
-  const { id, account, name, email, password, checkPassword } = payload
+export const setUserData = async (id, formData) => {
   try {
-    const { data } = await axiosInstance.put(`${baseUrl}/${id}`, {
-      id, account, name, email, password, checkPassword
-    });
+    const { data } = await axiosInstance.put(`${baseUrl}/${id}`, formData)
 
     if (data) {
       return { success: true, ...data };
