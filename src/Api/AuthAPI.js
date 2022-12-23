@@ -17,6 +17,8 @@ export const login = async ({ account, password }) => {
     return data;
   } catch (error) {
     console.error("[Login Failed]:", error);
+    const errCode = error.response.data.status
+    return { success: false, errCode: errCode };
   }
 };
 
@@ -44,6 +46,8 @@ export const register = async ({
     return data;
   } catch (error) {
     console.error("[Register Failed]:", error);
+    const errCode = error.response.data.status
+    return { success: false, errCode: errCode };
   }
 };
 
