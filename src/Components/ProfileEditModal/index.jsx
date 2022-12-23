@@ -4,7 +4,6 @@ import { useState } from "react";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
-import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
 import { useFollowBtn } from "../../Context/FollowBtnContext"; //傳入使用者資料卡片共用狀態
 import { useTweetList } from "../../Context/TweetContext";
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
@@ -19,22 +18,18 @@ function ProfileEditModal(props) {
   // 檢查目前路由
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[3];
-  // 目前登入者資料
-  const currentUserInfo = useAuth().currentUser;
-  const userID = currentUserInfo.id;
   // 共用狀態
-  const { setUserProfile } = useFollowBtn();
+  const { userProfile, setUserProfile } = useFollowBtn();
   const { setSelfTweetList, setSelfReplyData, setSelfLikeData } =
     useTweetList();
+  const userID = userProfile.id;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
-  const [background, setBackgroundUrl] = useState(currentUserInfo.cover);
-  const [avatarUrl, setAvatarUrl] = useState(currentUserInfo.avatar);
-  const [name, setName] = useState(currentUserInfo.name);
-  const [introduction, setIntroduction] = useState(
-    currentUserInfo.introduction
-  );
+  const [background, setBackgroundUrl] = useState(userProfile.cover);
+  const [avatarUrl, setAvatarUrl] = useState(userProfile.avatar);
+  const [name, setName] = useState(userProfile.name);
+  const [introduction, setIntroduction] = useState(userProfile.introduction);
   const [avatarPhoto, setAvatarPhoto] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -116,7 +111,7 @@ function ProfileEditModal(props) {
   async function handleSubmit() {
     setIsSubmitting(true);
     // 如果名稱是空白，顯示錯誤再輸入欄底下
-    if (name.length === 0) {
+    if (name?.length === 0) {
       return;
     }
 
@@ -156,7 +151,7 @@ function ProfileEditModal(props) {
         const selfNewReply = await getOneUsersReplies(userID);
         setSelfReplyData(selfNewReply);
       }
-      if (nowPageName === "like") {
+      if (nowPageName === "likes") {
         const selfNewLike = await getOneUsersLikes(userID);
         setSelfLikeData(selfNewLike);
       }
@@ -226,7 +221,7 @@ function ProfileEditModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : currentUserInfo.cover}
+              src={background ? background : userProfile.cover}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -248,7 +243,7 @@ function ProfileEditModal(props) {
           <div className={styles["user-avatar"]}>
             <div className={styles["avatar-image-wrap"]}>
               <img
-                src={avatarUrl ? avatarUrl : currentUserInfo.avatar}
+                src={avatarUrl ? avatarUrl : userProfile.avatar}
                 alt="person-avatar"
                 className={styles["avatar-image"]}
               />
@@ -281,7 +276,7 @@ function ProfileEditModal(props) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-                defaultValue={currentUserInfo.name}
+                defaultValue={userProfile.name}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -315,7 +310,7 @@ function ProfileEditModal(props) {
                 className={`${styles["form-input"]} ${styles["form-input-intro"]}`}
                 onChange={(e) => setIntroduction(e.target.value)}
                 rows="7"
-                defaultValue={currentUserInfo.introduction}
+                defaultValue={userProfile.introduction}
               />
             </div>
             <div className={styles["form-row-text"]}>
