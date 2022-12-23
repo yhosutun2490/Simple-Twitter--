@@ -28,28 +28,75 @@ function ProfileEditModal(props) {
   // 字數錯誤參數
   const nameError = name?.trim().length > 50 ? "error" : "";
   const introductionError = introduction?.trim().length > 160 ? "error" : "";
-  // handlBgeFileChange 取出上傳圖片物件
-  function handleBgFileChange(e) {
-    const { files } = e.target;
+  // 檢查圖片格式和大小的函式
+  async function checkPhotoValid(files) {
+    const fileType = files[0].type.slice(0, 5); //檔案類型 (image)
+    const imageType = files[0].type.slice(6);
+    const fileSize = files[0].size; //檔案大小 (最大1000KB)
+    console.log(fileSize);
+    let checkResult = false;
     if (files.length === 0) {
       // 使用者沒有選擇上傳的檔案
-      return;
+      return checkResult;
     }
-    // 否則產生預覽圖
-    const imageURL = window.URL.createObjectURL(files[0]);
-    setBackgroundUrl(imageURL);
-    setCoverPhoto(files[0]);
+    // 檔案類型不是圖片
+    if (fileType !== "image") {
+      await Swal.fire({
+        position: "top",
+        title: "只能上傳圖片檔案！",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return checkResult;
+    }
+    if (fileSize >= 1000000) {
+      await Swal.fire({
+        position: "top",
+        title: "圖片大小不能超過1MB",
+        timer: 1500,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return checkResult;
+    }
+    // 圖片類型驗證
+    if (imageType === "png" || imageType === "jpeg" || imageType === "jpg") {
+      checkResult = true;
+      return checkResult;
+    } else {
+      await Swal.fire({
+        position: "top",
+        title: "圖片格式錯誤(僅接受png/jpeg/jpg)",
+        timer: 1500,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      return checkResult;
+    }
   }
-  function handleAvatarFileChange(e) {
+  // handlBgeFileChange 取出上傳圖片物件
+  async function handleBgFileChange(e) {
     const { files } = e.target;
-    if (files.length === 0) {
-      // 使用者沒有選擇上傳的檔案
+    const checkResult = await checkPhotoValid(files);
+    if (checkResult) {
+      // 檢查正確產生預覽圖
+      const imageURL = window.URL.createObjectURL(files[0]);
+      setBackgroundUrl(imageURL);
+      setCoverPhoto(files[0]);
+    } else {
       return;
     }
-    // 否則產生預覽圖
-    const imageURL = window.URL.createObjectURL(files[0]);
-    setAvatarUrl(imageURL);
-    setAvatarPhoto(files[0]);
+  }
+  async function handleAvatarFileChange(e) {
+    const { files } = e.target;
+    const checkResult = await checkPhotoValid(files);
+    if (checkResult) {
+      // 檢查圖片正確產生預覽圖
+      const imageURL = window.URL.createObjectURL(files[0]);
+      setAvatarUrl(imageURL);
+      setAvatarPhoto(files[0]);
+    }
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   async function handleSubmit() {
@@ -75,18 +122,25 @@ function ProfileEditModal(props) {
     formData.append("cover", coverPhoto);
     formData.append("name", name);
     formData.append("introduction", introduction);
-    // let payLoad = {
-    //   name: name,
-    //   introduction: introduction,
-    //   avatar: avatarPhoto,
-    //   cover: coverPhoto,
-    // };
-
-    for (let [name, value] of formData.entries()) {
-      console.log(name + ": " + value);
-    }
+    // 等待編輯後端API回傳訊息
     const editResponse = await userEditPhotoModalNew(userID, formData);
-    console.log(editResponse);
+    if (editResponse.status === 200) {
+      await Swal.fire({
+        position: "top",
+        title: "編輯個人資料成功！",
+        timer: 1000,
+        icon: "success",
+        showConfirmButton: false,
+      });
+    } else {
+      await Swal.fire({
+        position: "top",
+        title: "編輯個人資料失敗！",
+        timer: 1000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+    }
     resetModalStatus();
   }
   // function 關掉視窗後重置狀態
@@ -126,7 +180,6 @@ function ProfileEditModal(props) {
             className={styles["btn-save"]}
             type="submit"
             onClick={handleSubmit}
-            // disabled={isSubmitting ? true : false}
           >
             儲存
           </button>
@@ -233,11 +286,6 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {/* {introduction?.length === 0 && isSubmitting ? (
-                  <div className={styles["text-error"]}>內容不可空白</div>
-                ) : (
-                  <div></div>
-                )} */}
               </div>
               <div className={styles["text-length"]}>
                 {introduction == null ? 0 : introduction?.trim().length}

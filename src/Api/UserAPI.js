@@ -110,22 +110,7 @@ export const userDisLikeTweet =  async (tweetID) => {
     return error;
   }
 };
-// 使用者編輯視窗上傳圖片、修改自介名稱api
-export const userEditPhotoModal = async (userID,payload) => {
-  const data = {
-    name: payload.name,
-    introduction: payload.introduction,
-    cover: payload.cover,
-    avatar: payload.avatar
-  }
-  try {
-    const res = await axiosInstance.put(`${baseUrl}/api/users/${userID}`,data)
-    return res;
-  } catch (error) {
-    console.error("[Edit Profile Failed]:", error);
-    return error;
-  }
-};
+
 
 
 
