@@ -11,6 +11,7 @@ function ProfileInfo(props) {
     followerCount,
     viewID,
     currentUserID,
+    isFollowing,
   } = props;
   return (
     <div className={styles["container"]}>
@@ -18,12 +19,18 @@ function ProfileInfo(props) {
         <img src={Avatar} alt="user-avatar" className={styles["avatar-img"]} />
       </div>
       <div className={styles["user-detail"]}>
-        <ProfileEditButton currentUserID={currentUserID} viewID={viewID} />
+        <ProfileEditButton
+          currentUserID={currentUserID}
+          viewID={viewID}
+          isFollowing={isFollowing}
+        />
         <div className={styles["user-info"]}>
           <p className={styles["user-name"]}>{name}</p>
           <p className={styles["user-account"]}>@{account}</p>
         </div>
-        <div className={styles["user-description"]}>{content}</div>
+        <div className={styles["user-description"]}>
+          {content !== null ? content : ""}
+        </div>
         <div className={styles["user-track-info"]}>
           <div className={styles["user-following"]}>
             <Link

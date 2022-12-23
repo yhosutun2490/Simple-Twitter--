@@ -38,7 +38,7 @@ function FollowButton(props) {
       await Swal.fire({
         position: "top",
         title: "追隨使用者成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -62,7 +62,7 @@ function FollowButton(props) {
       await Swal.fire({
         position: "top",
         title: "追隨使用者失敗",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
@@ -75,7 +75,7 @@ function FollowButton(props) {
       await Swal.fire({
         position: "top",
         title: "取消追隨成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -102,7 +102,7 @@ function FollowButton(props) {
       await Swal.fire({
         position: "top",
         title: "取消追隨失敗",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });

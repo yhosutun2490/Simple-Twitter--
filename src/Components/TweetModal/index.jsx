@@ -70,14 +70,26 @@ function TweetModal(props) {
         setSelfTweetList(apiSelfTweet);
         closeEvent(false);
       }
-    } else {
+    }
+    if (tweetResponse.status === 500) {
       Swal.fire({
         position: "top",
-        title: "推文失敗！",
+        title: "推文失敗(伺服器問題)！",
         timer: 2000,
         icon: "error",
         showConfirmButton: false,
       });
+    }
+    // 推文空白內容萬一被送出
+    if (tweetResponse.status === 406) {
+      Swal.fire({
+        position: "top",
+        title: "推文失敗~內容不容空白或數超過上限！",
+        timer: 2000,
+        icon: "error",
+        showConfirmButton: false,
+      });
+      closeEvent(false); //導回同一頁
     }
   }
   function handleOnFocus() {

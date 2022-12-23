@@ -31,6 +31,7 @@ function ProfileUserNavBar(props) {
           followerCount={userProfile?.followerCount}
           viewID={viewID}
           currentUserID={currentUserID}
+          isFollowing={userProfile?.isfollowing}
         />
       </div>
       <div className={styles["profile-nav-link"]}>

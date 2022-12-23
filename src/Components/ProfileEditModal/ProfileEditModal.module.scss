@@ -63,6 +63,14 @@
     }
     cursor: pointer;
    }
+   .btn-submitting {
+    text-align: start;
+    padding: 8px 16px;
+    background-color: var(--color-skyblue);
+    border: none;
+    border-radius: 100px;
+    color: var(--color-white);
+   }
 
   .btn-save {
     text-align: start;

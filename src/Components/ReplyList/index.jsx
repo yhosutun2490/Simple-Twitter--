@@ -6,6 +6,11 @@ function ReplyList(props) {
 
   return (
     <div className={styles["container"]}>
+      {repliesData && repliesData.length === 0 ? (
+        <div className={styles["no-replies-message"]}>該推文目前沒有回覆</div>
+      ) : (
+        ""
+      )}
       {repliesData &&
         repliesData?.map((data) => (
           <ReplyBox
@@ -20,6 +25,13 @@ function ReplyList(props) {
             replyUserID={data?.User?.id}
           />
         ))}
+      {selfReplies && selfReplies.length === 0 ? (
+        <div className={styles["no-replies-message"]}>
+          使用者目前沒有回覆文章
+        </div>
+      ) : (
+        ""
+      )}
       {selfReplies &&
         selfReplies?.map((data) => (
           <ReplyBox

@@ -1,3 +1,4 @@
+import styles from "./UserTweetList.module.scss";
 import UserTweetBox from "../UserTweetBox";
 
 function UserTweetList(props) {
@@ -10,7 +11,19 @@ function UserTweetList(props) {
   } = props;
 
   return (
-    <div>
+    <div className={styles["container"]}>
+      {selfTweet && selfTweet.length === 0 ? (
+        <div className={styles["no-tweet-message"]}>該使用者目前沒有推文</div>
+      ) : (
+        ""
+      )}
+      {selfLikeTweet && selfLikeTweet.length === 0 ? (
+        <div className={styles["no-tweet-message"]}>
+          該使用者目前沒有喜歡的推文
+        </div>
+      ) : (
+        ""
+      )}
       {selfTweet &&
         selfTweet?.map((data) => (
           <UserTweetBox

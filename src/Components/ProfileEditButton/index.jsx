@@ -11,7 +11,7 @@ function ProfileEditButton(props) {
 
   // 透過登入者id和搜尋者id是否一樣判斷是否為本人
   // 非本人有isFollow追隨選項
-  const { currentUserID, viewID } = props;
+  const { currentUserID, viewID, isFollowing } = props;
   const stringCurrentUserID = String(currentUserID); //轉成文字
   // 視窗打開onClick事件
   function handleOnClick() {
@@ -41,7 +41,7 @@ function ProfileEditButton(props) {
                 className={styles["avatar-img"]}
               />
             </div>
-            <FollowButton isFollow />
+            <FollowButton isFollow={isFollowing} userID={viewID} />
           </div>
         )}
       </div>
