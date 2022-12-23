@@ -63,3 +63,17 @@ export const checkPermission = async (token) => {
     console.error("[Check Permission Failed]:", error);
   }
 };
+
+// Admin check permission
+export const checkAdminPermission = async (token) => {
+  try {
+    const response = await axios.get(`${baseUrl}/auth/admin`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("[Check Admin Permission Failed]:", error);
+  }
+};
