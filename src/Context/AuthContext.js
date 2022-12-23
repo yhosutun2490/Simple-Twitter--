@@ -32,7 +32,6 @@ function AuthProvider(props) {
         setUserData(null);
         return;
       }
-      // if ( token && role=== user) {}
     
       const result = await checkPermission(token);
    
@@ -58,7 +57,7 @@ function AuthProvider(props) {
         currentUser: userData,
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
-          const { success, token, user } = await register({
+          const { success, token, user, errCode } = await register({
             account: data.account,
             name: data.nameTrimmed,
             email: data.email,
@@ -70,10 +69,10 @@ function AuthProvider(props) {
             setUserData(user)
             localStorage.setItem('authToken', token);
           }
-          return success
+          return { success, errCode }
         },
         login: async (data) => {
-          const { success, token, user } = await login({
+          const { success, token, user, errCode } = await login({
             account: data.accountTrimmed,
             password: data.passwordTrimmed,
           });
@@ -82,7 +81,7 @@ function AuthProvider(props) {
             setUserData(user)
             localStorage.setItem('authToken', token);
           }
-          return success;
+          return { success, errCode }
         },
         logout: () => {
           localStorage.removeItem('authToken');
