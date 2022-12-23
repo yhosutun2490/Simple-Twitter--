@@ -14,7 +14,7 @@ import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得使用者貼文列表
 import { getOneUsersLikes } from "../../Api/UserAPI"; //取得使用者喜歡推文
 import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 function ReplyModal(props) {
   // context用享狀態用
   const { setSelfTweetList, setSelfLikeData } = useTweetList();
@@ -69,10 +69,10 @@ function ReplyModal(props) {
     }
     const tweetResponse = await replyOneTweet(tweetID, text);
     if (tweetResponse.status === 200) {
-      await Swal.fire({
+      await ToastSuccess.fire({
         position: "top",
-        title: "成功推文！",
-        timer: 2000,
+        title: "回覆成功！",
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -107,10 +107,10 @@ function ReplyModal(props) {
       // 關閉視窗
       closeEvent(false);
     } else {
-      Swal.fire({
+      ToastFail.fire({
         position: "top",
-        title: "推文失敗！",
-        timer: 2000,
+        title: "回覆失敗！",
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });

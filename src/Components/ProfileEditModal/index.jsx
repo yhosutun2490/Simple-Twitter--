@@ -13,7 +13,7 @@ import { getOneUserTweets } from "../../Api/UserAPI";
 import { getOneUsersReplies } from "../../Api/UserAPI";
 import { getOneUsersLikes } from "../../Api/UserAPI";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function ProfileEditModal(props) {
   // 檢查目前路由
@@ -52,7 +52,7 @@ function ProfileEditModal(props) {
     }
     // 檔案類型不是圖片
     if (fileType !== "image") {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
         title: "只能上傳圖片檔案！",
         timer: 1000,
@@ -62,7 +62,7 @@ function ProfileEditModal(props) {
       return checkResult;
     }
     if (fileSize >= 1000000) {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
         title: "圖片大小不能超過1MB",
         timer: 1500,
@@ -76,7 +76,7 @@ function ProfileEditModal(props) {
       checkResult = true;
       return checkResult;
     } else {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
         title: "圖片格式錯誤(僅接受png/jpeg/jpg)",
         timer: 1500,
@@ -119,7 +119,7 @@ function ProfileEditModal(props) {
 
     // 超過字數上限表單不作事、跳出錯誤
     if (nameError === "error" || introductionError === "error") {
-      Swal.fire({
+      ToastFail.fire({
         position: "top",
         title: "輸入字數超過上限！",
         timer: 1000,
@@ -138,7 +138,7 @@ function ProfileEditModal(props) {
     const editResponse = await userEditPhotoModalNew(currentUser.id, formData);
     const newEditData = editResponse.data; // 新的個人資料
     if (editResponse.status === 200) {
-      await Swal.fire({
+      await ToastSuccess.fire({
         position: "top",
         title: "編輯個人資料成功！",
         timer: 2000,
@@ -172,7 +172,7 @@ function ProfileEditModal(props) {
 
       resetModalStatus();
     } else {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
         title: "編輯個人資料失敗！",
         timer: 1000,

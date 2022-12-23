@@ -8,7 +8,7 @@ import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主�
 import { useAuth } from "../../Context/AuthContext"; //取得現在登入者資料
 import { useFollowBtn } from "../../Context/FollowBtnContext"; //取得追隨按鈕所有共用的setFunciton
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function FollowButton(props) {
   // 更新用的狀態setFunction，由context統一管理
@@ -35,9 +35,9 @@ function FollowButton(props) {
   async function handleAddFollow() {
     const apiResponse = await addfollowUser(userID);
     if (apiResponse.status === 200) {
-      await Swal.fire({
+      await ToastSuccess.fire({
         position: "top",
-        title: "追隨使用者成功！",
+        title: "追隨成功！",
         timer: 1000,
         icon: "success",
         showConfirmButton: false,
@@ -59,9 +59,9 @@ function FollowButton(props) {
       const apiTopFollower = await getTopFollower();
       setTopFollower(apiTopFollower);
     } else {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
-        title: "追隨使用者失敗",
+        title: "追隨失敗",
         timer: 1000,
         icon: "error",
         showConfirmButton: false,
@@ -72,7 +72,7 @@ function FollowButton(props) {
   async function handleDeleteFollow() {
     const apiResponse = await deletefollowUser(currentUserID, userID);
     if (apiResponse.status === 200) {
-      await Swal.fire({
+      await ToastSuccess.fire({
         position: "top",
         title: "取消追隨成功！",
         timer: 1000,
@@ -99,7 +99,7 @@ function FollowButton(props) {
       const apiTopFollower = await getTopFollower();
       setTopFollower(apiTopFollower);
     } else {
-      await Swal.fire({
+      await ToastFail.fire({
         position: "top",
         title: "取消追隨失敗",
         timer: 1000,

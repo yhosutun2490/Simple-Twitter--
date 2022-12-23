@@ -9,7 +9,7 @@ import { getAllTweets } from "../../Api/TweetAPI";
 import { getOneUserTweets } from "../../Api/UserAPI";
 import { useAuth } from "../../Context/AuthContext";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function TweetModal(props) {
   // 設定推文列表清單的狀態
@@ -51,28 +51,35 @@ function TweetModal(props) {
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
       setText("");
-      await Swal.fire({
-        position: "top",
-        title: "成功推文！",
-        timer: 2000,
-        icon: "success",
-        showConfirmButton: false,
-      });
       if (currentPageName === "home") {
         // 成功推文後要即時更新資料(homepage)
         const apiAllTweet = await getAllTweets();
         setAllTweetList(apiAllTweet);
         closeEvent(false);
+        await ToastSuccess.fire({
+          position: "top",
+          title: "成功推文！",
+          timer: 2000,
+          icon: "success",
+          showConfirmButton: false,
+        });
       }
       // 成功推文後要即時更新資料(個人頁面)
       if (currentPageName === "user" && currentUserID === viewID) {
         const apiSelfTweet = await getOneUserTweets(currentUserID);
         setSelfTweetList(apiSelfTweet);
         closeEvent(false);
+        await ToastSuccess.fire({
+          position: "top",
+          title: "成功推文！",
+          timer: 2000,
+          icon: "success",
+          showConfirmButton: false,
+        });
       }
     }
     if (tweetResponse.status === 500) {
-      Swal.fire({
+      ToastFail.fire({
         position: "top",
         title: "推文失敗(伺服器問題)！",
         timer: 2000,
@@ -82,7 +89,7 @@ function TweetModal(props) {
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
-      Swal.fire({
+      ToastSuccess.fire({
         position: "top",
         title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,

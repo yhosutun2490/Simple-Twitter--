@@ -6,7 +6,7 @@ import { userTweet } from "../../Api/UserAPI"; //推文API
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
 import { useAuth } from "../../Context/AuthContext"; // 取得登入使用者資料
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function TweetInput(props) {
   const { setTweetList } = props;
@@ -41,7 +41,7 @@ function TweetInput(props) {
     }
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
-      await Swal.fire({
+      await ToastSuccess.fire({
         position: "top",
         title: "成功推文！",
         timer: 2000,
@@ -54,7 +54,7 @@ function TweetInput(props) {
       setTweetList(apiAllTweet);
     }
     if (tweetResponse.status === 500) {
-      Swal.fire({
+      ToastFail.fire({
         position: "top",
         title: "推文失敗(伺服器問題)！",
         timer: 2000,
@@ -64,7 +64,7 @@ function TweetInput(props) {
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
-      Swal.fire({
+      ToastFail.fire({
         position: "top",
         title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,
