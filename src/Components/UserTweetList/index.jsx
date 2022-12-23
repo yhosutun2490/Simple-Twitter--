@@ -32,7 +32,7 @@ function UserTweetList(props) {
             tweeterName={data?.User?.name}
             tweeterID={data?.User?.id}
             avatar={data?.User?.avatar}
-            update={data?.updatedAt}
+            update={data?.createdAt}
             content={data?.description}
             tweetNumber={data?.replyCount}
             likesNumber={data?.likeCount}

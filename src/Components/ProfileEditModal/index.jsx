@@ -4,8 +4,9 @@ import { useState } from "react";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
-import { useFollowBtn } from "../../Context/FollowBtnContext"; //傳入使用者資料卡片共用狀態
+import { useAuth } from "../../Context/AuthContext"; // 傳入登入使用者自己的資料
 import { useTweetList } from "../../Context/TweetContext";
+import { useFollowBtn } from "../../Context/FollowBtnContext";
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import { getOneUserData } from "../../Api/UserAPI"; //個人資料API
 import { getOneUserTweets } from "../../Api/UserAPI";
@@ -18,18 +19,19 @@ function ProfileEditModal(props) {
   // 檢查目前路由
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[3];
+  // 登入使用者的狀態
+  const { currentUser, setCurrentUser } = useAuth();
+  const { setUserProfile } = useFollowBtn();
   // 共用狀態
-  const { userProfile, setUserProfile } = useFollowBtn();
   const { setSelfTweetList, setSelfReplyData, setSelfLikeData } =
     useTweetList();
-  const userID = userProfile.id;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
-  const [background, setBackgroundUrl] = useState(userProfile.cover);
-  const [avatarUrl, setAvatarUrl] = useState(userProfile.avatar);
-  const [name, setName] = useState(userProfile.name);
-  const [introduction, setIntroduction] = useState(userProfile.introduction);
+  const [background, setBackgroundUrl] = useState(currentUser.cover);
+  const [avatarUrl, setAvatarUrl] = useState(currentUser.avatar);
+  const [name, setName] = useState(currentUser.name);
+  const [introduction, setIntroduction] = useState(currentUser.introduction);
   const [avatarPhoto, setAvatarPhoto] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -133,7 +135,8 @@ function ProfileEditModal(props) {
     formData.append("name", name);
     formData.append("introduction", introduction);
     // 等待編輯後端API回傳訊息
-    const editResponse = await userEditPhotoModalNew(userID, formData);
+    const editResponse = await userEditPhotoModalNew(currentUser.id, formData);
+    const newEditData = editResponse.data; // 新的個人資料
     if (editResponse.status === 200) {
       await Swal.fire({
         position: "top",
@@ -144,19 +147,29 @@ function ProfileEditModal(props) {
       });
       //返回使用者頁面，同步更新個人資料頁
       if (nowPageName === undefined) {
-        const selfNewTweet = await getOneUserTweets(userID);
+        const selfNewTweet = await getOneUserTweets(currentUser.id);
         setSelfTweetList(selfNewTweet);
       }
       if (nowPageName === "reply") {
-        const selfNewReply = await getOneUsersReplies(userID);
+        const selfNewReply = await getOneUsersReplies(currentUser.id);
         setSelfReplyData(selfNewReply);
       }
       if (nowPageName === "likes") {
-        const selfNewLike = await getOneUsersLikes(userID);
+        const selfNewLike = await getOneUsersLikes(currentUser.id);
         setSelfLikeData(selfNewLike);
       }
-      const newSelfPrfileData = await getOneUserData(userID);
+      // 個人資料頁同步更新
+      const newSelfPrfileData = await getOneUserData(currentUser.id);
       setUserProfile(newSelfPrfileData);
+      // useAuth setCurrentUser 登入者資料更新
+      setCurrentUser({
+        ...currentUser,
+        name: newEditData.name,
+        introduction: newEditData.introduction,
+        avatar: newEditData.avatar,
+        cover: newEditData.cover,
+      });
+
       resetModalStatus();
     } else {
       await Swal.fire({
@@ -174,7 +187,6 @@ function ProfileEditModal(props) {
     setIsSubmitting(false);
     setBackgroundUrl("");
     setAvatarUrl("");
-    setIsSubmitting(false);
     closeEvent(false);
   }
 
@@ -221,7 +233,7 @@ function ProfileEditModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : userProfile.cover}
+              src={background ? background : currentUser.cover}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -243,7 +255,7 @@ function ProfileEditModal(props) {
           <div className={styles["user-avatar"]}>
             <div className={styles["avatar-image-wrap"]}>
               <img
-                src={avatarUrl ? avatarUrl : userProfile.avatar}
+                src={avatarUrl ? avatarUrl : currentUser.avatar}
                 alt="person-avatar"
                 className={styles["avatar-image"]}
               />
@@ -276,7 +288,7 @@ function ProfileEditModal(props) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-                defaultValue={userProfile.name}
+                defaultValue={currentUser.name}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -310,7 +322,7 @@ function ProfileEditModal(props) {
                 className={`${styles["form-input"]} ${styles["form-input-intro"]}`}
                 onChange={(e) => setIntroduction(e.target.value)}
                 rows="7"
-                defaultValue={userProfile.introduction}
+                defaultValue={currentUser.introduction}
               />
             </div>
             <div className={styles["form-row-text"]}>
