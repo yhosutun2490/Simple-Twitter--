@@ -35,10 +35,9 @@ export const adminLogin = async ({ account, password }) => {
 
     return data;
   } catch (error) {
-    // 待後端
     console.error("[Admin login Failed]:", error);
-    //const errMsg = error.response.data.message
-    //return errMsg
+    const errCode = error.response.data.status
+    return { success: false, errCode: errCode };
   }
 };
 
