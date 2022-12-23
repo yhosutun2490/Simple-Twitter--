@@ -68,7 +68,7 @@ function SettingPage() {
     }
     // If all input value is valid
     const nameTrimmed = name.trim();
-    const id = currentUser.id
+    const id = currentUser.id;
     //打包資料成formData
     let formData = new FormData();
     formData.append("account", account);
@@ -80,8 +80,8 @@ function SettingPage() {
     for (let [name, value] of formData.entries()) {
       console.log(name + ": " + value);
     }
-    if(!formData) {
-      return
+    if (!formData) {
+      return;
     }
 
     const { success, errCode } = await setUserData(id, formData);
@@ -113,12 +113,15 @@ function SettingPage() {
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
-    setErrCode("")
+    setErrCode("");
   };
 
   //if user is authenticated, navigate to home page
   useEffect(() => {
     if (!isAuthenticated) {
+      ToastFail.fire({
+        title: "帳號不存在！",
+      });
       navigate("/login");
     }
   }, [navigate, isAuthenticated]);
