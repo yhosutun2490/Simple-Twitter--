@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { useState, useEffect, useContext } from "react";
 import { useLocation } from 'react-router-dom';
-import { login, register, checkPermission } from '../Api/AuthAPI'
+import { login, register, checkPermission, checkAdminPermission } from '../Api/AuthAPI'
 
 // 設定一開始context 預設值
 const defaultValue = {
@@ -32,9 +32,8 @@ function AuthProvider(props) {
         setUserData(null);
         return;
       }
-    
+
       const result = await checkPermission(token);
-   
 
       if (result.status === '200') {
         setIsAuthenticated(true);
@@ -46,8 +45,29 @@ function AuthProvider(props) {
         setUserData(null);
       }
     };
+    // checkPermission for admin related page
+    const checkAdminTokenIsValid = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setIsAuthenticated(false);
+        setUserData(null);
+        return;
+      }
+
+      const result = await checkAdminPermission(token);
+
+      if (result.status === '200') {
+        setIsAuthenticated(true);
+
+      } else {
+        setIsAuthenticated(false);
+      }
+    }
     // admin related pages not applied  
-    if (!pathname.includes("/admin")) { checkTokenIsValid() };
+    if (pathname.includes("/admin")) { checkAdminTokenIsValid() } 
+    else {
+      checkTokenIsValid()
+    }
   }, [pathname]);
 
   return (
