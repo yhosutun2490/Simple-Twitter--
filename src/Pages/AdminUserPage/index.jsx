@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./AdminUserPage.module.scss";
 import { ReactComponent as TweetFeather } from "../../assets/icons/tweet_feather_icon.svg";
 import { ReactComponent as LikeIcon } from "../../assets/icons/like_icon.svg";
 import { adminGetAllUsers } from "../../Api/AdminAPI";
+import { useAuth } from "../../Context/AuthContext";
 
 function AdminUserCard(props) {
   const {
@@ -52,12 +54,23 @@ function AdminUserCard(props) {
 
 function AdminUserPage() {
   const [userList, setUserList] = useState([]);
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuth();
+
+  //if user is authenticated, navigate to tweetlist page
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/admin");
+      return
+    }
+  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     const getAllUsersAsync = async () => {
       try {
         const res = await adminGetAllUsers();
-        setUserList(res.filter(data => data.role !== "admin"));
+        setUserList(res.filter((data) => data.role !== "admin"));
       } catch (error) {
         console.log(error);
       }

@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg";
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
+import { useAuth } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 
 function AdminTweetBox(props) {
@@ -50,6 +52,9 @@ function AdminTweetBox(props) {
 function AdminTweetPage() {
   const [tweetList, setTweetList] = useState([]);
   const [deleteTrigger, setDeleteTrigger] = useState(false); //delete function是否被觸發
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuth();
 
   const getAllTweetsAsync = async () => {
     try {
@@ -76,6 +81,13 @@ function AdminTweetPage() {
       console.error(error);
     }
   };
+
+  //if user is not authenticated, navigate to login page
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/admin");
+    }
+  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     getAllTweetsAsync();
