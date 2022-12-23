@@ -1,7 +1,7 @@
 import { createContext } from "react";
 import { useState, useEffect, useContext } from "react";
 import { useLocation } from 'react-router-dom';
-import { login, register, checkPermission } from '../Api/AuthAPI'
+import { login, register, checkPermission, checkAdminPermission } from '../Api/AuthAPI'
 
 // 設定一開始context 預設值
 const defaultValue = {
@@ -32,10 +32,8 @@ function AuthProvider(props) {
         setUserData(null);
         return;
       }
-      // if ( token && role=== user) {}
-    
+
       const result = await checkPermission(token);
-   
 
       if (result.status === '200') {
         setIsAuthenticated(true);
@@ -47,8 +45,29 @@ function AuthProvider(props) {
         setUserData(null);
       }
     };
+    // checkPermission for admin related page
+    const checkAdminTokenIsValid = async () => {
+      const token = localStorage.getItem('authToken');
+      if (!token) {
+        setIsAuthenticated(false);
+        setUserData(null);
+        return;
+      }
+
+      const result = await checkAdminPermission(token);
+
+      if (result.status === '200') {
+        setIsAuthenticated(true);
+
+      } else {
+        setIsAuthenticated(false);
+      }
+    }
     // admin related pages not applied  
-    if (!pathname.includes("/admin")) { checkTokenIsValid() };
+    if (pathname.includes("/admin")) { checkAdminTokenIsValid() } 
+    else {
+      checkTokenIsValid()
+    }
   }, [pathname]);
 
   return (
@@ -58,7 +77,7 @@ function AuthProvider(props) {
         currentUser: userData,
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
-          const { success, token, user } = await register({
+          const { success, token, user, errCode } = await register({
             account: data.account,
             name: data.nameTrimmed,
             email: data.email,
@@ -70,10 +89,10 @@ function AuthProvider(props) {
             setUserData(user)
             localStorage.setItem('authToken', token);
           }
-          return success
+          return { success, errCode }
         },
         login: async (data) => {
-          const { success, token, user } = await login({
+          const { success, token, user, errCode } = await login({
             account: data.accountTrimmed,
             password: data.passwordTrimmed,
           });
@@ -82,7 +101,7 @@ function AuthProvider(props) {
             setUserData(user)
             localStorage.setItem('authToken', token);
           }
-          return success;
+          return { success, errCode }
         },
         logout: () => {
           localStorage.removeItem('authToken');

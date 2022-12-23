@@ -6,13 +6,14 @@ import { useAuth } from "../../Context/AuthContext";
 
 import Button from "../../Components/Button";
 import styles from "./LoginPage.module.scss";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function LoginPage() {
   // State Variable
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
 
   const { login, isAuthenticated } = useAuth();
@@ -35,33 +36,39 @@ function LoginPage() {
     // refactor the value of account and password
     const accountTrimmed = account.trim();
     const passwordTrimmed = password.trim();
-    const success = await login({ accountTrimmed, passwordTrimmed });
+    const { success, errCode } = await login({
+      accountTrimmed,
+      passwordTrimmed,
+    });
 
-    // 待後端把錯誤訊息補上補上實作錯誤訊息
+    //登入成功
     if (success) {
-      Swal.fire({
-        title: "Success!",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+      ToastSuccess.fire({
+        title: "登入成功！",
       });
       navigate("/home");
       return;
-    } else {
-      Swal.fire({
-        title: "Failed...",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+    }
+    //登入失敗
+    //如果是非input欄顯示的錯誤，跳出訊息
+    if (errCode === 400) {
+      ToastFail.fire({
+        title: "有空白欄位！",
       });
+    } else if (!errCode) {
+      ToastFail.fire({
+        title: "發生未預期錯誤...",
+      });
+    } else {
+      // input欄顯示錯誤在click function外處理，所以需將errCode存起來
+      setErrCode(errCode);
     }
   };
 
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
+    setErrCode("");
   };
 
   //if user is authenticated, navigate to home page
@@ -71,6 +78,7 @@ function LoginPage() {
     }
   }, [navigate, isAuthenticated]);
 
+  // 以下為錯誤驗證------------------------------
   // Input blank check
   if (submitting && accountLength === 0) {
     accountAlertMsg = "此欄為必填欄位";
@@ -79,6 +87,19 @@ function LoginPage() {
   if (submitting && passwordLength === 0) {
     passwordAlertMsg = "此欄為必填欄位";
   }
+
+  //後端驗證錯誤（input欄位顯示）
+  //when the account does not exist
+  if (errCode === 423) {
+    accountAlertMsg = "帳號不存在";
+  }
+
+  //when invalid password
+  if (errCode === 402) {
+    passwordAlertMsg = "密碼錯誤";
+  }
+
+  // 以上為錯誤驗證------------------------------
 
   return (
     <div className={styles["container"]}>

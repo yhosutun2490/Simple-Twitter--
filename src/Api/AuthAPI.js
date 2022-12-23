@@ -17,6 +17,8 @@ export const login = async ({ account, password }) => {
     return data;
   } catch (error) {
     console.error("[Login Failed]:", error);
+    const errCode = error.response.data.status
+    return { success: false, errCode: errCode };
   }
 };
 
@@ -44,6 +46,8 @@ export const register = async ({
     return data;
   } catch (error) {
     console.error("[Register Failed]:", error);
+    const errCode = error.response.data.status
+    return { success: false, errCode: errCode };
   }
 };
 
@@ -57,5 +61,19 @@ export const checkPermission = async (token) => {
     return response.data;
   } catch (error) {
     console.error("[Check Permission Failed]:", error);
+  }
+};
+
+// Admin check permission
+export const checkAdminPermission = async (token) => {
+  try {
+    const response = await axios.get(`${baseUrl}/auth/admin`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("[Check Admin Permission Failed]:", error);
   }
 };

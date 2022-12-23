@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { ReactComponent as AdminDeleteIcon } from "../../assets/icons/admin_delete_icon.svg";
 import UserInfo from "../../Components/UserTweetBox/UserInfo";
 import styles from "./AdminTweetPage.module.scss";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 import { adminDeleteTweet, adminGetAllTweets } from "../../Api/AdminAPI";
-import Swal from "sweetalert2";
+import { useAuth } from "../../Context/AuthContext";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function AdminTweetBox(props) {
   //須從後端傳入的資料
@@ -50,6 +52,9 @@ function AdminTweetBox(props) {
 function AdminTweetPage() {
   const [tweetList, setTweetList] = useState([]);
   const [deleteTrigger, setDeleteTrigger] = useState(false); //delete function是否被觸發
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useAuth();
 
   const getAllTweetsAsync = async () => {
     try {
@@ -65,17 +70,26 @@ function AdminTweetPage() {
     try {
       await adminDeleteTweet(id);
       setDeleteTrigger(true);
-      Swal.fire({
+      ToastSuccess.fire({
         title: "刪除成功",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
       });
     } catch (error) {
       console.error(error);
+      ToastFail.fire({
+        title: "刪除失敗...",
+      });
     }
   };
+
+  //if user is not authenticated, navigate to login page
+  useEffect(() => {
+    if (!isAuthenticated) {
+      ToastFail.fire({
+        title: "帳號不存在！",
+      });
+      navigate("/admin");
+    }
+  }, [navigate, isAuthenticated]);
 
   useEffect(() => {
     getAllTweetsAsync();

@@ -5,7 +5,7 @@ import AuthInput from "../../Components/AuthInput";
 import { useAuth } from "../../Context/AuthContext";
 import Button from "../../Components/Button";
 import styles from "./RegisterPage.module.scss";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function RegisterPage() {
   // State Variable
@@ -15,6 +15,7 @@ function RegisterPage() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
 
   const { register, isAuthenticated } = useAuth();
@@ -68,7 +69,7 @@ function RegisterPage() {
     // If all input value is valid
     // refactor the value of account and password
     const nameTrimmed = name.trim();
-    const success = await register({
+    const { success, errCode } = await register({
       account,
       nameTrimmed,
       email,
@@ -76,30 +77,35 @@ function RegisterPage() {
       checkPassword,
     });
 
+    // 註冊成功
     if (success) {
-      Swal.fire({
-        title: "Success!",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+      ToastSuccess.fire({
+        title: "註冊成功",
       });
       navigate("/home");
       return;
-    } else {
-      Swal.fire({
-        title: "Failed...",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+    }
+    //註冊失敗
+    //如果是非input欄顯示的錯誤，跳出訊息
+    if (errCode === 402) {
+      ToastFail.fire({
+        title: "有空白欄位！",
       });
+    // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
+    } else if (errCode === 500 || !errCode) {
+      ToastFail.fire({
+        title: "發生未預期錯誤...",
+      });
+    } else {
+      // input欄顯示錯誤在click function外處理，所以需將errCode存起來
+      setErrCode(errCode);
     }
   };
 
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
+    setErrCode("");
   };
 
   //if user is authenticated, navigate to home page
@@ -109,6 +115,7 @@ function RegisterPage() {
     }
   }, [navigate, isAuthenticated]);
 
+  // 以下為錯誤驗證------------------------------
   // Input blank check
   if (submitting && accountLength === 0) {
     accountAlertMsg = "此欄為必填欄位";
@@ -140,36 +147,48 @@ function RegisterPage() {
   }
 
   // Word length limit alert
-  if (accountLength > accountLengthLimit) {
+  if (accountLength > accountLengthLimit || errCode === 403) {
     accountAlertMsg = "帳號字數超出上限";
   }
 
-  if (nameLength > nameLengthLimit) {
+  if (nameLength > nameLengthLimit || errCode === 413) {
     nameAlertMsg = "名稱字數超出上限";
   }
 
-  // 使用者有輸入且不是空值的時候判斷字數
+  // 使用者有輸入密碼且不是空值的時候判斷字數
   if (
-    passwordLength > 0 &&
-    passwordLength < 4 &&
-    !isSpaceCheck.test(password)
+    (passwordLength > 0 &&
+      passwordLength < 4 &&
+      !isSpaceCheck.test(password)) ||
+    (passwordLength > 0 &&
+      passwordLength > 12 &&
+      !isSpaceCheck.test(password)) ||
+    errCode === 412
   ) {
-    passwordAlertMsg = "密碼不可小於4字元";
-  }
-
-  if (passwordLength > 12) {
-    passwordAlertMsg = "密碼不可多於12字元";
+    passwordAlertMsg = "密碼長度不符";
   }
 
   //wrong email format alert
-  if (emailLength > 0 && !emailRule.test(email)) {
+  if ((emailLength > 0 && !emailRule.test(email)) || errCode === 401) {
     emailAlertMsg = "Email格式錯誤";
   }
 
   //passwordCheck unmatched alert
-  if (checkPassword > 0 && checkPassword !== password) {
+  if ((checkPassword > 0 && checkPassword !== password) || errCode === 422) {
     checkPasswordAlertMsg = "密碼不相符";
   }
+
+  //後端驗證帳號重複
+  if (errCode === 423) {
+    accountAlertMsg = "帳號已重複註冊";
+  }
+
+  //後端驗證email重複
+  if (errCode === 408) {
+    emailAlertMsg = "Email已重複註冊";
+  }
+
+  // 以上為錯誤驗證------------------------------
 
   return (
     <div className={styles["container"]}>
