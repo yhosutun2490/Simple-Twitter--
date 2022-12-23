@@ -6,18 +6,23 @@ import UserInfo from "../UserTweetBox/UserInfo";
 import { useState, useRef } from "react";
 import { TimeFromNow } from "../../CostumHook/TransFormDate";
 import { useAuth } from "../../Context/AuthContext";
+import { useTweetList } from "../../Context/TweetContext";
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文API
 import { getOneTweet } from "../../Api/TweetAPI"; //取得單支貼文資訊API
 import { getOneTweetReplies } from "../../Api/RepliesAPI"; //取得單支貼文列表API
 import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得使用者貼文列表
+import { getOneUsersLikes } from "../../Api/UserAPI"; //取得使用者喜歡推文
 import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
 import Swal from "sweetalert2";
 function ReplyModal(props) {
+  // context用享狀態用
+  const { setSelfTweetList, setSelfLikeData } = useTweetList();
   // 目前位置名稱
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[1]; //判斷 現在在home 還是 tweet
   const currentTweetID = pathname.split("/")[2]; //現在回覆文的ID
+  const likePageName = pathname.split("/")[3];
   // 個人資料頁觀看者的viewID
   let viewID = "";
   if (nowPageName === "user") {
@@ -36,7 +41,6 @@ function ReplyModal(props) {
     setAllTweetList, //三個同步畫面的setFunction
     setReplies,
     setMainTweetInfo,
-    setSelfTweetList, // 使用者個人推文頁更新用
   } = props;
   // 回覆文字狀態紀錄
   const [text, setText] = useState("");
@@ -89,9 +93,16 @@ function ReplyModal(props) {
         return;
       }
       // 在個人推文列表頁
-      if (nowPageName === "user") {
+      if (nowPageName === "user" && likePageName !== "likes") {
         const newSelfTweetData = await getOneUserTweets(viewID);
         setSelfTweetList(newSelfTweetData);
+        closeEvent(false);
+      }
+      // 個人喜歡推文頁
+      if (likePageName === "likes") {
+        const newSelfLikeTweet = await getOneUsersLikes(viewID);
+        setSelfLikeData(newSelfLikeTweet);
+        closeEvent(false);
       }
       // 關閉視窗
       closeEvent(false);
