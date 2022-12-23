@@ -6,7 +6,7 @@ import Button from "../../Components/Button";
 import styles from "./SettingPage.module.scss";
 import { useAuth } from "../../Context/AuthContext";
 import { setUserData } from "../../Api/UserSettingAPI";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function SettingPage() {
   //透過useAuth獲取現在登入使用者的資料，顯示default帳號、名稱、信箱
@@ -19,6 +19,7 @@ function SettingPage() {
   const [password, setPassword] = useState("");
   const [checkPassword, setCheckPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
 
   // Alert message variant
@@ -67,7 +68,7 @@ function SettingPage() {
     }
     // If all input value is valid
     const nameTrimmed = name.trim();
-    const { success, errMsg } = await setUserData({
+    const { success, errCode } = await setUserData({
       id: currentUser.id,
       account: account,
       name: nameTrimmed,
@@ -76,33 +77,27 @@ function SettingPage() {
       checkPassword: checkPassword,
     });
     if (success) {
-      Swal.fire({
+      ToastSuccess.fire({
         title: "更新成功！",
-        color: "#000000",
-        icon: "success",
-        iconColor: "#82C43C",
-        toast: "true",
-        showConfirmButton: false,
-        timer: 1500,
-        position: "top",
-        timerProgressBar: true,
       });
       setPassword("");
       setCheckPassword("");
       return;
-    } else {
-      Swal.fire({
-        title: errMsg,
-        color: "#000000",
-        icon: "error",
-        iconColor: "#FC5A5A",
-        toast: "true",
-        width: "30%",
-        showConfirmButton: false,
-        timer: 1500,
-        position: "top",
+    }
+    // token驗證失敗
+    if (errCode === 401) {
+      ToastFail.fire({
+        title: "您尚未登入",
       });
-      return;
+      navigate("/login");
+      // errCode為412（請求使用者id不存在）500（其他錯誤）或是沒有catch到errCode的錯誤
+    } else if (errCode === 411 || errCode === 500 || !errCode) {
+      ToastFail.fire({
+        title: "發生未預期錯誤...",
+      });
+    } else {
+      // input欄顯示錯誤在click function外處理，所以需將errCode存起來
+      setErrCode(errCode);
     }
   };
 
@@ -118,6 +113,7 @@ function SettingPage() {
     }
   }, [navigate, isAuthenticated]);
 
+  // 以下為錯誤驗證------------------------------
   // Input blank check
   if (submitting && accountLength === 0) {
     accountAlertMsg = "此欄為必填欄位";
@@ -141,31 +137,48 @@ function SettingPage() {
   }
 
   // Word length limit alert
-  if (accountLength > accountLengthLimit) {
+  if (accountLength > accountLengthLimit || errCode === 403) {
     accountAlertMsg = "帳號字數超出上限";
   }
 
-  if (nameLength > nameLengthLimit) {
+  if (nameLength > nameLengthLimit || errCode === 413) {
     nameAlertMsg = "名稱字數超出上限";
   }
 
-  if (passwordLength > 0 && passwordLength < 4) {
-    passwordAlertMsg = "密碼不可小於4字元";
-  }
-
-  if (passwordLength > 12) {
-    passwordAlertMsg = "密碼不可多於12字元";
+  // 使用者有輸入密碼且不是空值的時候判斷字數
+  if (
+    (passwordLength > 0 &&
+      passwordLength < 4 &&
+      !isSpaceCheck.test(password)) ||
+    (passwordLength > 0 && passwordLength > 12 && !isSpaceCheck.test(password))
+    // 待後端修正
+    // errCode ===
+  ) {
+    passwordAlertMsg = "密碼長度不符";
   }
 
   //wrong email format alert
-  if (emailLength > 0 && !emailRule.test(email)) {
+  if ((emailLength > 0 && !emailRule.test(email)) || errCode === 411) {
     emailAlertMsg = "Email格式錯誤";
   }
 
   //passwordCheck unmatched alert
   if (checkPassword >= 0 && checkPassword !== password) {
+    // 待後端修正
+    // errCode ===
     checkPasswordAlertMsg = "密碼不相符";
   }
+
+  //後端驗證帳號重複
+  if (errCode === 423) {
+    accountAlertMsg = "帳號已重複註冊";
+  }
+
+  //後端驗證email重複
+  if (errCode === 408) {
+    emailAlertMsg = "Email已重複註冊";
+  }
+  // 以上為錯誤驗證------------------------------
 
   return (
     <div className={styles["container"]}>
