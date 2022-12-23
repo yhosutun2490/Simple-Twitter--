@@ -91,7 +91,8 @@ function RegisterPage() {
       ToastFail.fire({
         title: "有空白欄位！",
       });
-    } else if (!errCode) {
+    // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
+    } else if (errCode === 500 || !errCode) {
       ToastFail.fire({
         title: "發生未預期錯誤...",
       });
