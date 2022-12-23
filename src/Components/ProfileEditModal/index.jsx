@@ -6,16 +6,26 @@ import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; //傳入登入使用者個人資料
 import { useFollowBtn } from "../../Context/FollowBtnContext"; //傳入使用者資料卡片共用狀態
+import { useTweetList } from "../../Context/TweetContext";
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import { getOneUserData } from "../../Api/UserAPI"; //個人資料API
+import { getOneUserTweets } from "../../Api/UserAPI";
+import { getOneUsersReplies } from "../../Api/UserAPI";
+import { getOneUsersLikes } from "../../Api/UserAPI";
+import { useLocation } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function ProfileEditModal(props) {
+  // 檢查目前路由
+  const { pathname } = useLocation();
+  const nowPageName = pathname.split("/")[3];
   // 目前登入者資料
   const currentUserInfo = useAuth().currentUser;
   const userID = currentUserInfo.id;
   // 共用狀態
   const { setUserProfile } = useFollowBtn();
+  const { setSelfTweetList, setSelfReplyData, setSelfLikeData } =
+    useTweetList();
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
@@ -104,9 +114,9 @@ function ProfileEditModal(props) {
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   async function handleSubmit() {
+    setIsSubmitting(true);
     // 如果名稱是空白，顯示錯誤再輸入欄底下
     if (name.length === 0) {
-      setIsSubmitting(true);
       return;
     }
 
@@ -119,6 +129,7 @@ function ProfileEditModal(props) {
         icon: "info",
         showConfirmButton: false,
       });
+      setIsSubmitting(false);
       return;
     }
     let formData = new FormData();
@@ -132,11 +143,23 @@ function ProfileEditModal(props) {
       await Swal.fire({
         position: "top",
         title: "編輯個人資料成功！",
-        timer: 1000,
+        timer: 2000,
         icon: "success",
         showConfirmButton: false,
       });
       //返回使用者頁面，同步更新個人資料頁
+      if (nowPageName === undefined) {
+        const selfNewTweet = await getOneUserTweets(userID);
+        setSelfTweetList(selfNewTweet);
+      }
+      if (nowPageName === "reply") {
+        const selfNewReply = await getOneUsersReplies(userID);
+        setSelfReplyData(selfNewReply);
+      }
+      if (nowPageName === "like") {
+        const selfNewLike = await getOneUsersLikes(userID);
+        setSelfLikeData(selfNewLike);
+      }
       const newSelfPrfileData = await getOneUserData(userID);
       setUserProfile(newSelfPrfileData);
       resetModalStatus();
@@ -148,6 +171,7 @@ function ProfileEditModal(props) {
         icon: "error",
         showConfirmButton: false,
       });
+      setIsSubmitting(false);
     }
   }
   // function 關掉視窗後重置狀態
@@ -155,6 +179,7 @@ function ProfileEditModal(props) {
     setIsSubmitting(false);
     setBackgroundUrl("");
     setAvatarUrl("");
+    setIsSubmitting(false);
     closeEvent(false);
   }
 
@@ -183,13 +208,20 @@ function ProfileEditModal(props) {
             }}
           />
           <p className={styles["popup-title"]}>編輯個人資料</p>
-          <button
-            className={styles["btn-save"]}
-            type="submit"
-            onClick={handleSubmit}
-          >
-            儲存
-          </button>
+          {!isSubmitting && (
+            <button
+              className={styles["btn-save"]}
+              type="submit"
+              onClick={handleSubmit}
+            >
+              儲存
+            </button>
+          )}
+          {isSubmitting ? (
+            <button className={styles["btn-submitting"]}>傳送中</button>
+          ) : (
+            ""
+          )}
         </div>
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>

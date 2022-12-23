@@ -3,17 +3,18 @@ import ProfileUserNavBar from "../../Components/ProfileUserNavBar";
 import ReplyList from "../../Components/ReplyList";
 import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主要資料的API
 import { getOneUsersReplies } from "../../Api/UserAPI"; // 取得某位使用者自己的回覆列表
-import { useRef, useEffect, useState } from "react";
-import { useLocation ,useNavigate } from "react-router-dom";
+import { useRef, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useFollowBtn } from "../../Context/FollowBtnContext"; // 追隨按鈕共用狀態用
+import { useTweetList } from "../../Context/TweetContext";
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 function ProfileReplyPage() {
-  const {isAuthenticated} = useAuth()
-  const navigate = useNavigate()
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   // 共用狀態
   const { userProfile, setUserProfile } = useFollowBtn();
   // 頁面資料狀態
-  const [selfReplyData, setSelfReplyData] = useState(""); //個人回覆資料
+  const { selfReplyData, setSelfReplyData } = useTweetList(); //個人回覆資料
 
   // 目前使用者ID
   const currentUserInfo = useAuth().currentUser;
@@ -54,7 +55,7 @@ function ProfileReplyPage() {
       }
     };
     apiUserReplies();
-  }, [viewID]);
+  }, [viewID, setSelfReplyData]);
 
   useEffect(() => {
     // 如果token驗證狀態沒過

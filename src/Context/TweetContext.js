@@ -14,13 +14,21 @@ function TweetListProvider(props) {
   const [allTweetSData, setAllTweetSData] = useState("")
   // 個人推文資料傳遞用
   const [selfTweetList, setSelfTweetList] = useState("");
+  // 個人回覆推文
+  const [selfReplyData, setSelfReplyData] = useState("");
+  // 個人喜歡的貼文 
+  const [selfLikeData, setSelfLikeData] = useState(""); 
 
   return (
     <TweetListContext.Provider value={{
       allTweetList: allTweetSData,
       setAllTweetList: setAllTweetSData,
       selfTweetList: selfTweetList,
-      setSelfTweetList: setSelfTweetList
+      setSelfTweetList: setSelfTweetList,
+      selfReplyData: selfReplyData,
+      setSelfReplyData: setSelfReplyData,
+      selfLikeData:selfLikeData,
+      setSelfLikeData:setSelfLikeData
     }}>
       {props.children}
     </TweetListContext.Provider>
