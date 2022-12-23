@@ -53,7 +53,7 @@ function LoginPage() {
     //如果是非input欄顯示的錯誤，跳出訊息
     if (errCode === 400) {
       ToastFail.fire({
-        title: "有空白欄位",
+        title: "有空白欄位！",
       });
     } else if (!errCode) {
       ToastFail.fire({
