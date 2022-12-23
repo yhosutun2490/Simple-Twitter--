@@ -5,13 +5,14 @@ import AuthInput from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
 import { adminLogin } from "../../Api/AdminAPI";
 import styles from "./AdminLoginPage.module.scss";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
 
 function AdminLoginPage() {
   // State Variable
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
 
   // Alert message variant
@@ -29,7 +30,7 @@ function AdminLoginPage() {
       return;
     }
     // If all input value is valid
-    const { success, token } = await adminLogin({
+    const { success, token, errCode } = await adminLogin({
       account,
       password,
     });
@@ -37,31 +38,35 @@ function AdminLoginPage() {
     // 待後端把錯誤訊息補上補上實作錯誤訊息
     if (success) {
       localStorage.setItem("authToken", token);
-      Swal.fire({
-        title: "Success!",
-        icon: "success",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+      ToastSuccess.fire({
+        title: "登入成功！",
       });
       navigate("/admin/tweetlist");
       return;
-    } else {
-      Swal.fire({
-        title: "Failed...",
-        icon: "error",
-        showConfirmButton: false,
-        timer: 1000,
-        position: "top",
+    }
+    //登入失敗
+    //如果是非input欄顯示的錯誤，跳出訊息
+    if (errCode === 400) {
+      ToastFail.fire({
+        title: "有空白欄位！",
       });
+    } else if (!errCode) {
+      ToastFail.fire({
+        title: "發生未預期錯誤...",
+      });
+    } else {
+      // input欄顯示錯誤在click function外處理，所以需將errCode存起來
+      setErrCode(errCode);
     }
   };
 
   // When user focus on the input clear the alert message
   const handleFocus = () => {
     setSubmitting(false);
+    setErrCode("");
   };
 
+  // 以下為錯誤驗證------------------------------
   // Input blank check
   if (submitting && accountLength === 0) {
     accountAlertMsg = "此欄為必填欄位";
@@ -69,6 +74,17 @@ function AdminLoginPage() {
 
   if (submitting && passwordLength === 0) {
     passwordAlertMsg = "此欄為必填欄位";
+  }
+
+  //後端驗證錯誤（input欄位顯示）
+  //when the account does not exist
+  if (errCode === 423) {
+    accountAlertMsg = "帳號不存在";
+  }
+
+  //when invalid password
+  if (errCode === 402) {
+    passwordAlertMsg = "密碼錯誤";
   }
 
   return (
