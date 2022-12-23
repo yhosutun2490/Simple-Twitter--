@@ -52,21 +52,21 @@ function TweetInput(props) {
       // 成功推文後要即時更新資料
       const apiAllTweet = await getAllTweets();
       setTweetList(apiAllTweet);
-    } 
-     // 推文空白內容萬一被送出
-    if (tweetResponse.status === 406) {
+    }
+    if (tweetResponse.status === 500) {
       Swal.fire({
         position: "top",
-        title: "推文失敗~內容不容空白或數超過上限！",
+        title: "推文失敗(伺服器問題)！",
         timer: 2000,
         icon: "error",
         showConfirmButton: false,
       });
     }
-    else {
+    // 推文空白內容萬一被送出
+    if (tweetResponse.status === 406) {
       Swal.fire({
         position: "top",
-        title: "推文失敗(伺服器問題)！",
+        title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,
         icon: "error",
         showConfirmButton: false,
