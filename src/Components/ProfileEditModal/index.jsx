@@ -35,6 +35,7 @@ function ProfileEditModal(props) {
   const [avatarPhoto, setAvatarPhoto] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isBlank, setIsBlank] = useState(false);
 
   // 字數錯誤參數
   const nameError = name?.trim().length > 50 ? "error" : "";
@@ -108,10 +109,12 @@ function ProfileEditModal(props) {
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   async function handleSubmit() {
-    setIsSubmitting(true);
     // 如果名稱是空白，顯示錯誤再輸入欄底下
-    if (name?.length === 0) {
+    if (name?.trim().length === 0) {
+      setIsBlank(true);
       return;
+    } else {
+      setIsSubmitting(true);
     }
 
     // 超過字數上限表單不作事、跳出錯誤
@@ -164,7 +167,6 @@ function ProfileEditModal(props) {
         avatar: newEditData.avatar,
         cover: newEditData.cover,
       });
-
       resetModalStatus();
     } else {
       await ToastFail.fire({
@@ -176,17 +178,22 @@ function ProfileEditModal(props) {
       setIsSubmitting(false);
     }
   }
-  // function 關掉視窗後重置狀態
+  // function 關掉視窗後重置狀態 (如果使用者填了 但沒SAVE要用沒儲存前的狀態)
   function resetModalStatus() {
     setIsSubmitting(false);
     setBackgroundUrl("");
     setAvatarUrl("");
+    // 確定使用者有更動的值，有save靠submit handler更新，沒有save用舊值
+    setName(currentUser.name);
+    setIntroduction(currentUser.introduction);
+    setIsBlank(false);
     closeEvent(false);
   }
 
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
   function handleOnFocus() {
     setIsSubmitting(false);
+    setIsBlank(false);
   }
   /////////////////////元件JSX
   // 如果trigger是 True 打開元件
@@ -292,7 +299,7 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {name?.length === 0 && isSubmitting ? (
+                {name?.trim().length === 0 && isBlank ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
