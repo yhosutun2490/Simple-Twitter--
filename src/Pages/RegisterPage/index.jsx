@@ -28,7 +28,7 @@ function RegisterPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account.length;
+  const accountLength = account.trim().length;
   const nameLength = name.trim().length;
   const passwordLength = password.length;
   const emailLength = email.length;
@@ -68,9 +68,10 @@ function RegisterPage() {
     }
     // If all input value is valid
     // refactor the value of account and password
-    const nameTrimmed = name.trim();
+    const accountTrimmed = account.trim()
+    const nameTrimmed = name.trim()
     const { success, errCode } = await register({
-      account,
+      accountTrimmed,
       nameTrimmed,
       email,
       password,
@@ -91,7 +92,7 @@ function RegisterPage() {
       ToastFail.fire({
         title: "有空白欄位！",
       });
-    // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
+      // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
     } else if (errCode === 500 || !errCode) {
       ToastFail.fire({
         title: "發生未預期錯誤...",
@@ -188,6 +189,11 @@ function RegisterPage() {
     emailAlertMsg = "Email已重複註冊";
   }
 
+  //後端驗證email和帳號同時重複
+  if (errCode === 405) {
+    accountAlertMsg = "帳號已重複註冊";
+    emailAlertMsg = "Email已重複註冊";
+  }
   // 以上為錯誤驗證------------------------------
 
   return (

@@ -28,8 +28,12 @@ function AdminUserCard(props) {
         <img src={avatar} className={styles["avatar-img"]} alt="user-avatar" />
       </div>
       <div className={styles["user-info"]}>
-        <p className={styles["user-info-name"]}>{userName}</p>
-        <p className={styles["user-info-account"]}>@{account}</p>
+        <p className={styles["user-info-name"]}>
+          {userName.length > 18 ? userName.slice(0, 18) + "..." : userName}
+        </p>
+        <p className={styles["user-info-account"]}>
+          @{account.length > 18 ? account.slice(0, 18) + "..." : account}
+        </p>
       </div>
       <div className={styles["user-tweet-data"]}>
         <div className={styles["user-tweet-num"]}>
@@ -66,7 +70,7 @@ function AdminUserPage() {
         title: "帳號不存在！",
       });
       navigate("/admin");
-      return
+      return;
     }
   }, [navigate, isAuthenticated]);
 

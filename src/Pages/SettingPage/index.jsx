@@ -30,7 +30,7 @@ function SettingPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account?.length;
+  const accountLength = account?.trim().length;
   const nameLength = name?.trim().length;
   const passwordLength = password?.length;
   const emailLength = email?.length;
@@ -67,22 +67,16 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
+    const accountTrimmed = account.trim();
     const nameTrimmed = name.trim();
     const id = currentUser.id;
     //打包資料成formData
     let formData = new FormData();
-    formData.append("account", account);
+    formData.append("account", accountTrimmed);
     formData.append("name", nameTrimmed);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("checkPassword", checkPassword);
-
-    for (let [name, value] of formData.entries()) {
-      console.log(name + ": " + value);
-    }
-    if (!formData) {
-      return;
-    }
 
     const { success, errCode } = await setUserData(id, formData);
     if (success) {
@@ -100,7 +94,7 @@ function SettingPage() {
       });
       navigate("/login");
       // errCode為412（請求使用者id不存在）500（其他錯誤）或是沒有catch到errCode的錯誤
-    } else if (errCode === 411 || errCode === 500 || !errCode) {
+    } else if (errCode === 412 || errCode === 500 || !errCode) {
       ToastFail.fire({
         title: "發生未預期錯誤...",
       });
@@ -120,7 +114,7 @@ function SettingPage() {
   useEffect(() => {
     if (!isAuthenticated) {
       ToastFail.fire({
-        title: "帳號不存在！",
+        title: "您尚未登入！",
       });
       navigate("/login");
     }
@@ -163,9 +157,10 @@ function SettingPage() {
     (passwordLength > 0 &&
       passwordLength < 4 &&
       !isSpaceCheck.test(password)) ||
-    (passwordLength > 0 && passwordLength > 12 && !isSpaceCheck.test(password))
-    // 待後端修正
-    // errCode ===
+    (passwordLength > 0 &&
+      passwordLength > 12 &&
+      !isSpaceCheck.test(password)) ||
+    errCode === 422
   ) {
     passwordAlertMsg = "密碼長度不符";
   }
@@ -176,9 +171,7 @@ function SettingPage() {
   }
 
   //passwordCheck unmatched alert
-  if (checkPassword >= 0 && checkPassword !== password) {
-    // 待後端修正
-    // errCode ===
+  if ((checkPassword >= 0 && checkPassword !== password) || errCode === 407) {
     checkPasswordAlertMsg = "密碼不相符";
   }
 
@@ -189,6 +182,12 @@ function SettingPage() {
 
   //後端驗證email重複
   if (errCode === 408) {
+    emailAlertMsg = "Email已重複註冊";
+  }
+
+  //後端驗證email和帳號同時重複
+  if (errCode === 405) {
+    accountAlertMsg = "帳號已重複註冊";
     emailAlertMsg = "Email已重複註冊";
   }
   // 以上為錯誤驗證------------------------------

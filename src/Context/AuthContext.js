@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { useState, useEffect, useContext } from "react";
 import { useLocation } from 'react-router-dom';
 import { login, register, checkPermission, checkAdminPermission } from '../Api/AuthAPI'
+import { adminLogin } from "../Api/AdminAPI";
 
 // 設定一開始context 預設值
 const defaultValue = {
@@ -10,6 +11,7 @@ const defaultValue = {
   setCurrentUser: null, //更新使用者資料
   register: null, //註冊function
   login: null, //登入function
+  adminLogin: null,
   logout: null, // 登出function
 }
 
@@ -64,7 +66,7 @@ function AuthProvider(props) {
       }
     }
     // admin related pages not applied  
-    if (pathname.includes("/admin")) { checkAdminTokenIsValid() } 
+    if (pathname.includes("/admin")) { checkAdminTokenIsValid() }
     else {
       checkTokenIsValid()
     }
@@ -78,7 +80,7 @@ function AuthProvider(props) {
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
           const { success, token, user, errCode } = await register({
-            account: data.account,
+            account: data.accountTrimmed,
             name: data.nameTrimmed,
             email: data.email,
             password: data.password,
@@ -107,6 +109,17 @@ function AuthProvider(props) {
           localStorage.removeItem('authToken');
           setUserData(null);
           setIsAuthenticated(false);
+        },
+        adminLogin: async (data) => {
+          const { success, token, errCode } = await adminLogin({
+            account: data.account,
+            password: data.password,
+          });
+          if (token) {
+            setIsAuthenticated(true);
+            localStorage.setItem('authToken', token);
+          }
+          return { success, errCode }
         }
       }
     }>
