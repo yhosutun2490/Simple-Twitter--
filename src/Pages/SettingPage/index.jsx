@@ -30,8 +30,8 @@ function SettingPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account?.length;
-  const nameLength = name?.length;
+  const accountLength = account?.trim().length;
+  const nameLength = name?.trim().length;
   const passwordLength = password?.length;
   const emailLength = email?.length;
   const accountLengthLimit = 50;
@@ -67,11 +67,13 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
+    const accountTrimmed = account.trim();
+    const nameTrimmed = name.trim();
     const id = currentUser.id;
     //打包資料成formData
     let formData = new FormData();
-    formData.append("account", account);
-    formData.append("name", name);
+    formData.append("account", accountTrimmed);
+    formData.append("name", nameTrimmed);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("checkPassword", checkPassword);

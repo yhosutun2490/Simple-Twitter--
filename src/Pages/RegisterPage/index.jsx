@@ -28,8 +28,8 @@ function RegisterPage() {
   let checkPasswordAlertMsg = "";
 
   // Word length related constant
-  const accountLength = account.length;
-  const nameLength = name.length;
+  const accountLength = account.trim().length;
+  const nameLength = name.trim().length;
   const passwordLength = password.length;
   const emailLength = email.length;
   const checkPasswordLength = checkPassword.length;
@@ -68,9 +68,11 @@ function RegisterPage() {
     }
     // If all input value is valid
     // refactor the value of account and password
+    const accountTrimmed = account.trim()
+    const nameTrimmed = name.trim()
     const { success, errCode } = await register({
-      account,
-      name,
+      accountTrimmed,
+      nameTrimmed,
       email,
       password,
       checkPassword,

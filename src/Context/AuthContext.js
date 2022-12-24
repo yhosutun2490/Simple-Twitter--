@@ -80,8 +80,8 @@ function AuthProvider(props) {
         setCurrentUser: setUserData, //傳給編輯使用者資料相關頁面使用
         register: async (data) => {
           const { success, token, user, errCode } = await register({
-            account: data.account,
-            name: data.name,
+            account: data.accountTrimmed,
+            name: data.nameTrimmed,
             email: data.email,
             password: data.password,
             checkPassword: data.checkPassword
