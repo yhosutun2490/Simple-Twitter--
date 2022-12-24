@@ -162,9 +162,10 @@ function SettingPage() {
     (passwordLength > 0 &&
       passwordLength < 4 &&
       !isSpaceCheck.test(password)) ||
-    (passwordLength > 0 && passwordLength > 12 && !isSpaceCheck.test(password))
-    // 待後端修正
-    // errCode ===
+    (passwordLength > 0 &&
+      passwordLength > 12 &&
+      !isSpaceCheck.test(password)) ||
+    errCode === 422
   ) {
     passwordAlertMsg = "密碼長度不符";
   }
@@ -175,9 +176,7 @@ function SettingPage() {
   }
 
   //passwordCheck unmatched alert
-  if (checkPassword >= 0 && checkPassword !== password) {
-    // 待後端修正
-    // errCode ===
+  if ((checkPassword >= 0 && checkPassword !== password) || errCode === 407) {
     checkPasswordAlertMsg = "密碼不相符";
   }
 
