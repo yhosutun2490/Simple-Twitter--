@@ -31,7 +31,7 @@ function SettingPage() {
 
   // Word length related constant
   const accountLength = account?.length;
-  const nameLength = name?.trim().length;
+  const nameLength = name?.length;
   const passwordLength = password?.length;
   const emailLength = email?.length;
   const accountLengthLimit = 50;
@@ -67,12 +67,11 @@ function SettingPage() {
       return;
     }
     // If all input value is valid
-    const nameTrimmed = name.trim();
     const id = currentUser.id;
     //打包資料成formData
     let formData = new FormData();
     formData.append("account", account);
-    formData.append("name", nameTrimmed);
+    formData.append("name", name);
     formData.append("email", email);
     formData.append("password", password);
     formData.append("checkPassword", checkPassword);
@@ -100,7 +99,7 @@ function SettingPage() {
       });
       navigate("/login");
       // errCode為412（請求使用者id不存在）500（其他錯誤）或是沒有catch到errCode的錯誤
-    } else if (errCode === 411 || errCode === 500 || !errCode) {
+    } else if (errCode === 412 || errCode === 500 || !errCode) {
       ToastFail.fire({
         title: "發生未預期錯誤...",
       });
@@ -120,7 +119,7 @@ function SettingPage() {
   useEffect(() => {
     if (!isAuthenticated) {
       ToastFail.fire({
-        title: "帳號不存在！",
+        title: "您尚未登入！",
       });
       navigate("/login");
     }
