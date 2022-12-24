@@ -80,10 +80,9 @@
     cursor: pointer;
     border-radius: 100px;
     color: var(--color-white);
-
-    &:hover {
-      background-color: rgb(198, 216, 233);
-    }
+   &:hover {
+          box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
+        }
   }
 }
 
