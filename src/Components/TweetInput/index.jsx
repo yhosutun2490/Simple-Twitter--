@@ -36,10 +36,11 @@ function TweetInput(props) {
       setIsOnResponse(false);
       return;
     }
-    // 空白內容處理
-    if (text.length === 0) {
+    // 空白內容處理 (沒輸入和輸入空白都是不能送表單)
+    if (text.trim().length === 0) {
       setIsOnSubmit(true);
       setIsOnResponse(false);
+      setText("");
       return;
     }
     const tweetResponse = await userTweet(text);
@@ -103,7 +104,7 @@ function TweetInput(props) {
       </div>
       <div className={styles["footer"]}>
         <div className={styles["error-message"]}>
-          {isOnSubmit && text.length === 0 ? "內容不能空白" : ""}
+          {isOnSubmit && text.trim().length === 0 ? "內容不能空白" : ""}
           {text.length > 140 ? "字數超過上限140字" : ""}
         </div>
         <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>

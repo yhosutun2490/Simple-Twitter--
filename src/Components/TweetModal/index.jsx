@@ -46,9 +46,10 @@ function TweetModal(props) {
       setIsOnResponse(false);
       return;
     }
-    if (text.length === 0) {
+    if (text.trim().length === 0) {
       setIsBlank(true);
       setIsOnResponse(false);
+      setText("");
       return;
     }
     const tweetResponse = await userTweet(text);
@@ -151,7 +152,7 @@ function TweetModal(props) {
           ) : (
             <div></div>
           )}
-          {isBlank && text.length === 0 ? (
+          {isBlank && text.trim().length === 0 ? (
             <div className={styles["error-message"]}>內容不可空白</div>
           ) : (
             <div></div>
