@@ -36,7 +36,6 @@ function FollowButton(props) {
     const apiResponse = await addfollowUser(userID);
     if (apiResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "追隨成功！",
         timer: 1000,
         icon: "success",
@@ -60,7 +59,6 @@ function FollowButton(props) {
       setTopFollower(apiTopFollower);
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "追隨失敗",
         timer: 1000,
         icon: "error",
@@ -73,7 +71,6 @@ function FollowButton(props) {
     const apiResponse = await deletefollowUser(currentUserID, userID);
     if (apiResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "取消追隨成功！",
         timer: 1000,
         icon: "success",
@@ -100,7 +97,6 @@ function FollowButton(props) {
       setTopFollower(apiTopFollower);
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "取消追隨失敗",
         timer: 1000,
         icon: "error",
