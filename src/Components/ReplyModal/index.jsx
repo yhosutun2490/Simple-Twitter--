@@ -70,7 +70,6 @@ function ReplyModal(props) {
     const tweetResponse = await replyOneTweet(tweetID, text);
     if (tweetResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "回覆成功！",
         timer: 1000,
         icon: "success",
@@ -107,8 +106,7 @@ function ReplyModal(props) {
       // 關閉視窗
       closeEvent(false);
     } else {
-      ToastFail.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "回覆失敗！",
         timer: 1000,
         icon: "error",
