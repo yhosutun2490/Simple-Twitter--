@@ -12,6 +12,8 @@ function TweetInput(props) {
   const { setTweetList } = props;
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
+  // 送出推文後等待回應狀態
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 判斷使用者是否回到輸入狀態
   const [isOnSubmit, setIsOnSubmit] = useState(false);
   const textAreaRef = useRef(null);
@@ -27,8 +29,7 @@ function TweetInput(props) {
     setText(e.value);
   }
   async function handleTweetSubmit() {
-    // 換行空白處理
-    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    setIsOnResponse(true);
 
     // 超過140字推文表單不送出
     if (text.length > 140) {
@@ -37,6 +38,7 @@ function TweetInput(props) {
     // 空白內容處理
     if (text.length === 0) {
       setIsOnSubmit(true);
+      setIsOnResponse(false);
       return;
     }
     const tweetResponse = await userTweet(text);
@@ -48,6 +50,7 @@ function TweetInput(props) {
         showConfirmButton: false,
       });
       setText("");
+      setIsOnResponse(false);
       // 成功推文後要即時更新資料
       const apiAllTweet = await getAllTweets();
       setTweetList(apiAllTweet);
@@ -59,6 +62,7 @@ function TweetInput(props) {
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
@@ -68,6 +72,7 @@ function TweetInput(props) {
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
   }
   function handleOnFocus() {
@@ -101,7 +106,9 @@ function TweetInput(props) {
           {text.length > 140 ? "字數超過上限140字" : ""}
         </div>
         <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
-          <TweetSubmitButton />
+          {isOnResponse && <div className={styles["loading"]}></div>}
+          {isOnResponse && <div className={styles["loading-btn"]}>傳送中</div>}
+          {!isOnResponse && <TweetSubmitButton />}
         </div>
       </div>
     </div>

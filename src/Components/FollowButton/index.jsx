@@ -18,6 +18,7 @@ function FollowButton(props) {
   const currentUserInfo = useAuth().currentUser;
   const currentUserID = currentUserInfo.id; // 登入使用者自己的id
   const { userID, isFollow } = props; // userID指的是卡片使用者id
+
   let newIsFollowering = isFollow; // 處理後端資料格式不一樣
   if (Number(newIsFollowering) === 1) {
     newIsFollowering = true;

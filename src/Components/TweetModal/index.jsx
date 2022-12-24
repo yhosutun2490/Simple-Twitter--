@@ -20,6 +20,8 @@ function TweetModal(props) {
   const [text, setText] = useState("");
   const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);
+  // api傳送等待狀態
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 使用者個人資料
   const { currentUser } = useAuth();
   const currentUserAvatar = currentUser.avatar;
@@ -38,18 +40,19 @@ function TweetModal(props) {
   }
 
   async function handleTweetSubmit() {
-    // 換行空白處理
-    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    setIsOnResponse(true);
     // 超過140字和空白內文不送出推文表單
     if (text.length > 140) {
       return;
     }
     if (text.length === 0) {
       setIsBlank(true);
+      setIsOnResponse(false);
       return;
     }
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
+      setIsOnResponse(false);
       setText("");
       if (currentPageName === "home") {
         // 成功推文後要即時更新資料(homepage)
@@ -57,7 +60,6 @@ function TweetModal(props) {
         setAllTweetList(apiAllTweet);
         closeEvent(false);
         await ToastSuccess.fire({
-          position: "top",
           title: "成功推文！",
           timer: 2000,
           icon: "success",
@@ -78,6 +80,7 @@ function TweetModal(props) {
       }
     }
     if (tweetResponse.status === 500) {
+      setIsOnResponse(false);
       ToastFail.fire({
         title: "推文失敗(伺服器問題)！",
         timer: 2000,
@@ -87,6 +90,7 @@ function TweetModal(props) {
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
+      setIsOnResponse(false);
       ToastSuccess.fire({
         title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,
@@ -151,8 +155,12 @@ function TweetModal(props) {
           ) : (
             <div></div>
           )}
-          <div onClick={handleTweetSubmit}>
-            <TweetSubmitButton />
+          <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
+            {isOnResponse && <div className={styles["loading"]}></div>}
+            {isOnResponse && (
+              <div className={styles["loading-btn"]}>傳送中</div>
+            )}
+            {!isOnResponse && <TweetSubmitButton />}
           </div>
         </div>
       </div>
