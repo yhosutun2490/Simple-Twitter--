@@ -39,7 +39,7 @@ function UserTweetBox(props) {
           />
         </Link>
       </div>
-      <div className={styles["tweet-detail"]}>
+      <div className={styles["tweet-user-info"]}>
         <UserInfo
           userName={tweeterName}
           account={tweeterAccount}

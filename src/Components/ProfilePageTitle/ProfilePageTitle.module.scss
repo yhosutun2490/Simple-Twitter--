@@ -9,7 +9,7 @@
 }
 
 .profile-title {
-  width: 100%;
+  width: calc(100% - 16px);
   margin-left: 16px;
   display: flex;
   justify-content: center;
