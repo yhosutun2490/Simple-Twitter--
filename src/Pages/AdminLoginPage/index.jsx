@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AcLogo } from "../../assets/icons/AcLogo.svg";
 import AuthInput from "../../Components/AuthInput/index";
 import Button from "../../Components/Button";
-import { adminLogin } from "../../Api/AdminAPI";
+// import { adminLogin } from "../../Api/AdminAPI";
 import { useAuth } from "../../Context/AuthContext";
 import styles from "./AdminLoginPage.module.scss";
 import { ToastSuccess, ToastFail } from "../../assets/sweetalert"; //引入Toast樣式
@@ -16,7 +16,7 @@ function AdminLoginPage() {
   const [errCode, setErrCode] = useState("");
   const navigate = useNavigate();
 
-  const { isAuthenticated } = useAuth();
+  const { adminLogin, isAuthenticated } = useAuth();
 
   // Alert message variant
   let accountAlertMsg = "";
@@ -33,14 +33,12 @@ function AdminLoginPage() {
       return;
     }
     // If all input value is valid
-    const { success, token, errCode } = await adminLogin({
+    const { success, errCode } = await adminLogin({
       account,
       password,
     });
 
-    // 待後端把錯誤訊息補上補上實作錯誤訊息
     if (success) {
-      localStorage.setItem("authToken", token);
       ToastSuccess.fire({
         title: "登入成功！",
       });
