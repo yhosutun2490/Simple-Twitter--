@@ -53,7 +53,6 @@ function ProfileEditModal(props) {
     // 檔案類型不是圖片
     if (fileType !== "image") {
       await ToastFail.fire({
-        position: "top",
         title: "只能上傳圖片檔案！",
         timer: 1000,
         icon: "error",
@@ -63,7 +62,6 @@ function ProfileEditModal(props) {
     }
     if (fileSize >= 1000000) {
       await ToastFail.fire({
-        position: "top",
         title: "圖片大小不能超過1MB",
         timer: 1500,
         icon: "error",
@@ -77,7 +75,6 @@ function ProfileEditModal(props) {
       return checkResult;
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "圖片格式錯誤(僅接受png/jpeg/jpg)",
         timer: 1500,
         icon: "error",
@@ -120,7 +117,6 @@ function ProfileEditModal(props) {
     // 超過字數上限表單不作事、跳出錯誤
     if (nameError === "error" || introductionError === "error") {
       ToastFail.fire({
-        position: "top",
         title: "輸入字數超過上限！",
         timer: 1000,
         icon: "info",
@@ -139,9 +135,8 @@ function ProfileEditModal(props) {
     const newEditData = editResponse.data; // 新的個人資料
     if (editResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "編輯個人資料成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -173,7 +168,6 @@ function ProfileEditModal(props) {
       resetModalStatus();
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "編輯個人資料失敗！",
         timer: 1000,
         icon: "error",

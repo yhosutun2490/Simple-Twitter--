@@ -70,7 +70,6 @@ function TweetModal(props) {
         setSelfTweetList(apiSelfTweet);
         closeEvent(false);
         await ToastSuccess.fire({
-          position: "top",
           title: "成功推文！",
           timer: 2000,
           icon: "success",
@@ -80,7 +79,6 @@ function TweetModal(props) {
     }
     if (tweetResponse.status === 500) {
       ToastFail.fire({
-        position: "top",
         title: "推文失敗(伺服器問題)！",
         timer: 2000,
         icon: "error",
@@ -90,7 +88,6 @@ function TweetModal(props) {
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
       ToastSuccess.fire({
-        position: "top",
         title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,
         icon: "error",

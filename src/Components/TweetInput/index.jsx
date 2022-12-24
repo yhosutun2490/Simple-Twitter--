@@ -42,9 +42,8 @@ function TweetInput(props) {
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "成功推文！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -55,9 +54,8 @@ function TweetInput(props) {
     }
     if (tweetResponse.status === 500) {
       ToastFail.fire({
-        position: "top",
         title: "推文失敗(伺服器問題)！",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
@@ -65,9 +63,8 @@ function TweetInput(props) {
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
       ToastFail.fire({
-        position: "top",
         title: "推文失敗~內容不容空白或數超過上限！",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });

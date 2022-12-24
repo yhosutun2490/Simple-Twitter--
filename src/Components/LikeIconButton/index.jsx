@@ -29,7 +29,6 @@ function LikeIconButton(props) {
     const apiLikeResponse = await userLikeTweet(tweetID);
     if (apiLikeResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "增加like成功！",
         timer: 1000,
         icon: "success",
@@ -60,7 +59,6 @@ function LikeIconButton(props) {
       }
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "增加like失敗",
         timer: 1000,
         icon: "error",

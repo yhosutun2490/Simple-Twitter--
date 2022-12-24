@@ -30,7 +30,6 @@ function LikeFullIconButton(props) {
     const apiDisLikeResponse = await userDisLikeTweet(tweetID);
     if (apiDisLikeResponse.status === 200) {
       await ToastSuccess.fire({
-        position: "top",
         title: "取消like成功！",
         timer: 1000,
         icon: "success",
@@ -60,7 +59,6 @@ function LikeFullIconButton(props) {
       }
     } else {
       await ToastFail.fire({
-        position: "top",
         title: "取消like失敗",
         timer: 1000,
         icon: "error",

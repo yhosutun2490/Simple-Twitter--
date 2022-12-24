@@ -28,7 +28,7 @@ function FollowButton(props) {
   // 現在觀看的使用者viewID 同步更新刷畫面用
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[3]; //區分現在在following or follow頁面
-  const viewID = pathname.split("/")[2]; //要轉成數字，不然api吃不到
+  const viewID = pathname.split("/")[2]; //觀看用戶的id
   const userPageName = pathname.split("/")[1]; //取出路由是否為user (個人資料頁)
 
   // 點擊打api用
