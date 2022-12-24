@@ -46,6 +46,8 @@ function ReplyModal(props) {
   const [text, setText] = useState("");
   // 送出推文按鈕時顯示空白錯誤
   const [isBlank, setIsBlank] = useState(false);
+  // 等待Api request 回應的時間
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 設定useRef讓輸入內容高度能夠變化
   const textAreaRef = useRef(null);
   // 日期資料轉換
@@ -61,11 +63,13 @@ function ReplyModal(props) {
   }
   // 處理回覆貼文送出
   async function handleReplyTweet() {
+    setIsOnResponse(true);
     if (text.length > 140) {
       return;
     }
     if (text.length === 0) {
       setIsBlank(true);
+      setIsOnResponse(false);
     }
     const tweetResponse = await replyOneTweet(tweetID, text);
     if (tweetResponse.status === 200) {
@@ -75,12 +79,12 @@ function ReplyModal(props) {
         icon: "success",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
       setText("");
       // 成功回覆推文後要再更新資料(homepage)
       if (nowPageName === "home") {
         const newTweetListData = await getAllTweets(); //取得最新所有貼文
         setAllTweetList(newTweetListData); // 刷新tweetlist (homepage)
-        closeEvent(false); //關掉彈窗
       }
       // 在推文回覆列表頁後更新資料
       if (nowPageName === "tweet") {
@@ -88,20 +92,16 @@ function ReplyModal(props) {
         setReplies(newRepliesData);
         const newMainTweetData = await getOneTweet(currentTweetID); //取得單一推文主資料
         setMainTweetInfo(newMainTweetData);
-        closeEvent(false); //關掉彈窗
-        return;
       }
       // 在個人推文列表頁
       if (nowPageName === "user" && likePageName !== "likes") {
         const newSelfTweetData = await getOneUserTweets(viewID);
         setSelfTweetList(newSelfTweetData);
-        closeEvent(false);
       }
       // 個人喜歡推文頁
       if (likePageName === "likes") {
         const newSelfLikeTweet = await getOneUsersLikes(viewID);
         setSelfLikeData(newSelfLikeTweet);
-        closeEvent(false);
       }
       // 關閉視窗
       closeEvent(false);
@@ -112,6 +112,7 @@ function ReplyModal(props) {
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
   }
   // 使用者重複輸入時，不重複顯示空白提示
@@ -196,7 +197,11 @@ function ReplyModal(props) {
             <div></div>
           )}
           <div className={styles["reply-btn"]} onClick={handleReplyTweet}>
-            <ReplyTweetButton />
+            {isOnResponse && <div className={styles["loading"]}></div>}
+            {isOnResponse && (
+              <div className={styles["loading-btn"]}>傳送中</div>
+            )}
+            {!isOnResponse && <ReplyTweetButton />}
           </div>
         </div>
       </div>
