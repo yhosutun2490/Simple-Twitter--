@@ -190,6 +190,12 @@ function SettingPage() {
   if (errCode === 408) {
     emailAlertMsg = "Email已重複註冊";
   }
+
+  //後端驗證email和帳號同時重複
+  if (errCode === 405) {
+    accountAlertMsg = "帳號已重複註冊";
+    emailAlertMsg = "Email已重複註冊";
+  }
   // 以上為錯誤驗證------------------------------
 
   return (
