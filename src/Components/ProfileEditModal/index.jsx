@@ -6,7 +6,7 @@ import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
 import { useAuth } from "../../Context/AuthContext"; // 傳入登入使用者自己的資料
 import { useTweetList } from "../../Context/TweetContext";
-import { useFollowBtn } from "../../Context/FollowBtnContext";
+import { useFollowBtn } from "../../Context/ProfileContext";
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import { getOneUserData } from "../../Api/UserAPI"; //個人資料API
 import { getOneUserTweets } from "../../Api/UserAPI";

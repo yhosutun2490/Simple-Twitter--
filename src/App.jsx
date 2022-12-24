@@ -4,7 +4,7 @@ import LayoutCommon from "./Components/LayoutCommon";
 import LayoutAdmin from "./Components/LayoutAdmin";
 import { AuthProvider } from "./Context/AuthContext"; //引入驗證用AuthProvider
 import { TweetListProvider } from "./Context/TweetContext"; // 引入推文頁面(layout)共享狀態provider
-import { FollowBtnProvider } from "./Context/FollowBtnContext"; //引入追隨按鈕共用狀態
+import { FollowBtnProvider } from "./Context/ProfileContext"; //引入追隨按鈕共用狀態
 import HomePage from "./Pages/HomePage";
 import RegisterPage from "./Pages/RegisterPage";
 import LoginPage from "./Pages/LoginPage";

@@ -5,7 +5,7 @@ import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主�
 import { getOneUsersReplies } from "../../Api/UserAPI"; // 取得某位使用者自己的回覆列表
 import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useFollowBtn } from "../../Context/FollowBtnContext"; // 追隨按鈕共用狀態用
+import { useFollowBtn } from "../../Context/ProfileContext"; // 追隨按鈕共用狀態用
 import { useTweetList } from "../../Context/TweetContext";
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
 function ProfileReplyPage() {

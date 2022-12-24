@@ -3,7 +3,7 @@ import PopularUserCard from "./PopularUserCard";
 import { useAuth } from "../../../Context/AuthContext"; // 取得當前使用者id context狀態
 import { useEffect } from "react";
 import { getTopFollower } from "../../../Api/UserAPI"; //前10大追隨者清單API
-import { useFollowBtn } from "../../../Context/FollowBtnContext"; //推薦跟隨狀態由context共享
+import { useFollowBtn } from "../../../Context/ProfileContext"; //推薦跟隨狀態由context共享
 
 function PopularUserList() {
   const { topFollower, setTopFollower } = useFollowBtn(); //推薦追隨資料放在共享context

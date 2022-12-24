@@ -5,7 +5,7 @@ import { getOneUserFollower } from "../../Api/FollowShipsAPI"; //取得某位使
 import { getOneUserData } from "../../Api/UserAPI";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
-import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕共用狀態
+import { useFollowBtn } from "../../Context/ProfileContext"; //追隨按鈕共用狀態
 import { useAuth } from "../../Context/AuthContext";
 function FollowerListPage() {
   //驗證登入

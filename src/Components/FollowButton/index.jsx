@@ -6,7 +6,7 @@ import { getOneUserFollowing } from "../../Api/FollowShipsAPI"; //追隨中名�
 import { getTopFollower } from "../../Api/UserAPI"; //推薦跟隨API
 import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者主資料
 import { useAuth } from "../../Context/AuthContext"; //取得現在登入者資料
-import { useFollowBtn } from "../../Context/FollowBtnContext"; //取得追隨按鈕所有共用的setFunciton
+import { useFollowBtn } from "../../Context/ProfileContext"; //取得追隨按鈕所有共用的setFunciton
 import { useLocation } from "react-router-dom";
 import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 

@@ -4,7 +4,7 @@ import UserTweetList from "../../Components/UserTweetList";
 import { useLocation } from "react-router-dom";
 import { useRef, useEffect } from "react";
 import { useAuth } from "../../Context/AuthContext"; // 登入使用者狀態共用
-import { useFollowBtn } from "../../Context/FollowBtnContext"; // 按鈕共用狀態用
+import { useFollowBtn } from "../../Context/ProfileContext"; // 按鈕共用狀態用
 import { useTweetList } from "../../Context/TweetContext";
 import { getOneUserData } from "../../Api/UserAPI"; //取得某位使用者資料
 import { getOneUsersLikes } from "../../Api/UserAPI"; // 取得某位使用者喜歡的推文
