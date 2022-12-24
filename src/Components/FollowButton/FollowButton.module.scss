@@ -6,9 +6,13 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  font-family: sans-serif;
+  font-family: "Noto Sans TC";
   background-color: var(--color-white);
   cursor: pointer;
+  &:hover { box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);}
+    &:active {
+      transform: translate(0, -5px)
+    }
 }
 .following-btn {
   padding: 8px 16px;
@@ -19,6 +23,12 @@
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  font-family: sans-serif;
+  font-family: "Noto Sans TC";
   cursor: pointer;
+  &:hover {
+      box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
+    }
+  &:active {
+    transform: translate(0,-5px)
+  }
 }

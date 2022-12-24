@@ -6,7 +6,7 @@ import { getOneUserTweets } from "../../Api/UserAPI"; // 取得某位使用者�
 import { useRef, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../Context/AuthContext"; // context傳入現在登入使用者資訊
-import { useFollowBtn } from "../../Context/FollowBtnContext"; //追隨按鈕狀態控制context
+import { useFollowBtn } from "../../Context/ProfileContext"; //追隨按鈕狀態控制context
 import { useTweetList } from "../../Context/TweetContext";
 
 function ProfilePage() {

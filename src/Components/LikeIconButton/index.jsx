@@ -6,7 +6,7 @@ import { userLikeTweet } from "../../Api/UserAPI"; //使用者對貼文按喜歡
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得某位使用者的貼文
 import { getOneUsersLikes } from "../../Api/UserAPI"; //取得某位使用者喜歡的貼文
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 function LikeIconButton(props) {
   // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)
   const {
@@ -28,10 +28,9 @@ function LikeIconButton(props) {
     // 打api更新按讚狀態....
     const apiLikeResponse = await userLikeTweet(tweetID);
     if (apiLikeResponse.status === 200) {
-      await Swal.fire({
-        position: "top",
+      await ToastSuccess.fire({
         title: "增加like成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -59,10 +58,9 @@ function LikeIconButton(props) {
         return;
       }
     } else {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "增加like失敗",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });

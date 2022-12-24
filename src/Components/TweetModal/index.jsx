@@ -9,7 +9,7 @@ import { getAllTweets } from "../../Api/TweetAPI";
 import { getOneUserTweets } from "../../Api/UserAPI";
 import { useAuth } from "../../Context/AuthContext";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function TweetModal(props) {
   // 設定推文列表清單的狀態
@@ -20,6 +20,8 @@ function TweetModal(props) {
   const [text, setText] = useState("");
   const [isBlank, setIsBlank] = useState(false);
   const textAreaRef = useRef(null);
+  // api傳送等待狀態
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 使用者個人資料
   const { currentUser } = useAuth();
   const currentUserAvatar = currentUser.avatar;
@@ -38,42 +40,50 @@ function TweetModal(props) {
   }
 
   async function handleTweetSubmit() {
-    // 換行空白處理
-    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    setIsOnResponse(true);
     // 超過140字和空白內文不送出推文表單
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
-    if (text.length === 0) {
+    if (text.trim().length === 0) {
       setIsBlank(true);
+      setIsOnResponse(false);
+      setText("");
       return;
     }
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
+      setIsOnResponse(false);
       setText("");
-      await Swal.fire({
-        position: "top",
-        title: "成功推文！",
-        timer: 2000,
-        icon: "success",
-        showConfirmButton: false,
-      });
       if (currentPageName === "home") {
         // 成功推文後要即時更新資料(homepage)
         const apiAllTweet = await getAllTweets();
         setAllTweetList(apiAllTweet);
         closeEvent(false);
+        await ToastSuccess.fire({
+          title: "成功推文！",
+          timer: 2000,
+          icon: "success",
+          showConfirmButton: false,
+        });
       }
       // 成功推文後要即時更新資料(個人頁面)
       if (currentPageName === "user" && currentUserID === viewID) {
         const apiSelfTweet = await getOneUserTweets(currentUserID);
         setSelfTweetList(apiSelfTweet);
         closeEvent(false);
+        await ToastSuccess.fire({
+          title: "成功推文！",
+          timer: 2000,
+          icon: "success",
+          showConfirmButton: false,
+        });
       }
     }
     if (tweetResponse.status === 500) {
-      Swal.fire({
-        position: "top",
+      setIsOnResponse(false);
+      ToastFail.fire({
         title: "推文失敗(伺服器問題)！",
         timer: 2000,
         icon: "error",
@@ -82,8 +92,8 @@ function TweetModal(props) {
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
-      Swal.fire({
-        position: "top",
+      setIsOnResponse(false);
+      ToastSuccess.fire({
         title: "推文失敗~內容不容空白或數超過上限！",
         timer: 2000,
         icon: "error",
@@ -142,13 +152,17 @@ function TweetModal(props) {
           ) : (
             <div></div>
           )}
-          {isBlank && text.length === 0 ? (
+          {isBlank && text.trim().length === 0 ? (
             <div className={styles["error-message"]}>內容不可空白</div>
           ) : (
             <div></div>
           )}
-          <div onClick={handleTweetSubmit}>
-            <TweetSubmitButton />
+          <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
+            {isOnResponse && <div className={styles["loading"]}></div>}
+            {isOnResponse && (
+              <div className={styles["loading-btn"]}>傳送中</div>
+            )}
+            {!isOnResponse && <TweetSubmitButton />}
           </div>
         </div>
       </div>

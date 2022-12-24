@@ -5,7 +5,7 @@ import { getOneTweet } from "../../Api/TweetAPI"; //取得推文主要資料
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得某位使用者的貼文
 import { getOneUsersLikes } from "../../Api/UserAPI"; //取得某位使用者喜歡的推文
 import { ReactComponent as LikeFull } from "../../assets/icons/like_full_icon.svg";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 import { useLocation } from "react-router-dom"; //抓目前網址path
 function LikeFullIconButton(props) {
   // 回覆按鈕點到時需要連到tweet-list頁面,large放大圖片大小(tweet推文詳細頁用)
@@ -29,10 +29,9 @@ function LikeFullIconButton(props) {
     // 打api更新按讚狀態....
     const apiDisLikeResponse = await userDisLikeTweet(tweetID);
     if (apiDisLikeResponse.status === 200) {
-      await Swal.fire({
-        position: "top",
+      await ToastSuccess.fire({
         title: "取消like成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
@@ -59,10 +58,9 @@ function LikeFullIconButton(props) {
         return;
       }
     } else {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "取消like失敗",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });

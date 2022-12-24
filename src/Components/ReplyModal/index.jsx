@@ -14,7 +14,7 @@ import { replyOneTweet } from "../../Api/RepliesAPI"; //回覆貼文API
 import { getOneUserTweets } from "../../Api/UserAPI"; //取得使用者貼文列表
 import { getOneUsersLikes } from "../../Api/UserAPI"; //取得使用者喜歡推文
 import { useLocation } from "react-router-dom"; //用來判斷目前網址 決定呼叫哪支API更新
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 function ReplyModal(props) {
   // context用享狀態用
   const { setSelfTweetList, setSelfLikeData } = useTweetList();
@@ -46,6 +46,8 @@ function ReplyModal(props) {
   const [text, setText] = useState("");
   // 送出推文按鈕時顯示空白錯誤
   const [isBlank, setIsBlank] = useState(false);
+  // 等待Api request 回應的時間
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 設定useRef讓輸入內容高度能夠變化
   const textAreaRef = useRef(null);
   // 日期資料轉換
@@ -61,27 +63,31 @@ function ReplyModal(props) {
   }
   // 處理回覆貼文送出
   async function handleReplyTweet() {
+    setIsOnResponse(true);
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
-    if (text.length === 0) {
+    if (text.trim().length === 0) {
       setIsBlank(true);
+      setIsOnResponse(false);
+      setText("");
+      return;
     }
     const tweetResponse = await replyOneTweet(tweetID, text);
     if (tweetResponse.status === 200) {
-      await Swal.fire({
-        position: "top",
-        title: "成功推文！",
-        timer: 2000,
+      await ToastSuccess.fire({
+        title: "回覆成功！",
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
       setText("");
       // 成功回覆推文後要再更新資料(homepage)
       if (nowPageName === "home") {
         const newTweetListData = await getAllTweets(); //取得最新所有貼文
         setAllTweetList(newTweetListData); // 刷新tweetlist (homepage)
-        closeEvent(false); //關掉彈窗
       }
       // 在推文回覆列表頁後更新資料
       if (nowPageName === "tweet") {
@@ -89,31 +95,27 @@ function ReplyModal(props) {
         setReplies(newRepliesData);
         const newMainTweetData = await getOneTweet(currentTweetID); //取得單一推文主資料
         setMainTweetInfo(newMainTweetData);
-        closeEvent(false); //關掉彈窗
-        return;
       }
       // 在個人推文列表頁
       if (nowPageName === "user" && likePageName !== "likes") {
         const newSelfTweetData = await getOneUserTweets(viewID);
         setSelfTweetList(newSelfTweetData);
-        closeEvent(false);
       }
       // 個人喜歡推文頁
       if (likePageName === "likes") {
         const newSelfLikeTweet = await getOneUsersLikes(viewID);
         setSelfLikeData(newSelfLikeTweet);
-        closeEvent(false);
       }
       // 關閉視窗
       closeEvent(false);
     } else {
-      Swal.fire({
-        position: "top",
-        title: "推文失敗！",
-        timer: 2000,
+      await ToastFail.fire({
+        title: "回覆失敗！",
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
   }
   // 使用者重複輸入時，不重複顯示空白提示
@@ -192,13 +194,17 @@ function ReplyModal(props) {
           ) : (
             <div></div>
           )}
-          {isBlank && text.length === 0 ? (
+          {isBlank && text.trim().length === 0 ? (
             <div className={styles["error-message"]}>內容不可空白</div>
           ) : (
             <div></div>
           )}
           <div className={styles["reply-btn"]} onClick={handleReplyTweet}>
-            <ReplyTweetButton />
+            {isOnResponse && <div className={styles["loading"]}></div>}
+            {isOnResponse && (
+              <div className={styles["loading-btn"]}>傳送中</div>
+            )}
+            {!isOnResponse && <ReplyTweetButton />}
           </div>
         </div>
       </div>

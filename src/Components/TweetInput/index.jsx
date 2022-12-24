@@ -6,12 +6,14 @@ import { userTweet } from "../../Api/UserAPI"; //推文API
 import { getAllTweets } from "../../Api/TweetAPI"; //取得所有推文
 import { useAuth } from "../../Context/AuthContext"; // 取得登入使用者資料
 import { Link } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function TweetInput(props) {
   const { setTweetList } = props;
   // 推文內容記錄狀態用
   const [text, setText] = useState("");
+  // 送出推文後等待回應狀態
+  const [isOnResponse, setIsOnResponse] = useState(false);
   // 判斷使用者是否回到輸入狀態
   const [isOnSubmit, setIsOnSubmit] = useState(false);
   const textAreaRef = useRef(null);
@@ -27,50 +29,52 @@ function TweetInput(props) {
     setText(e.value);
   }
   async function handleTweetSubmit() {
-    // 換行空白處理
-    // const tweetInput = text.trim().replace(/\r\n|\n/g, "");
+    setIsOnResponse(true);
 
     // 超過140字推文表單不送出
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
-    // 空白內容處理
-    if (text.length === 0) {
+    // 空白內容處理 (沒輸入和輸入空白都是不能送表單)
+    if (text.trim().length === 0) {
       setIsOnSubmit(true);
+      setIsOnResponse(false);
+      setText("");
       return;
     }
     const tweetResponse = await userTweet(text);
     if (tweetResponse.status === 200) {
-      await Swal.fire({
-        position: "top",
+      await ToastSuccess.fire({
         title: "成功推文！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
       setText("");
+      setIsOnResponse(false);
       // 成功推文後要即時更新資料
       const apiAllTweet = await getAllTweets();
       setTweetList(apiAllTweet);
     }
     if (tweetResponse.status === 500) {
-      Swal.fire({
-        position: "top",
+      ToastFail.fire({
         title: "推文失敗(伺服器問題)！",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
     // 推文空白內容萬一被送出
     if (tweetResponse.status === 406) {
-      Swal.fire({
-        position: "top",
+      ToastFail.fire({
         title: "推文失敗~內容不容空白或數超過上限！",
-        timer: 2000,
+        timer: 1000,
         icon: "error",
         showConfirmButton: false,
       });
+      setIsOnResponse(false);
     }
   }
   function handleOnFocus() {
@@ -100,11 +104,13 @@ function TweetInput(props) {
       </div>
       <div className={styles["footer"]}>
         <div className={styles["error-message"]}>
-          {isOnSubmit && text.length === 0 ? "內容不能空白" : ""}
+          {isOnSubmit && text.trim().length === 0 ? "內容不能空白" : ""}
           {text.length > 140 ? "字數超過上限140字" : ""}
         </div>
         <div className={styles["tweet-btn"]} onClick={handleTweetSubmit}>
-          <TweetSubmitButton />
+          {isOnResponse && <div className={styles["loading"]}></div>}
+          {isOnResponse && <div className={styles["loading-btn"]}>傳送中</div>}
+          {!isOnResponse && <TweetSubmitButton />}
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
   align-items: center;
   margin-left: 8px;
   font-family: "Noto Sans TC";
-
+  flex-wrap: wrap;
   .user-info-name {
     font-size: 16px;
     line-height: 26px;
@@ -18,8 +18,23 @@
     color: var(--color-secondary);
     margin-right: 2px;
   }
+  .user-info-name,
+  .user-info-acount {
+    max-width: 150px;
+    /* 名稱過長...顯示 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .account-link {
     color: var(--color-secondary);
     text-decoration: none;
   }
+}
+
+@media screen and (max-width: 100px) {
+  .user-info-name,
+    .user-info-acount {
+      max-width: 130px;   
+}
 }

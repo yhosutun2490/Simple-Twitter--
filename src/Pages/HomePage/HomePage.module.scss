@@ -6,6 +6,7 @@
   height: 100vh;
   /* 用web-kit 改一下scrollbar樣式*/
   overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 .page-title {

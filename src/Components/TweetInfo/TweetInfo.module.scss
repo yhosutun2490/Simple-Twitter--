@@ -1,6 +1,7 @@
 .container {
   padding: 0 16px;
   font-family: "Noto Sans TC";
+  width: calc(100% - 16px);
 }
 
 .tweet-user-info {
@@ -15,16 +16,25 @@
     margin-right: 8px;
   }
   .user-name-group {
+    width: 90%;
     & .name {
       font-size: 16px;
       line-height: 26px;
       font-weight: 700;
+      /* 名稱過長顯示 */
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
     & .account {
       font-size: 14px;
       line-height: 22px;
       font-weight: 400;
       color: var(--color-secondary);
+      /* 名稱過長顯示 */
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
   }
 }

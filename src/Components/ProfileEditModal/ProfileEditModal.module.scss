@@ -80,10 +80,9 @@
     cursor: pointer;
     border-radius: 100px;
     color: var(--color-white);
-
-    &:hover {
-      background-color: rgb(198, 216, 233);
-    }
+   &:hover {
+          box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
+        }
   }
 }
 
@@ -227,5 +226,43 @@
     .form-input-intro {
       resize: none;
     }
+  }
+}
+
+.tweet-btn {
+  display: flex;
+}
+
+.loading {
+  width: 25px;
+  height: 25px;
+  border: 2px solid rgba(67, 234, 108, 1);
+  border-top-color: rgba(67, 234, 108, 0.2);
+  border-right-color: rgba(67, 234, 108, 0.2);
+  border-bottom-color: rgba(67, 234, 108, 0.2);
+  border-radius: 100%;
+  margin-right: 15px;
+  align-self: center;
+
+  animation: circle infinite 0.75s linear;
+}
+
+.loading-btn {
+  text-align: start;
+  padding: 8px 16px;
+  background-color: var(--color-skyblue);
+  border: none;
+  border-radius: 50px;
+  color: var(--color-white);
+  font-size: var(--main-text-size);
+}
+
+@keyframes circle {
+  0% {
+    transform: rotate(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
   }
 }

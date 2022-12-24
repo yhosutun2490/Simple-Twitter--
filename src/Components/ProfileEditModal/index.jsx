@@ -4,35 +4,38 @@ import { useState } from "react";
 import { ReactComponent as Camera } from "../../assets/icons/camera_icon.svg";
 import { ReactComponent as Cross } from "../../assets/icons/cross_white.svg";
 import { ReactComponent as CrossOrange } from "../../assets/icons/cross_orange.svg";
-import { useFollowBtn } from "../../Context/FollowBtnContext"; //傳入使用者資料卡片共用狀態
+import { useAuth } from "../../Context/AuthContext"; // 傳入登入使用者自己的資料
 import { useTweetList } from "../../Context/TweetContext";
+import { useFollowBtn } from "../../Context/ProfileContext";
 import { userEditPhotoModalNew } from "../../Api/EditModalAPI";
 import { getOneUserData } from "../../Api/UserAPI"; //個人資料API
 import { getOneUserTweets } from "../../Api/UserAPI";
 import { getOneUsersReplies } from "../../Api/UserAPI";
 import { getOneUsersLikes } from "../../Api/UserAPI";
 import { useLocation } from "react-router-dom";
-import Swal from "sweetalert2";
+import { ToastSuccess, ToastFail } from "../../assets/sweetalert";
 
 function ProfileEditModal(props) {
   // 檢查目前路由
   const { pathname } = useLocation();
   const nowPageName = pathname.split("/")[3];
+  // 登入使用者的狀態
+  const { currentUser, setCurrentUser } = useAuth();
+  const { setUserProfile } = useFollowBtn();
   // 共用狀態
-  const { userProfile, setUserProfile } = useFollowBtn();
   const { setSelfTweetList, setSelfReplyData, setSelfLikeData } =
     useTweetList();
-  const userID = userProfile.id;
   // 要帶入資料庫使用者的帳戶、名稱、自介、大頭貼和背景圖
   const { trigger, closeEvent } = props;
   //上傳資料儲存狀態
-  const [background, setBackgroundUrl] = useState(userProfile.cover);
-  const [avatarUrl, setAvatarUrl] = useState(userProfile.avatar);
-  const [name, setName] = useState(userProfile.name);
-  const [introduction, setIntroduction] = useState(userProfile.introduction);
+  const [background, setBackgroundUrl] = useState(currentUser.cover);
+  const [avatarUrl, setAvatarUrl] = useState(currentUser.avatar);
+  const [name, setName] = useState(currentUser.name);
+  const [introduction, setIntroduction] = useState(currentUser.introduction);
   const [avatarPhoto, setAvatarPhoto] = useState("");
   const [coverPhoto, setCoverPhoto] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isBlank, setIsBlank] = useState(false);
 
   // 字數錯誤參數
   const nameError = name?.trim().length > 50 ? "error" : "";
@@ -50,8 +53,7 @@ function ProfileEditModal(props) {
     }
     // 檔案類型不是圖片
     if (fileType !== "image") {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "只能上傳圖片檔案！",
         timer: 1000,
         icon: "error",
@@ -60,8 +62,7 @@ function ProfileEditModal(props) {
       return checkResult;
     }
     if (fileSize >= 1000000) {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "圖片大小不能超過1MB",
         timer: 1500,
         icon: "error",
@@ -74,8 +75,7 @@ function ProfileEditModal(props) {
       checkResult = true;
       return checkResult;
     } else {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "圖片格式錯誤(僅接受png/jpeg/jpg)",
         timer: 1500,
         icon: "error",
@@ -109,16 +109,17 @@ function ProfileEditModal(props) {
   }
   // 表單資料提交，字數超過上限不能提交(表單不送出)、資料如果是空白傳回預設值
   async function handleSubmit() {
-    setIsSubmitting(true);
     // 如果名稱是空白，顯示錯誤再輸入欄底下
-    if (name?.length === 0) {
+    if (name?.trim().length === 0) {
+      setIsBlank(true);
       return;
+    } else {
+      setIsSubmitting(true);
     }
 
     // 超過字數上限表單不作事、跳出錯誤
     if (nameError === "error" || introductionError === "error") {
-      Swal.fire({
-        position: "top",
+      ToastFail.fire({
         title: "輸入字數超過上限！",
         timer: 1000,
         icon: "info",
@@ -133,34 +134,42 @@ function ProfileEditModal(props) {
     formData.append("name", name);
     formData.append("introduction", introduction);
     // 等待編輯後端API回傳訊息
-    const editResponse = await userEditPhotoModalNew(userID, formData);
+    const editResponse = await userEditPhotoModalNew(currentUser.id, formData);
+    const newEditData = editResponse.data; // 新的個人資料
     if (editResponse.status === 200) {
-      await Swal.fire({
-        position: "top",
+      await ToastSuccess.fire({
         title: "編輯個人資料成功！",
-        timer: 2000,
+        timer: 1000,
         icon: "success",
         showConfirmButton: false,
       });
       //返回使用者頁面，同步更新個人資料頁
       if (nowPageName === undefined) {
-        const selfNewTweet = await getOneUserTweets(userID);
+        const selfNewTweet = await getOneUserTweets(currentUser.id);
         setSelfTweetList(selfNewTweet);
       }
       if (nowPageName === "reply") {
-        const selfNewReply = await getOneUsersReplies(userID);
+        const selfNewReply = await getOneUsersReplies(currentUser.id);
         setSelfReplyData(selfNewReply);
       }
       if (nowPageName === "likes") {
-        const selfNewLike = await getOneUsersLikes(userID);
+        const selfNewLike = await getOneUsersLikes(currentUser.id);
         setSelfLikeData(selfNewLike);
       }
-      const newSelfPrfileData = await getOneUserData(userID);
+      // 個人資料頁同步更新
+      const newSelfPrfileData = await getOneUserData(currentUser.id);
       setUserProfile(newSelfPrfileData);
+      // useAuth setCurrentUser 登入者資料更新
+      setCurrentUser({
+        ...currentUser,
+        name: newEditData.name,
+        introduction: newEditData.introduction,
+        avatar: newEditData.avatar,
+        cover: newEditData.cover,
+      });
       resetModalStatus();
     } else {
-      await Swal.fire({
-        position: "top",
+      await ToastFail.fire({
         title: "編輯個人資料失敗！",
         timer: 1000,
         icon: "error",
@@ -169,18 +178,22 @@ function ProfileEditModal(props) {
       setIsSubmitting(false);
     }
   }
-  // function 關掉視窗後重置狀態
+  // function 關掉視窗後重置狀態 (如果使用者填了 但沒SAVE要用沒儲存前的狀態)
   function resetModalStatus() {
     setIsSubmitting(false);
     setBackgroundUrl("");
     setAvatarUrl("");
-    setIsSubmitting(false);
+    // 確定使用者有更動的值，有save靠submit handler更新，沒有save用舊值
+    setName(currentUser.name);
+    setIntroduction(currentUser.introduction);
+    setIsBlank(false);
     closeEvent(false);
   }
 
   // 處理onFocus 使用者再次輸入時解除按鈕disabled
   function handleOnFocus() {
     setIsSubmitting(false);
+    setIsBlank(false);
   }
   /////////////////////元件JSX
   // 如果trigger是 True 打開元件
@@ -221,7 +234,7 @@ function ProfileEditModal(props) {
         <div className={styles["popup-body"]} onFocus={handleOnFocus}>
           <div className={styles["user-bg"]}>
             <img
-              src={background ? background : userProfile.cover}
+              src={background ? background : currentUser.cover}
               alt="bg-img"
               className={styles["bg-image"]}
             />
@@ -243,7 +256,7 @@ function ProfileEditModal(props) {
           <div className={styles["user-avatar"]}>
             <div className={styles["avatar-image-wrap"]}>
               <img
-                src={avatarUrl ? avatarUrl : userProfile.avatar}
+                src={avatarUrl ? avatarUrl : currentUser.avatar}
                 alt="person-avatar"
                 className={styles["avatar-image"]}
               />
@@ -276,7 +289,7 @@ function ProfileEditModal(props) {
                 onChange={(e) => {
                   setName(e.target.value);
                 }}
-                defaultValue={userProfile.name}
+                defaultValue={currentUser.name}
               />
             </div>
             <div className={styles["form-row-text"]}>
@@ -286,7 +299,7 @@ function ProfileEditModal(props) {
                 ) : (
                   <div></div>
                 )}
-                {name?.length === 0 && isSubmitting ? (
+                {name?.trim().length === 0 && isBlank ? (
                   <div className={styles["text-error"]}>內容不可空白</div>
                 ) : (
                   <div></div>
@@ -310,7 +323,7 @@ function ProfileEditModal(props) {
                 className={`${styles["form-input"]} ${styles["form-input-intro"]}`}
                 onChange={(e) => setIntroduction(e.target.value)}
                 rows="7"
-                defaultValue={userProfile.introduction}
+                defaultValue={currentUser.introduction}
               />
             </div>
             <div className={styles["form-row-text"]}>

@@ -8,6 +8,11 @@
 .container {
   position: relative;
   cursor: pointer;
+  &:hover {
+      background-color: var(--color-light-grey);
+      border-radius: 100%;
+      transform: scale(1.1, 1.1);
+    }
   animation: love-appear 0.5s forwards;
 }
 
