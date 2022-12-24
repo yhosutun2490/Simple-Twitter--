@@ -33,6 +33,7 @@ function TweetInput(props) {
 
     // 超過140字推文表單不送出
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
     // 空白內容處理

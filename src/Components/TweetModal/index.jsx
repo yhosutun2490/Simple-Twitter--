@@ -43,6 +43,7 @@ function TweetModal(props) {
     setIsOnResponse(true);
     // 超過140字和空白內文不送出推文表單
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
     if (text.length === 0) {

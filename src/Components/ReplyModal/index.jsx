@@ -65,6 +65,7 @@ function ReplyModal(props) {
   async function handleReplyTweet() {
     setIsOnResponse(true);
     if (text.length > 140) {
+      setIsOnResponse(false);
       return;
     }
     if (text.length === 0) {
