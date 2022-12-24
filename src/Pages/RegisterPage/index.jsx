@@ -29,7 +29,7 @@ function RegisterPage() {
 
   // Word length related constant
   const accountLength = account.length;
-  const nameLength = name.trim().length;
+  const nameLength = name.length;
   const passwordLength = password.length;
   const emailLength = email.length;
   const checkPasswordLength = checkPassword.length;
@@ -68,10 +68,9 @@ function RegisterPage() {
     }
     // If all input value is valid
     // refactor the value of account and password
-    const nameTrimmed = name.trim();
     const { success, errCode } = await register({
       account,
-      nameTrimmed,
+      name,
       email,
       password,
       checkPassword,
@@ -91,7 +90,7 @@ function RegisterPage() {
       ToastFail.fire({
         title: "有空白欄位！",
       });
-    // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
+      // errCode為500（其他錯誤）或是沒有catch到errCode的錯誤
     } else if (errCode === 500 || !errCode) {
       ToastFail.fire({
         title: "發生未預期錯誤...",

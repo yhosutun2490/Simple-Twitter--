@@ -81,7 +81,7 @@ function AuthProvider(props) {
         register: async (data) => {
           const { success, token, user, errCode } = await register({
             account: data.account,
-            name: data.nameTrimmed,
+            name: data.name,
             email: data.email,
             password: data.password,
             checkPassword: data.checkPassword
