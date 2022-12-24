@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/Simple-Twitter-Natsu/static/css/main.7e0a50d3.css",
-    "main.js": "/Simple-Twitter-Natsu/static/js/main.242bca1a.js",
+    "main.js": "/Simple-Twitter-Natsu/static/js/main.dc8028a1.js",
     "static/js/787.ef50a9b3.chunk.js": "/Simple-Twitter-Natsu/static/js/787.ef50a9b3.chunk.js",
     "static/media/background.svg": "/Simple-Twitter-Natsu/static/media/background.e72031b7c27957c317e7c4ec66e9b0cc.svg",
     "static/media/gear.svg": "/Simple-Twitter-Natsu/static/media/gear.aeea3d23398684654b0c128869a94dd3.svg",
@@ -22,11 +22,11 @@
     "static/media/arrowPre.svg": "/Simple-Twitter-Natsu/static/media/arrowPre.5a11d6a8a2191decdf03869a77b345db.svg",
     "static/media/like_full_icon.svg": "/Simple-Twitter-Natsu/static/media/like_full_icon.816e9f378ab9de3bdafbba658f7bccf2.svg",
     "main.7e0a50d3.css.map": "/Simple-Twitter-Natsu/static/css/main.7e0a50d3.css.map",
-    "main.242bca1a.js.map": "/Simple-Twitter-Natsu/static/js/main.242bca1a.js.map",
+    "main.dc8028a1.js.map": "/Simple-Twitter-Natsu/static/js/main.dc8028a1.js.map",
     "787.ef50a9b3.chunk.js.map": "/Simple-Twitter-Natsu/static/js/787.ef50a9b3.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.7e0a50d3.css",
-    "static/js/main.242bca1a.js"
+    "static/js/main.dc8028a1.js"
   ]
 }
