@@ -9,16 +9,22 @@
 }
 
 .profile-title {
+  width: 100%;
   margin-left: 16px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   .user-name {
+    width: 95%;
     font-size: 18px;
     line-height: 26px;
     font-weight: 700;
     color: var(--color-dark-black);
     cursor: pointer;
+    /* 名稱過長顯示 */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 
   }
   .tweet-count {
