@@ -56,6 +56,7 @@ function ProfileEditModal(props) {
       await ToastFail.fire({
         title: "只能上傳圖片檔案！",
         timer: 1000,
+        width: "420px",
         icon: "error",
         showConfirmButton: false,
       });
@@ -65,6 +66,7 @@ function ProfileEditModal(props) {
       await ToastFail.fire({
         title: "圖片大小不能超過1MB",
         timer: 1500,
+        width: "450px",
         icon: "error",
         showConfirmButton: false,
       });
@@ -78,6 +80,7 @@ function ProfileEditModal(props) {
       await ToastFail.fire({
         title: "圖片格式錯誤(僅接受png/jpeg/jpg)",
         timer: 1500,
+        width: "600px",
         icon: "error",
         showConfirmButton: false,
       });
@@ -140,6 +143,7 @@ function ProfileEditModal(props) {
       await ToastSuccess.fire({
         title: "編輯個人資料成功！",
         timer: 1000,
+        width: "420px",
         icon: "success",
         showConfirmButton: false,
       });
@@ -171,6 +175,7 @@ function ProfileEditModal(props) {
     } else {
       await ToastFail.fire({
         title: "編輯個人資料失敗！",
+        width: "420px",
         timer: 1000,
         icon: "error",
         showConfirmButton: false,
