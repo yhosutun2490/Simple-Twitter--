@@ -7,8 +7,9 @@
   font-size: var(--main-text-size);
   padding: 8px 16px;
   font-family: "Noto Sans TC";
+  cursor: pointer;
   &:hover {
-    cursor: pointer;
+    box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
   }
 }
 
@@ -21,8 +22,9 @@
   font-size: var(--main-text-size);
   padding: 8px 16px;
   font-family: "Noto Sans TC";
-    &:hover {
-    cursor: pointer;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
   }
 }
 
@@ -36,7 +38,8 @@
   line-height: 30px;
   padding: 8px 24px;
   font-family: "Noto Sans TC";
-    &:hover {
-    cursor: pointer;
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0 0 3px 3px rgba(201, 196, 196, 0.8);
   }
 }
