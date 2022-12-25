@@ -30,10 +30,8 @@ function UserNavBar() {
           }
           end
         >
-          <div className={styles["navbar-link__wrap"]}>
-            <House className={styles["navbar-link__logo"]} />
-            <HouseActive className={styles["navbar-link__logo-active"]} />
-          </div>
+          <House className={styles["navbar-link__logo"]} />
+          <HouseActive className={styles["navbar-link__logo-active"]} />
         </NavLink>
         <NavLink
           to={"/home"}
@@ -59,10 +57,8 @@ function UserNavBar() {
             ].join(" ")
           }
         >
-          <div className={styles["navbar-link__wrap"]}>
-            <Head className={styles["navbar-link__logo"]} />
-            <HeadActive className={styles["navbar-link__logo-active"]} />
-          </div>
+          <Head className={styles["navbar-link__logo"]} />
+          <HeadActive className={styles["navbar-link__logo-active"]} />
           <p className={styles["navbar-link__title"]}>個人資料</p>
         </NavLink>
       </NavBarItem>
@@ -77,10 +73,8 @@ function UserNavBar() {
           }
           end
         >
-          <div className={styles["navbar-link__wrap"]}>
-            <Gear className={styles["navbar-link__logo"]} />
-            <GearActive className={styles["navbar-link__logo-active"]} />
-          </div>
+          <Gear className={styles["navbar-link__logo"]} />
+          <GearActive className={styles["navbar-link__logo-active"]} />
         </NavLink>
         <NavLink
           to={"/setting"}
