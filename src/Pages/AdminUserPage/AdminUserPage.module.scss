@@ -17,7 +17,7 @@
 .user-list {
   height: 100vh;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+  grid-template-columns: repeat(4, 250px);
   grid-gap: 16px;
   width: 100%;
   padding: 16px 15px;
@@ -60,9 +60,26 @@
   }
 }
 
+.user-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .user-info {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 32px;
   text-align: center;
+  .user-info-name,
+  .user-info-account {
+    /* 名稱過長...顯示 */
+    max-width: 90%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
   .user-info-name {
     line-height: 26px;
     font-weight: 700;

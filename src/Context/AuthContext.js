@@ -70,7 +70,7 @@ function AuthProvider(props) {
     else {
       checkTokenIsValid()
     }
-  }, [pathname]);
+  }, [pathname, isAuthenticated]);
 
   return (
     <AuthContext.Provider value={
