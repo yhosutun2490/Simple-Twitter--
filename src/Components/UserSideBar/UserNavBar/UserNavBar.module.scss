@@ -15,23 +15,33 @@
 .navbar-link {
   display: flex;
   align-items: center;
+  justify-content: center;
   text-decoration: none;
   color: var(--color-dark-black);
+  
+  .navbar-link__logo-active,.navbar-link__logo {
+    width: 24px;
+    height: 24px;
+  }
+
+  .navbar-link__logo-active {
+    display: none;
+  }
 
   &.router-link-active {
     color: var(--logo-color);
-    path {
-      fill: var(--logo-color)
+    .navbar-link__logo {
+      display: none;
+      }
+    .navbar-link__logo-active {
+      display: block;
     }
   }
   &:hover {
     background-color: var(--color-light-sliver);
     border-radius: 5px;
   }
-  &__logo {
-    width: 20px;
-    height: 20px;
-  }
+
   &__title {
     margin-left: 16.9px;
     font-size: 18px;
