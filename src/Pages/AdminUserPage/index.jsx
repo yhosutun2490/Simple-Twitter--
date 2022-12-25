@@ -63,7 +63,7 @@ function AdminUserPage() {
 
   const { isAuthenticated } = useAuth();
 
-  //if user is authenticated, navigate to tweetlist page
+  //if user is not authenticated, navigate to admin login page
   useEffect(() => {
     if (!isAuthenticated) {
       ToastFail.fire({
