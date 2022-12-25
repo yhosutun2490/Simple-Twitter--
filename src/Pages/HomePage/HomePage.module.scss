@@ -7,12 +7,14 @@
   /* 用web-kit 改一下scrollbar樣式*/
   overflow-y: scroll;
   overflow-x: hidden;
+  /*title用定位*/
+  position: relative;
 }
 
 .page-title {
-  position: fixed;
+  position: sticky;
   top: 0;
-  width: 654.667px;
+  width: 100%;
   font-size: 24px;
   line-height: 26px;
   font-weight: 700;
@@ -20,14 +22,7 @@
   background-color: var(--color-white);
   opacity: 0.9;
   cursor: pointer;
-
-  @media screen and (max-width:1200px) {
-    width: 393px;
-  }
 }
 
-/* 下推74px 讓上面首頁可以置頂*/
-.tweet-input {
-  margin-top: 74px;
-}
+
 

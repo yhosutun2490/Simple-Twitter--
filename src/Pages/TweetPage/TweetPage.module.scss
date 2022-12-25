@@ -6,12 +6,13 @@
   height: 100vh;
   /* 用web-kit 改一下scrollbar樣式*/
   overflow-y: scroll;
+  position: relative;
 }
 .page-title-wrap {
   display: flex;
-  position: fixed;
+  position: sticky;
   top: 0;
-  width: 648px;
+  width: 100%;
   align-items: center;
   padding: 24px 28px;
   border-bottom: 1px solid #E6ECF0;
@@ -22,16 +23,11 @@
   cursor: pointer;
   background-color: var(--color-white);
     opacity: 0.9;
-  @media screen and (max-width:1200px) {
-      width: 393px;
-    }
+  
 }
 .arrow-img {
   margin-right: 19px;
 }
-/* 下推74px 讓上面首頁可以置頂*/
-.tweet-info-wrap {
-  margin-top: 74px;
-}
+
 
 
