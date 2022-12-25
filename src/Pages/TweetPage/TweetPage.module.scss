@@ -10,7 +10,7 @@
 .page-title-wrap {
   display: flex;
   position: fixed;
-  width: 502.208px;
+  width: 648px;
   align-items: center;
   padding: 24px 28px;
   border-bottom: 1px solid #E6ECF0;
@@ -22,7 +22,7 @@
   background-color: var(--color-white);
     opacity: 0.9;
   @media screen and (max-width:1200px) {
-      width: 398px;
+      width: 393px;
     }
 }
 .arrow-img {
