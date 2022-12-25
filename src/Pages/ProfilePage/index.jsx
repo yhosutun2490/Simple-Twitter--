@@ -66,12 +66,12 @@ function ProfilePage() {
 
   return (
     <div className={styles["container"]} ref={containerRef}>
-      <ProfileUserNavBar
-        viewID={viewID}
-        currentUserID={currentUserID}
-        scrollTop={scrollTop}
-        userProfile={userProfile}
-      />
+        <ProfileUserNavBar
+          viewID={viewID}
+          currentUserID={currentUserID}
+          scrollTop={scrollTop}
+          userProfile={userProfile}
+        />
       <div>
         <UserTweetList
           selfTweet={selfTweetList}
