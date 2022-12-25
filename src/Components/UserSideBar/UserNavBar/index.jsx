@@ -4,8 +4,12 @@ import NavBarItem from "./NavBarItem";
 import LogoutButton from "./LogoutButton";
 import { NavLink } from "react-router-dom";
 import { ReactComponent as House } from "../../../assets/icons/house.svg";
+import { ReactComponent as HouseActive } from "../../../assets/icons/house_Full.svg";
 import { ReactComponent as Head } from "../../../assets/icons/head.svg";
+import { ReactComponent as HeadActive } from "../../../assets/icons/head_Full.svg";
+
 import { ReactComponent as Gear } from "../../../assets/icons/gear.svg";
+import { ReactComponent as GearActive } from "../../../assets/icons/gear_Full.svg";
 import TweetButtonSideBar from "./TweetButtonSideBar";
 import { useAuth } from "../../../Context/AuthContext";
 
@@ -27,6 +31,7 @@ function UserNavBar() {
           end
         >
           <House className={styles["navbar-link__logo"]} />
+          <HouseActive className={styles["navbar-link__logo-active"]} />
         </NavLink>
         <NavLink
           to={"/home"}
@@ -53,6 +58,7 @@ function UserNavBar() {
           }
         >
           <Head className={styles["navbar-link__logo"]} />
+          <HeadActive className={styles["navbar-link__logo-active"]} />
           <p className={styles["navbar-link__title"]}>個人資料</p>
         </NavLink>
       </NavBarItem>
@@ -68,6 +74,7 @@ function UserNavBar() {
           end
         >
           <Gear className={styles["navbar-link__logo"]} />
+          <GearActive className={styles["navbar-link__logo-active"]} />
         </NavLink>
         <NavLink
           to={"/setting"}

@@ -43,7 +43,7 @@
   line-height: 36px;
   font-weight: 400;
   /*內容太長要換行*/
-  word-break: break-all;
+  word-wrap: break-word;
 }
 .tweet-update-detail {
   padding: 8px 0;

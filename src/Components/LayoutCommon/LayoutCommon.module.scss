@@ -1,9 +1,19 @@
 .layout-container {
-  width: 100%;
   display: grid;
-  grid-template-columns: minmax(280px, 2.33fr) minmax(400px, 5.657fr) minmax(308px, 4.011fr);
+  // grid-template-columns: minmax(280px, 2.33fr) minmax(400px, 5.657fr) minmax(308px, 4.011fr);
+  grid-template-columns: minmax(228px, 2.33fr) minmax(438px, 5.657fr) minmax(293.47px, 4.011fr);
   grid-auto-rows: 100vh;
-}
+  margin: 0 auto;
+ 
+  @media screen and (min-width: 992px) {
+     width: 960px;
+    }
+  @media screen and (min-width: 1200px) {
+        width: 1400px;
+      } 
+  }
+
+
 
 .column1 {
   grid-column: 1/2;

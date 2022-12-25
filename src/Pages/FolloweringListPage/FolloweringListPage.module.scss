@@ -3,18 +3,12 @@
   border: 1px solid #E6ECF0;
   height: 100%;
   overflow-y: scroll;
+  position: relative;
 }
 .profile-navbar {
-  position: fixed;
+  position: sticky;
+  top: 0;
   background-color: var(--color-white);
   opacity: 0.95;
-  width: 502.208px;
-
-  @media screen and (max-width:1200px) {
-    width: 398px;
-  }
-}
-
-.follow-list {
-  padding-top: 132.5px;
+  width: 100%;
 }

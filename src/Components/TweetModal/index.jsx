@@ -60,26 +60,18 @@ function TweetModal(props) {
         // 成功推文後要即時更新資料(homepage)
         const apiAllTweet = await getAllTweets();
         setAllTweetList(apiAllTweet);
-        closeEvent(false);
-        await ToastSuccess.fire({
-          title: "成功推文！",
-          timer: 2000,
-          icon: "success",
-          showConfirmButton: false,
-        });
       }
       // 成功推文後要即時更新資料(個人頁面)
       if (currentPageName === "user" && currentUserID === viewID) {
         const apiSelfTweet = await getOneUserTweets(currentUserID);
         setSelfTweetList(apiSelfTweet);
-        closeEvent(false);
-        await ToastSuccess.fire({
-          title: "成功推文！",
-          timer: 2000,
-          icon: "success",
-          showConfirmButton: false,
-        });
       }
+      closeEvent(false);
+      await ToastSuccess.fire({
+        title: "成功推文！",
+        icon: "success",
+        showConfirmButton: false,
+      });
     }
     if (tweetResponse.status === 500) {
       setIsOnResponse(false);
