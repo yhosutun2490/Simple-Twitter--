@@ -3,12 +3,13 @@
 }
 .profile-title {
   position: fixed;
+  top: 0;
   background-color: var(--color-white);
   opacity: 0.9;
   z-index: 2;
   width: 649px;
   @media screen and (max-width:1200px) {
-      width: 393px;
+      width: 394px;
     }
 }
 
