@@ -100,8 +100,8 @@ function AdminUserPage() {
             userName={user.name}
             tweetNum={user.tweetCount}
             likedNum={user.likeCount}
-            followingNum={user.followingCount}
-            followerNum={user.followerCount}
+            followingNum={user.followerCount}
+            followerNum={user.followingCount}
           />
         ))}
       </div>
