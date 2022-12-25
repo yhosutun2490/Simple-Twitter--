@@ -1,32 +1,35 @@
 {
   "files": {
-    "main.css": "/Simple-Twitter-Natsu/static/css/main.7e0a50d3.css",
-    "main.js": "/Simple-Twitter-Natsu/static/js/main.dc8028a1.js",
+    "main.css": "/Simple-Twitter-Natsu/static/css/main.7e09f548.css",
+    "main.js": "/Simple-Twitter-Natsu/static/js/main.54ef7ab4.js",
     "static/js/787.ef50a9b3.chunk.js": "/Simple-Twitter-Natsu/static/js/787.ef50a9b3.chunk.js",
     "static/media/background.svg": "/Simple-Twitter-Natsu/static/media/background.e72031b7c27957c317e7c4ec66e9b0cc.svg",
     "static/media/gear.svg": "/Simple-Twitter-Natsu/static/media/gear.aeea3d23398684654b0c128869a94dd3.svg",
+    "static/media/gear_Full.svg": "/Simple-Twitter-Natsu/static/media/gear_Full.badd14d1a1894e7f8240b1e925f016a0.svg",
     "static/media/AcLogo.svg": "/Simple-Twitter-Natsu/static/media/AcLogo.e454f4a3ed11bc97a62468b6d59775ce.svg",
     "static/media/notification_info.svg": "/Simple-Twitter-Natsu/static/media/notification_info.f0679ec31392e5a7d9edaadee86cc645.svg",
     "static/media/logout.svg": "/Simple-Twitter-Natsu/static/media/logout.e0ca41e9271eef8779f88ba1621e43d8.svg",
-    "static/media/head.svg": "/Simple-Twitter-Natsu/static/media/head.bf0b578c8b387dabbc19a78e66a71a66.svg",
     "static/media/camera_icon.svg": "/Simple-Twitter-Natsu/static/media/camera_icon.d259c479a8f2754ea182ecf7c78f083a.svg",
+    "static/media/head.svg": "/Simple-Twitter-Natsu/static/media/head.f53035e66efb7b32f8c893f03fcb6784.svg",
+    "static/media/house.svg": "/Simple-Twitter-Natsu/static/media/house.05ce69333110b948d45b08938c26d5ee.svg",
     "static/media/reply_icon.svg": "/Simple-Twitter-Natsu/static/media/reply_icon.dd13cc02b1708cc295be446ddd553dc8.svg",
-    "static/media/house.svg": "/Simple-Twitter-Natsu/static/media/house.ceb8e3df46d8907d5dfc4f5fa5c07e2c.svg",
+    "static/media/house_Full.svg": "/Simple-Twitter-Natsu/static/media/house_Full.278391af7c455f2a17329ba5c2b56c1a.svg",
     "static/media/like_icon.svg": "/Simple-Twitter-Natsu/static/media/like_icon.e9a735ba1c64ac815e2135dd30810a14.svg",
     "static/media/letter_icon.svg": "/Simple-Twitter-Natsu/static/media/letter_icon.608b5b827d6b85f1fef8aac0513d9e97.svg",
     "static/media/tweet_feather_icon.svg": "/Simple-Twitter-Natsu/static/media/tweet_feather_icon.ff83b6c6b1551574a0466889694b1f20.svg",
     "static/media/cross_orange.svg": "/Simple-Twitter-Natsu/static/media/cross_orange.95a4b04284cee1b7ad5d765fa3021956.svg",
     "index.html": "/Simple-Twitter-Natsu/index.html",
     "static/media/cross_white.svg": "/Simple-Twitter-Natsu/static/media/cross_white.2863158e7f1d0e47b6474f440d663eba.svg",
+    "static/media/head_Full.svg": "/Simple-Twitter-Natsu/static/media/head_Full.15c0054969a7fd680b78dbf8ded00d46.svg",
     "static/media/admin_delete_icon.svg": "/Simple-Twitter-Natsu/static/media/admin_delete_icon.0ef1debe198ad4087fcc75958370a965.svg",
     "static/media/arrowPre.svg": "/Simple-Twitter-Natsu/static/media/arrowPre.5a11d6a8a2191decdf03869a77b345db.svg",
     "static/media/like_full_icon.svg": "/Simple-Twitter-Natsu/static/media/like_full_icon.816e9f378ab9de3bdafbba658f7bccf2.svg",
-    "main.7e0a50d3.css.map": "/Simple-Twitter-Natsu/static/css/main.7e0a50d3.css.map",
-    "main.dc8028a1.js.map": "/Simple-Twitter-Natsu/static/js/main.dc8028a1.js.map",
+    "main.7e09f548.css.map": "/Simple-Twitter-Natsu/static/css/main.7e09f548.css.map",
+    "main.54ef7ab4.js.map": "/Simple-Twitter-Natsu/static/js/main.54ef7ab4.js.map",
     "787.ef50a9b3.chunk.js.map": "/Simple-Twitter-Natsu/static/js/787.ef50a9b3.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.7e0a50d3.css",
-    "static/js/main.dc8028a1.js"
+    "static/css/main.7e09f548.css",
+    "static/js/main.54ef7ab4.js"
   ]
 }
