@@ -85,7 +85,7 @@ function AdminTweetPage() {
   useEffect(() => {
     if (!isAuthenticated) {
       ToastFail.fire({
-        title: "帳號不存在！",
+        title: "您尚未登入！",
       });
       navigate("/admin");
     }
