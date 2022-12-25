@@ -2,10 +2,11 @@
   width: 100%;
   display: grid;
   margin: 0 auto;
-  grid-template-columns: minmax(280px, 2.33fr) minmax(400px, 5.657fr) minmax(
-      308px,
-      4.011fr
-    );
+  // grid-template-columns: minmax(280px, 2.33fr) minmax(400px, 5.657fr) minmax(
+  //     308px,
+  //     4.011fr
+  //   );
+grid-template-columns: minmax(228px, 2.33fr) minmax(438px, 5.657fr) minmax(293.47px, 4.011fr);
   grid-auto-rows: 100vh;
   font-family: "Noto Sans TC";
   @media screen and (min-width: 992px) {
