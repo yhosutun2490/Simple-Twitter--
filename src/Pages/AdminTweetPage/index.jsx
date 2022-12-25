@@ -84,9 +84,6 @@ function AdminTweetPage() {
   //if user is not authenticated, navigate to login page
   useEffect(() => {
     if (!isAuthenticated) {
-      ToastFail.fire({
-        title: "您尚未登入！",
-      });
       navigate("/admin");
     }
   }, [navigate, isAuthenticated]);

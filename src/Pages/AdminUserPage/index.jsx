@@ -64,9 +64,6 @@ function AdminUserPage() {
   //if user is not authenticated, navigate to admin login page
   useEffect(() => {
     if (!isAuthenticated) {
-      ToastFail.fire({
-        title: "您尚未登入！",
-      });
       navigate("/admin");
       return;
     }

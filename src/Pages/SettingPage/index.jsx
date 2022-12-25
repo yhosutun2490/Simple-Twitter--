@@ -113,9 +113,6 @@ function SettingPage() {
   //if user is authenticated, navigate to home page
   useEffect(() => {
     if (!isAuthenticated) {
-      ToastFail.fire({
-        title: "您尚未登入！",
-      });
       navigate("/login");
     }
   }, [navigate, isAuthenticated]);
