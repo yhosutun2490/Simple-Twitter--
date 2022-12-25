@@ -90,7 +90,7 @@ function SettingPage() {
     // token驗證失敗
     if (errCode === 401) {
       ToastFail.fire({
-        title: "您尚未登入",
+        title: "您尚未登入！",
       });
       navigate("/login");
       // errCode為412（請求使用者id不存在）500（其他錯誤）或是沒有catch到errCode的錯誤
