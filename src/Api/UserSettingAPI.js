@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "https://floating-forest-88499.herokuapp.com/api/users";
+const baseUrl = "https://lingering-wildflower-6442.fly.dev/api/users";
 
 const axiosInstance = axios.create({
   baseURL: baseUrl,

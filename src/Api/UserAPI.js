@@ -1,7 +1,7 @@
 // 引入axios
 import axios from 'axios';
 // 後端Heroku網址
-const baseUrl ="https://floating-forest-88499.herokuapp.com"
+const baseUrl ="https://lingering-wildflower-6442.fly.dev"
 
 // 產生axios 實例來管理API
 const axiosInstance = axios.create({
